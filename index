@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>FXEC Mock Interview</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    margin: 0;
+    padding: 30px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.12);
+}
+
+h1 {
+    color: #174a87;
+}
+
+.question {
+    background: #eef4ff;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.timer {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 25px;
+    color: #174a87;
+}
+
+.status {
+    text-align: center;
+    font-size: 18px;
+    margin: 20px;
+}
+
+.buttons {
+    text-align: center;
+}
+
+button {
+    padding: 13px 22px;
+    margin: 5px;
+    border: none;
+    border-radius: 9px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.start {
+    background: #1677ff;
+    color: white;
+}
+
+.stop {
+    background: #d93025;
+    color: white;
+}
+
+.play {
+    background: #188038;
+    color: white;
+}
+
+button:disabled {
+    opacity: .45;
+}
+
+audio {
+    width: 100%;
+    margin-top: 25px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>FXEC Mock Interview – Voice Test</h1>
+
+<div class="question">
+Question 1: Tell me about yourself.
+</div>
+
+<div id="status" class="status">
+Ready. Click Start Recording.
+</div>
+
+<div id="timer" class="timer">
+00:00
+</div>
+
+<div class="buttons">
+
+<button class="start" id="start">
+🎙 Start Recording
+</button>
+
+<button class="stop" id="stop" disabled>
+⏹ Stop
+</button>
+
+<button class="play" id="play" disabled>
+▶ Play
+</button>
+
+</div>
+
+<audio id="audio" controls></audio>
+
+</div>
+
+<script>
+
+let recorder;
+let stream;
+let chunks = [];
+
+let startTime;
+let timerInterval;
+
+const startButton =
+    document.getElementById("start");
+
+const stopButton =
+    document.getElementById("stop");
+
+const playButton =
+    document.getElementById("play");
+
+const status =
+    document.getElementById("status");
+
+const timer =
+    document.getElementById("timer");
+
+const audio =
+    document.getElementById("audio");
+
+
+startButton.onclick = async function() {
+
+    try {
+
+        stream =
+            await navigator.mediaDevices
+            .getUserMedia({
+                audio: true
+            });
+
+        chunks = [];
+
+        recorder =
+            new MediaRecorder(stream);
+
+        recorder.ondataavailable =
+            function(event) {
+
+                if (event.data.size > 0) {
+                    chunks.push(event.data);
+                }
+
+            };
+
+        recorder.onstop =
+            function() {
+
+                const blob =
+                    new Blob(
+                        chunks,
+                        {type: "audio/webm"}
+                    );
+
+                const audioURL =
+                    URL.createObjectURL(blob);
+
+                audio.src = audioURL;
+
+                playButton.disabled = false;
+
+                status.innerHTML =
+                    "✅ Recording completed.";
+
+                stream.getTracks().forEach(
+                    track => track.stop()
+                );
+
+            };
+
+        recorder.start();
+
+        startTime = Date.now();
+
+        timerInterval =
+            setInterval(function() {
+
+                let seconds =
+                    Math.floor(
+                        (Date.now() - startTime) / 1000
+                    );
+
+                let min =
+                    Math.floor(seconds / 60);
+
+                let sec =
+                    seconds % 60;
+
+                timer.innerHTML =
+                    String(min).padStart(2,"0")
+                    + ":"
+                    +
+                    String(sec).padStart(2,"0");
+
+            },1000);
+
+        startButton.disabled = true;
+
+        stopButton.disabled = false;
+
+        status.innerHTML =
+            "🔴 Recording... Speak now.";
+
+    }
+
+    catch(error) {
+
+        status.innerHTML =
+            "❌ Microphone access failed: "
+            + error.name;
+
+        console.error(error);
+
+    }
+
+};
+
+
+stopButton.onclick = function() {
+
+    if (recorder) {
+
+        recorder.stop();
+
+    }
+
+    clearInterval(timerInterval);
+
+    startButton.disabled = false;
+
+    stopButton.disabled = true;
+
+};
+
+
+playButton.onclick = function() {
+
+    audio.play();
+
+};
+
+</script>
+
+</body>
+</html>
