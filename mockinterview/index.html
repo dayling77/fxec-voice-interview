@@ -817,6 +817,186 @@ button:disabled {
 
 }
 
+
+
+/* =====================================================
+   PREPARATION BEFORE LOGIN
+   ===================================================== */
+
+.prep-launch {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+.prep-launch h3 {
+    margin: 0 0 8px;
+    color: #073b78;
+}
+
+.prep-launch p {
+    margin: 0 auto 14px;
+    max-width: 680px;
+}
+
+.secondary-button {
+    background: white;
+    color: #073b78;
+    border: 2px solid #1769c2;
+}
+
+.secondary-button:hover {
+    background: #eef6ff;
+}
+
+#preparationCard {
+    max-width: 950px;
+}
+
+.prep-intro {
+    background: #f5f9ff;
+    border-left: 4px solid #1769c2;
+    padding: 16px 18px;
+    border-radius: 8px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+}
+
+.prep-question {
+    border: 1px solid #dbe4ef;
+    border-radius: 14px;
+    padding: 22px;
+    margin: 18px 0;
+    background: white;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, .05);
+}
+
+.prep-question h3 {
+    color: #073b78;
+    margin: 0 0 10px;
+}
+
+.prep-label {
+    display: block;
+    font-weight: 700;
+    color: #334155;
+    margin: 16px 0 7px;
+}
+
+.prep-question ul {
+    margin: 7px 0 0 20px;
+    line-height: 1.65;
+}
+
+.prep-pill-box {
+    background: #f8fafc;
+    padding: 12px 15px;
+    border-radius: 8px;
+    line-height: 1.7;
+}
+
+.prep-target-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.prep-target {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.prep-word-target {
+    background: #fff4cc;
+    border: 1px solid #f0c36d;
+    color: #6b4f00;
+}
+
+.prep-phrase-target {
+    background: #e8f1ff;
+    border: 1px solid #8db8ee;
+    color: #073b78;
+}
+
+.prep-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 10px 0 4px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.prep-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.prep-legend i {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.prep-sample {
+    background: #f8fafc;
+    padding: 16px 17px;
+    border-radius: 8px;
+    line-height: 1.85;
+}
+
+.prep-sample mark {
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.prep-sample mark.word-highlight {
+    background: #fff0b3;
+    color: #5b4300;
+}
+
+.prep-sample mark.phrase-highlight {
+    background: #dbeafe;
+    color: #073b78;
+}
+
+.audio-note {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.audio-button {
+    margin-top: 12px;
+    background: #073b78;
+}
+
+.prep-back {
+    margin-top: 18px;
+}
+
+.prep-loading,
+.prep-error {
+    text-align: center;
+    padding: 25px;
+}
+
+.prep-error {
+    color: #b42318;
+}
+
+@media (max-width: 600px) {
+    .prep-question {
+        padding: 17px;
+    }
+}
 </style>
 
 </head>
@@ -888,6 +1068,25 @@ button:disabled {
     </div>
 
 
+    <div class="prep-launch">
+
+        <h3>📘 Prepare Before You Begin</h3>
+
+        <p>
+            Review the 10 questions, preparation tips, useful words,
+            professional phrases and sample responses before starting.
+        </p>
+
+        <button
+            type="button"
+            class="secondary-button"
+            onclick="openPreparation()">
+            View Questions &amp; Tips
+        </button>
+
+    </div>
+
+
     <div
         id="serverStatus"
         class="server-status">
@@ -895,6 +1094,38 @@ button:disabled {
         Connecting to FXEC server...
 
     </div>
+
+</section>
+
+
+<!-- =====================================================
+     PREPARATION
+     ===================================================== -->
+
+<section
+    id="preparationCard"
+    class="card hidden">
+
+    <h2>📘 Prepare Before You Begin</h2>
+
+    <div class="prep-intro">
+        <strong>How to use this section:</strong>
+        Review how each question can be approached, study the useful words
+        and professional phrases, and listen to the sample response.
+        The sample is a model of structure and professional communication —
+        do not memorise it word for word. Your interview response should be your own.
+    </div>
+
+    <div id="preparationContent">
+        <div class="prep-loading">Loading interview preparation...</div>
+    </div>
+
+    <button
+        type="button"
+        class="secondary-button prep-back"
+        onclick="closePreparation()">
+        ← Back to Student Verification
+    </button>
 
 </section>
 
@@ -1551,6 +1782,486 @@ async function testServer() {
 // Run immediately.
 
 testServer();
+
+
+// =====================================================
+// PRE-INTERVIEW PREPARATION
+// =====================================================
+
+const PREPARATION_GUIDANCE = {
+
+    1: {
+        tips: [
+            'Start with your name and current programme.',
+            'Briefly describe your educational background and relevant skills.',
+            'Mention one or two interests or experiences that support your career direction.',
+            'Finish by connecting your present skills with your career goal.'
+        ],
+        sample: 'Let me briefly introduce myself. I am currently pursuing my engineering degree, and my academic background has helped me build a strong foundation in both technical knowledge and communication. I have developed skills in teamwork, problem-solving, and using technology to complete practical tasks. My area of interest is continuous learning and professional development. My short-term goal is to strengthen my technical and communication skills and contribute effectively to a professional team.'
+    },
+
+    2: {
+        tips: [
+            'State the career area you want to pursue.',
+            'Explain why that area interests you.',
+            'Mention the skills you are developing for that career.',
+            'Explain the steps you plan to take to achieve your long-term goal.'
+        ],
+        sample: 'My career objective is to build a career in a field where I can apply my technical knowledge and continue to learn. I aspire to build a career in a professional environment that gives me opportunities to develop my expertise. I am particularly interested in improving my problem-solving and communication skills. I am currently developing my skills through academic projects and practical learning. My long-term goal is to specialise in my area of interest and contribute to the organisation through consistent professional growth.'
+    },
+
+    3: {
+        tips: [
+            'Name your programme and briefly describe your academic journey.',
+            'Mention important subjects or areas you enjoyed.',
+            'Include practical learning, projects or achievements where relevant.',
+            'Explain how your education has prepared you for your career.'
+        ],
+        sample: 'I am currently pursuing my engineering programme, and my academic background has helped me build a strong foundation for my career. During my studies, I developed knowledge in core subjects as well as practical problem-solving skills. One area I particularly enjoyed was applying classroom concepts to practical projects. I gained practical experience through project work, teamwork, and hands-on learning. This experience helped me to understand how technical knowledge can be applied to real-world situations.'
+    },
+
+    4: {
+        tips: [
+            'Choose two or three genuine strengths.',
+            'Give a brief example that demonstrates at least one strength.',
+            'Explain how the strength helps you in academic or professional situations.',
+            'Avoid simply listing qualities without evidence.'
+        ],
+        sample: 'One of my key strengths is problem-solving. I consider myself a person who likes to understand an issue before deciding on a solution. I have developed strong skills in teamwork and communication as well. I can demonstrate this through my academic projects, where I had to coordinate with others and complete tasks within a deadline. This strength helps me to approach challenges systematically, and I believe this will help me contribute effectively in a professional environment.'
+    },
+
+    5: {
+        tips: [
+            'Choose a genuine but manageable area for improvement.',
+            'Explain why you identified it as an area for improvement.',
+            'Describe the specific actions you are taking.',
+            'End with the progress you have made or your next goal.'
+        ],
+        sample: 'One area I am currently working on is communication confidence, particularly when speaking in front of a group. I have identified this as an area for improvement because clear communication is important in professional situations. I am taking steps to improve by practising spoken English, participating in discussions, and asking for feedback. I have been working on speaking more clearly and confidently, and I have made progress through regular practice. My goal is to communicate confidently in a professional environment.'
+    },
+
+    6: {
+        tips: [
+            'Begin with the project title or topic and its purpose.',
+            'Explain the problem and the main objective.',
+            'Describe the technology, tools or method used.',
+            'Clearly state your individual role and implementation work.',
+            'Mention a challenge, how your team addressed it, the result and what you learned.'
+        ],
+        sample: 'My project focuses on developing a practical solution to a real-world problem. The main objective was to design and implement a system that could address the identified requirement efficiently. We used appropriate technology and tools to develop and test the solution. My role in the project was to contribute to the implementation and testing of the system. One challenge we faced was identifying and resolving an issue during development. We addressed this by analysing the problem, discussing possible solutions, and testing the revised approach. The outcome of the project was a working solution, and I learned the importance of teamwork, systematic problem-solving, and careful testing.'
+    },
+
+    7: {
+        tips: [
+            'First identify the technical concept being asked about.',
+            'Explain the main principle clearly in your own words.',
+            'Give a relevant practical example or application.',
+            'Mention an advantage or limitation when appropriate.',
+            'Use correct technical terminology and maintain a logical explanation.'
+        ],
+        sample: 'Let me explain the concept step by step. The main principle is to understand how the system or process works and why it is used. This can be applied in practical engineering situations where the concept helps solve a specific problem. For example, I would connect the concept to an application from my programme and explain the process clearly. The main advantage is its practical usefulness, while one limitation may depend on the conditions in which it is applied. In practical applications, understanding both the principle and its limitations is important.'
+    },
+
+    8: {
+        tips: [
+            'Describe a specific situation in which you worked with others.',
+            'Explain your responsibility and individual contribution.',
+            'Describe how the team communicated and coordinated.',
+            'Mention a challenge or disagreement if relevant and explain how it was resolved.',
+            'Finish with the result of the teamwork.'
+        ],
+        sample: 'I worked as part of a team when we completed an academic project together. My responsibility was to contribute to the implementation and coordinate my tasks with the other members. I contributed by completing my assigned work and supporting the team when needed. We communicated through regular discussions and shared updates on our progress. We faced a challenge when some tasks were taking longer than expected. We resolved it by reviewing the priorities and coordinating the remaining work. As a result, we completed the project successfully and improved our cooperation as a team.'
+    },
+
+    9: {
+        tips: [
+            'Describe a specific problem or challenge.',
+            'Explain how you analysed the situation.',
+            'Describe the decision or action you took.',
+            'State the result clearly.',
+            'Finish with the lesson you learned from the experience.'
+        ],
+        sample: 'I faced a challenge when an issue affected the progress of an academic project. The first step I took was to understand the problem instead of making a quick decision. I analysed the situation by identifying the possible causes and discussing them with my team. I decided to test the most practical solution and review the result. I overcame the problem by making a systematic change and checking the outcome carefully. The result was that we were able to continue the project successfully. I learned that analysing a problem carefully can lead to a more effective solution.'
+    },
+
+    10: {
+        tips: [
+            'Show that you would remain professional under pressure.',
+            'First understand the situation before reacting.',
+            'Communicate respectfully with the people involved.',
+            'Consider possible solutions and take appropriate responsibility.',
+            'Explain how you would learn from feedback or the experience.'
+        ],
+        sample: 'If I faced such a situation, I would first try to understand the issue clearly and remain professional. My first step would be to identify the priority and understand what is expected from me. I would communicate with the relevant person and discuss the situation respectfully. I would consider the possible solutions and choose an appropriate course of action based on the available information. I would take responsibility for my part of the situation and seek feedback if necessary. My aim would be to resolve the issue constructively and learn from the experience.'
+    }
+};
+
+
+function openPreparation() {
+
+    hide('loginCard');
+    show('preparationCard');
+
+    loadPreparationQuestions();
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+
+function closePreparation() {
+
+    hide('preparationCard');
+    show('loginCard');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+
+async function loadPreparationQuestions() {
+
+    const container = document.getElementById('preparationContent');
+
+    container.innerHTML =
+        '<div class="prep-loading">Loading the interview questions and preparation material...</div>';
+
+    try {
+
+        let result = await apiGet(
+            'getInterviewQuestions',
+            { programme: 'All' },
+            20000,
+            2
+        );
+
+        /*
+         * The live interview bank intentionally returns exactly 10 questions
+         * only when a student's programme is known, because Q7 is programme-
+         * specific. Before login there is no programme yet.
+         *
+         * For the public preparation page, make one programme-specific API
+         * request only to obtain the nine common questions. The Q7 row is then
+         * replaced by the generic preparation version already defined in the
+         * frontend. This does NOT change the live assessment or backend.
+         */
+        if (!result || !result.success || !Array.isArray(result.questions) || result.questions.length < 10) {
+            const fallbackResult = await apiGet(
+                'getInterviewQuestions',
+                { programme: 'B.E.CSE' },
+                20000,
+                2
+            );
+
+            if (!fallbackResult || !fallbackResult.success || !Array.isArray(fallbackResult.questions)) {
+                throw new Error(
+                    (result && result.message) ||
+                    'Unable to load the interview preparation material.'
+                );
+            }
+
+            result = fallbackResult;
+        }
+
+        let questionsForPreparation = result.questions
+            .slice()
+            .sort(function(a, b) {
+                return Number(a.qNo) - Number(b.qNo);
+            });
+
+        /*
+         * Q7 is programme-specific in the actual interview. For preparation,
+         * show the generic Q7 guidance so students understand the expected
+         * approach without seeing a technical question for the wrong programme.
+         */
+        const q7 = questionsForPreparation.find(function(q) {
+            return Number(q.qNo) === 7;
+        });
+
+        if (q7) {
+            q7.question = 'Answer a technical question related to your programme.';
+            q7.category = 'Technical';
+            q7.programme = 'All';
+            q7.usefulWords = 'concept; principle; application; process; method; system; analyse; implement; efficiency; example';
+            q7.professionalPhrases = 'Let me explain the concept...; The main principle is...; This can be applied in...; For example...; The main advantage is...; One limitation is...; In practical applications...';
+            q7.thinkingPoints = 'concept; principle; example/application; advantage/limitation';
+            q7.evaluationFocus = 'technical accuracy; technical vocabulary; explanation; grammar; pronunciation; fluency; clarity';
+        }
+
+        if (questionsForPreparation.length < 10) {
+            throw new Error('The interview preparation material is incomplete.');
+        }
+
+        container.innerHTML = questionsForPreparation
+            .slice(0, 10)
+            .map(renderPreparationQuestion)
+            .join('');
+
+    }
+    catch (error) {
+
+        console.error('Preparation load error:', error);
+
+        container.innerHTML =
+            '<div class="prep-error">' +
+            escapeHtml(error.message || 'Unable to load preparation material.') +
+            '<br><br>Please try again.</div>';
+    }
+}
+
+
+function splitTargets(value) {
+
+    return String(value || '')
+        .split(';')
+        .map(function(item) { return item.trim(); })
+        .filter(Boolean);
+}
+
+
+function escapeRegExp(value) {
+
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+
+function highlightSample(text, phrases, words) {
+
+    let html = escapeHtml(text || '');
+    const replacements = [];
+    let counter = 0;
+
+    function protect(match, className) {
+        const token = '___FXEC_TARGET_' + counter++ + '___';
+        replacements.push({ token: token, html: '<mark class="' + className + '">' + match + '</mark>' });
+        return token;
+    }
+
+    phrases.slice().sort(function(a,b){ return b.length-a.length; }).forEach(function(phrase) {
+        const escaped = escapeHtml(phrase);
+        if (!escaped) return;
+        const pattern = new RegExp(escapeRegExp(escaped), 'gi');
+        html = html.replace(pattern, function(match) {
+            return protect(match, 'phrase-highlight');
+        });
+    });
+
+    words.slice().sort(function(a,b){ return b.length-a.length; }).forEach(function(word) {
+        const escaped = escapeHtml(word);
+        if (!escaped) return;
+        const pattern = new RegExp('(^|[^A-Za-z])(' + escapeRegExp(escaped) + ')(?=$|[^A-Za-z])', 'gi');
+        html = html.replace(pattern, function(full, before, matched) {
+            return before + protect(matched, 'word-highlight');
+        });
+    });
+
+    replacements.forEach(function(item) {
+        html = html.split(item.token).join(item.html);
+    });
+
+    return html;
+}
+
+
+function renderTargetPills(items, className) {
+    return items.map(function(item) {
+        return '<span class="prep-target ' + className + '">' + escapeHtml(item) + '</span>';
+    }).join('');
+}
+
+
+function renderPreparationQuestion(q) {
+
+    const n = Number(q.qNo);
+    const guidance = PREPARATION_GUIDANCE[n] || {
+        tips: ['Understand the question, organise your ideas clearly, and answer in your own words.'],
+        sample: 'Prepare a clear, relevant and professional response using the suggested vocabulary and phrases naturally.'
+    };
+
+    const words = splitTargets(q.usefulWords);
+    const phrases = splitTargets(q.professionalPhrases);
+    const thinking = splitTargets(q.thinkingPoints);
+    const highlightedSample = highlightSample(guidance.sample, phrases, words);
+
+    return `
+        <article class="prep-question">
+            <h3>Question ${n}</h3>
+            <div><strong>${escapeHtml(q.question || '')}</strong></div>
+
+            <span class="prep-label">💡 How to answer</span>
+            <ul>
+                ${guidance.tips.map(function(tip) {
+                    return '<li>' + escapeHtml(tip) + '</li>';
+                }).join('')}
+            </ul>
+
+            <div class="prep-legend">
+                <span><i style="background:#fff0b3;border:1px solid #f0c36d"></i> Required words</span>
+                <span><i style="background:#dbeafe;border:1px solid #8db8ee"></i> Professional phrases</span>
+            </div>
+
+            <span class="prep-label">🗣 Required Words</span>
+            <div class="prep-pill-box prep-target-list">${renderTargetPills(words, 'prep-word-target')}</div>
+
+            <span class="prep-label">💼 Required Professional Phrases</span>
+            <div class="prep-pill-box prep-target-list">${renderTargetPills(phrases, 'prep-phrase-target')}</div>
+
+            <span class="prep-label">🧠 Thinking Points</span>
+            <div class="prep-pill-box prep-target-list">${renderTargetPills(thinking, 'prep-phrase-target')}</div>
+
+            <span class="prep-label">🎧 Sample Response — Natural US English</span>
+            <div class="prep-sample">${highlightedSample}</div>
+            <div class="audio-note">Highlighted words and phrases are required targets. Listen for how they are used naturally in context.</div>
+
+            <button type="button" class="audio-button" onclick="speakPreparationSample(${n}, this)">
+                🔊 Listen to Natural US English Sample
+            </button>
+        </article>
+    `;
+}
+
+
+function getPreferredSampleVoiceGender(questionNumber) {
+
+    /*
+     * Use a mix of female and male voices across the 10 samples.
+     * This keeps the preparation section from sounding like one speaker
+     * throughout. The browser/device must provide a suitable US-English
+     * voice for the selected gender.
+     */
+
+    const maleQuestions = [2, 4, 6, 8, 10];
+    return maleQuestions.indexOf(Number(questionNumber)) !== -1
+        ? 'male'
+        : 'female';
+}
+
+
+function selectNaturalUSVoice(voices, gender) {
+
+    const usVoices = voices.filter(function(voice) {
+        return voice.lang && voice.lang.toLowerCase().startsWith('en-us');
+    });
+
+    if (!usVoices.length) return null;
+
+    /*
+     * Prefer Microsoft/Google US neural or high-quality voices where the
+     * browser exposes them. Voice names vary by operating system/browser,
+     * so several known names are supported with a controlled fallback.
+     */
+    const maleNames = [
+        'Microsoft Guy Online (Natural) - English (United States)',
+        'Microsoft Ryan Online (Natural) - English (United States)',
+        'Microsoft Christopher Online (Natural) - English (United States)',
+        'Microsoft Andrew Online (Natural) - English (United States)',
+        'Microsoft Eric Online (Natural) - English (United States)',
+        'Microsoft Brian Online (Natural) - English (United States)',
+        'Microsoft Guy - English (United States)',
+        'Microsoft Ryan - English (United States)',
+        'Alex',
+        'Google US English'
+    ];
+
+    const femaleNames = [
+        'Microsoft Aria Online (Natural) - English (United States)',
+        'Microsoft Jenny Online (Natural) - English (United States)',
+        'Microsoft Ava Online (Natural) - English (United States)',
+        'Microsoft Aria - English (United States)',
+        'Samantha',
+        'Ava',
+        'Google US English'
+    ];
+
+    const preferredNames = gender === 'male' ? maleNames : femaleNames;
+
+    for (let i = 0; i < preferredNames.length; i++) {
+        const exact = usVoices.find(function(voice) {
+            return voice.name === preferredNames[i];
+        });
+        if (exact) return exact;
+    }
+
+    /* Name-based gender fallback for browsers with slightly different names. */
+    const genderKeywords = gender === 'male'
+        ? ['guy', 'ryan', 'christopher', 'andrew', 'eric', 'brian', 'alex', 'david', 'mark']
+        : ['aria', 'jenny', 'ava', 'samantha', 'zira', 'susan', 'allison'];
+
+    const byKeyword = usVoices.find(function(voice) {
+        const name = voice.name.toLowerCase();
+        return genderKeywords.some(function(keyword) {
+            return name.indexOf(keyword) !== -1;
+        });
+    });
+
+    if (byKeyword) return byKeyword;
+
+    /*
+     * If the requested gender is unavailable, use the best US-English voice
+     * rather than failing audio playback. This is device dependent.
+     */
+    return usVoices.find(function(voice) {
+        return /natural|neural|online/i.test(voice.name);
+    }) || usVoices[0];
+}
+
+
+function speakPreparationSample(questionNumber, button) {
+
+    const guidance = PREPARATION_GUIDANCE[questionNumber];
+    if (!guidance || !guidance.sample) return;
+
+    if (!('speechSynthesis' in window)) {
+        alert('Audio playback is not supported by this browser.');
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const gender = getPreferredSampleVoiceGender(questionNumber);
+    const voices = window.speechSynthesis.getVoices();
+    const usVoice = selectNaturalUSVoice(voices, gender);
+
+    const utterance = new SpeechSynthesisUtterance(guidance.sample);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.92;
+    utterance.pitch = gender === 'male' ? 0.90 : 1.02;
+    utterance.volume = 1;
+
+    if (usVoice) utterance.voice = usVoice;
+
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.textContent = gender === 'male'
+        ? '🔊 Playing US English Male Sample...'
+        : '🔊 Playing US English Female Sample...';
+
+    utterance.onend = function() {
+        button.disabled = false;
+        button.textContent = originalText;
+    };
+    utterance.onerror = function() {
+        button.disabled = false;
+        button.textContent = originalText;
+    };
+
+    window.speechSynthesis.speak(utterance);
+}
+
+
+function escapeHtml(value) {
+
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
 
 // =====================================================
