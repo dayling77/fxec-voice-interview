@@ -896,12 +896,81 @@ button:disabled {
     line-height: 1.7;
 }
 
+.prep-target-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.prep-target {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.prep-word-target {
+    background: #fff4cc;
+    border: 1px solid #f0c36d;
+    color: #6b4f00;
+}
+
+.prep-phrase-target {
+    background: #e8f1ff;
+    border: 1px solid #8db8ee;
+    color: #073b78;
+}
+
+.prep-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 10px 0 4px;
+    font-size: 13px;
+    color: #475569;
+}
+
+.prep-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.prep-legend i {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
 .prep-sample {
     background: #f8fafc;
-    padding: 14px 16px;
+    padding: 16px 17px;
     border-radius: 8px;
-    line-height: 1.7;
-    white-space: pre-line;
+    line-height: 1.85;
+}
+
+.prep-sample mark {
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.prep-sample mark.word-highlight {
+    background: #fff0b3;
+    color: #5b4300;
+}
+
+.prep-sample mark.phrase-highlight {
+    background: #dbeafe;
+    color: #073b78;
+}
+
+.audio-note {
+    margin: 10px 0 0;
+    font-size: 13px;
+    color: #64748b;
 }
 
 .audio-button {
@@ -1945,6 +2014,66 @@ async function loadPreparationQuestions() {
 }
 
 
+function splitTargets(value) {
+
+    return String(value || '')
+        .split(';')
+        .map(function(item) { return item.trim(); })
+        .filter(Boolean);
+}
+
+
+function escapeRegExp(value) {
+
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+
+function highlightSample(text, phrases, words) {
+
+    let html = escapeHtml(text || '');
+    const replacements = [];
+    let counter = 0;
+
+    function protect(match, className) {
+        const token = '___FXEC_TARGET_' + counter++ + '___';
+        replacements.push({ token: token, html: '<mark class="' + className + '">' + match + '</mark>' });
+        return token;
+    }
+
+    phrases.slice().sort(function(a,b){ return b.length-a.length; }).forEach(function(phrase) {
+        const escaped = escapeHtml(phrase);
+        if (!escaped) return;
+        const pattern = new RegExp(escapeRegExp(escaped), 'gi');
+        html = html.replace(pattern, function(match) {
+            return protect(match, 'phrase-highlight');
+        });
+    });
+
+    words.slice().sort(function(a,b){ return b.length-a.length; }).forEach(function(word) {
+        const escaped = escapeHtml(word);
+        if (!escaped) return;
+        const pattern = new RegExp('(^|[^A-Za-z])(' + escapeRegExp(escaped) + ')(?=$|[^A-Za-z])', 'gi');
+        html = html.replace(pattern, function(full, before, matched) {
+            return before + protect(matched, 'word-highlight');
+        });
+    });
+
+    replacements.forEach(function(item) {
+        html = html.split(item.token).join(item.html);
+    });
+
+    return html;
+}
+
+
+function renderTargetPills(items, className) {
+    return items.map(function(item) {
+        return '<span class="prep-target ' + className + '">' + escapeHtml(item) + '</span>';
+    }).join('');
+}
+
+
 function renderPreparationQuestion(q) {
 
     const n = Number(q.qNo);
@@ -1953,9 +2082,10 @@ function renderPreparationQuestion(q) {
         sample: 'Prepare a clear, relevant and professional response using the suggested vocabulary and phrases naturally.'
     };
 
-    const words = q.usefulWords || '';
-    const phrases = q.professionalPhrases || '';
-    const thinking = q.thinkingPoints || '';
+    const words = splitTargets(q.usefulWords);
+    const phrases = splitTargets(q.professionalPhrases);
+    const thinking = splitTargets(q.thinkingPoints);
+    const highlightedSample = highlightSample(guidance.sample, phrases, words);
 
     return `
         <article class="prep-question">
@@ -1969,36 +2099,61 @@ function renderPreparationQuestion(q) {
                 }).join('')}
             </ul>
 
-            <span class="prep-label">🗣 Useful Words</span>
-            <div class="prep-pill-box">${escapeHtml(words)}</div>
+            <div class="prep-legend">
+                <span><i style="background:#fff0b3;border:1px solid #f0c36d"></i> Required words</span>
+                <span><i style="background:#dbeafe;border:1px solid #8db8ee"></i> Professional phrases</span>
+            </div>
 
-            <span class="prep-label">💼 Professional Phrases</span>
-            <div class="prep-pill-box">${escapeHtml(phrases)}</div>
+            <span class="prep-label">🗣 Required Words</span>
+            <div class="prep-pill-box prep-target-list">${renderTargetPills(words, 'prep-word-target')}</div>
+
+            <span class="prep-label">💼 Required Professional Phrases</span>
+            <div class="prep-pill-box prep-target-list">${renderTargetPills(phrases, 'prep-phrase-target')}</div>
 
             <span class="prep-label">🧠 Thinking Points</span>
-            <div class="prep-pill-box">${escapeHtml(thinking)}</div>
+            <div class="prep-pill-box prep-target-list">${renderTargetPills(thinking, 'prep-phrase-target')}</div>
 
             <span class="prep-label">🎧 Sample Response — Natural US English</span>
-            <div class="prep-sample">${escapeHtml(guidance.sample)}</div>
+            <div class="prep-sample">${highlightedSample}</div>
+            <div class="audio-note">Highlighted words and phrases are required targets. Listen for how they are used naturally in context.</div>
 
-            <button
-                type="button"
-                class="audio-button"
-                onclick="speakPreparationSample(${n}, this)">
-                🔊 Listen to Sample
+            <button type="button" class="audio-button" onclick="speakPreparationSample(${n}, this)">
+                🔊 Listen to Natural US English Sample
             </button>
         </article>
     `;
 }
 
 
+function selectNaturalUSVoice(voices) {
+
+    const preferredNames = [
+        'Google US English',
+        'Microsoft Aria Online (Natural) - English (United States)',
+        'Microsoft Jenny Online (Natural) - English (United States)',
+        'Microsoft Aria - English (United States)',
+        'Samantha',
+        'Ava',
+        'Alex'
+    ];
+
+    for (let i = 0; i < preferredNames.length; i++) {
+        const exact = voices.find(function(voice) {
+            return voice.name === preferredNames[i] && voice.lang && voice.lang.toLowerCase().startsWith('en-us');
+        });
+        if (exact) return exact;
+    }
+
+    return voices.find(function(voice) {
+        return voice.lang && voice.lang.toLowerCase().startsWith('en-us');
+    }) || null;
+}
+
+
 function speakPreparationSample(questionNumber, button) {
 
     const guidance = PREPARATION_GUIDANCE[questionNumber];
-
-    if (!guidance || !guidance.sample) {
-        return;
-    }
+    if (!guidance || !guidance.sample) return;
 
     if (!('speechSynthesis' in window)) {
         alert('Audio playback is not supported by this browser.');
@@ -2009,29 +2164,21 @@ function speakPreparationSample(questionNumber, button) {
 
     const utterance = new SpeechSynthesisUtterance(guidance.sample);
     utterance.lang = 'en-US';
-    utterance.rate = 0.92;
-    utterance.pitch = 1;
+    utterance.rate = 0.88;
+    utterance.pitch = 0.98;
+    utterance.volume = 1;
 
-    const voices = window.speechSynthesis.getVoices();
-    const usVoice = voices.find(function(voice) {
-        return voice.lang && voice.lang.toLowerCase() === 'en-us';
-    }) || voices.find(function(voice) {
-        return voice.lang && voice.lang.toLowerCase().startsWith('en-us');
-    });
-
-    if (usVoice) {
-        utterance.voice = usVoice;
-    }
+    const usVoice = selectNaturalUSVoice(window.speechSynthesis.getVoices());
+    if (usVoice) utterance.voice = usVoice;
 
     const originalText = button.textContent;
     button.disabled = true;
-    button.textContent = '🔊 Playing...';
+    button.textContent = '🔊 Playing sample...';
 
     utterance.onend = function() {
         button.disabled = false;
         button.textContent = originalText;
     };
-
     utterance.onerror = function() {
         button.disabled = false;
         button.textContent = originalText;
