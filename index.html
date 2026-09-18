@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -49,7 +50,7 @@ body {
 
     text-align: center;
 
-    padding: 18px 15px 22px;
+    padding: 20px 15px 24px;
 
 }
 
@@ -65,15 +66,15 @@ body {
 
     margin: 7px 0 0;
 
-    font-size: 20px;
+    font-size: 19px;
 
-    opacity: 0.9;
+    opacity: .92;
 
 }
 
 
 /* =====================================================
-   MAIN
+   CONTAINER
    ===================================================== */
 
 .container {
@@ -103,7 +104,7 @@ body {
 
     box-shadow:
         0 8px 28px
-        rgba(0,0,0,0.08);
+        rgba(0,0,0,.08);
 
 }
 
@@ -119,7 +120,7 @@ body {
 
 
 /* =====================================================
-   FORM
+   INPUT
    ===================================================== */
 
 label {
@@ -128,7 +129,7 @@ label {
 
     font-weight: bold;
 
-    margin-bottom: 9px;
+    margin-bottom: 8px;
 
 }
 
@@ -138,19 +139,12 @@ input {
 
     padding: 15px;
 
-    border: 1px solid #c7d3e3;
+    border:
+        1px solid #c7d3e3;
 
     border-radius: 9px;
 
     font-size: 17px;
-
-    outline: none;
-
-}
-
-input:focus {
-
-    border-color: #2878d4;
 
 }
 
@@ -187,7 +181,7 @@ button:hover {
 
 button:disabled {
 
-    opacity: 0.55;
+    opacity: .55;
 
     cursor: not-allowed;
 
@@ -195,14 +189,14 @@ button:disabled {
 
 
 /* =====================================================
-   STATUS
+   SERVER STATUS
    ===================================================== */
 
 .server-status {
 
     text-align: center;
 
-    margin-top: 15px;
+    margin-top: 18px;
 
     color: #60758a;
 
@@ -210,7 +204,7 @@ button:disabled {
 
 .server-status.connected {
 
-    color: #198754;
+    color: #008a55;
 
     font-weight: bold;
 
@@ -218,18 +212,18 @@ button:disabled {
 
 
 /* =====================================================
-   MESSAGES
+   MESSAGE
    ===================================================== */
 
 .message {
+
+    display: none;
 
     padding: 14px;
 
     border-radius: 8px;
 
     margin-top: 15px;
-
-    display: none;
 
 }
 
@@ -265,7 +259,7 @@ button:disabled {
 
 
 /* =====================================================
-   STUDENT INFO
+   STUDENT
    ===================================================== */
 
 .student-grid {
@@ -273,7 +267,7 @@ button:disabled {
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
     gap: 15px;
 
@@ -307,7 +301,7 @@ button:disabled {
 
 
 /* =====================================================
-   QUESTION HEADER
+   QUESTION
    ===================================================== */
 
 .question-header {
@@ -318,19 +312,17 @@ button:disabled {
 
     align-items: center;
 
-    gap: 15px;
-
     margin-bottom: 20px;
 
 }
 
 .question-number {
 
-    font-size: 18px;
+    color: #1769c2;
 
     font-weight: bold;
 
-    color: #1769c2;
+    font-size: 18px;
 
 }
 
@@ -350,16 +342,11 @@ button:disabled {
 
 }
 
-
-/* =====================================================
-   QUESTION
-   ===================================================== */
-
 .question {
 
     font-size: 27px;
 
-    line-height: 1.4;
+    line-height: 1.45;
 
     font-weight: bold;
 
@@ -371,7 +358,7 @@ button:disabled {
 
 
 /* =====================================================
-   HINT SECTIONS
+   HINTS
    ===================================================== */
 
 .hint-section {
@@ -396,7 +383,8 @@ button:disabled {
 
     background: #f6f9fd;
 
-    border-left: 4px solid #1769c2;
+    border-left:
+        4px solid #1769c2;
 
     padding: 14px 16px;
 
@@ -408,7 +396,7 @@ button:disabled {
 
 
 /* =====================================================
-   PREPARATION TIMER
+   TIMER
    ===================================================== */
 
 .timer-box {
@@ -431,7 +419,7 @@ button:disabled {
 
     font-size: 16px;
 
-    opacity: 0.85;
+    opacity: .85;
 
 }
 
@@ -441,7 +429,7 @@ button:disabled {
 
     font-weight: bold;
 
-    margin-top: 5px;
+    margin: 5px 0;
 
 }
 
@@ -467,8 +455,6 @@ button:disabled {
     font-size: 19px;
 
     font-weight: bold;
-
-    margin-bottom: 15px;
 
 }
 
@@ -507,11 +493,11 @@ button:disabled {
 
     height: 100%;
 
-    background: #1769c2;
-
     width: 0%;
 
-    transition: width 0.3s;
+    background: #1769c2;
+
+    transition: width .3s;
 
 }
 
@@ -551,26 +537,12 @@ button:disabled {
 
 
 /* =====================================================
-   BRIDGE
+   POST FRAME
    ===================================================== */
 
-#backendBridge {
+#postFrame {
 
-    position: fixed;
-
-    width: 1px;
-
-    height: 1px;
-
-    left: -10px;
-
-    top: -10px;
-
-    border: 0;
-
-    opacity: 0;
-
-    pointer-events: none;
+    display: none;
 
 }
 
@@ -579,7 +551,7 @@ button:disabled {
    MOBILE
    ===================================================== */
 
-@media (max-width: 750px) {
+@media (max-width:750px) {
 
     .header h1 {
         font-size: 25px;
@@ -601,13 +573,9 @@ button:disabled {
         font-size: 22px;
     }
 
-    .timer {
-        font-size: 44px;
-    }
-
 }
 
-@media (max-width: 500px) {
+@media (max-width:500px) {
 
     .student-grid {
         grid-template-columns: 1fr;
@@ -623,13 +591,11 @@ button:disabled {
 <body>
 
 
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
 <header class="header">
 
-    <h1>FXEC AI Mock Interview</h1>
+    <h1>
+        FXEC AI Mock Interview
+    </h1>
 
     <p>
         AI-Powered Employability & Communication Assessment
@@ -642,7 +608,7 @@ button:disabled {
 
 
 <!-- =====================================================
-     STUDENT VERIFICATION
+     LOGIN
      ===================================================== -->
 
 <section
@@ -659,15 +625,15 @@ button:disabled {
     </p>
 
 
-    <label for="email">
+    <label>
         College Email Address
     </label>
+
 
     <input
         id="email"
         type="email"
-        placeholder="yourname@francisxavier.ac.in"
-        autocomplete="email">
+        placeholder="yourname@francisxavier.ac.in">
 
 
     <br><br>
@@ -700,7 +666,7 @@ button:disabled {
 
 
 <!-- =====================================================
-     STUDENT INFORMATION
+     STUDENT
      ===================================================== -->
 
 <section
@@ -763,12 +729,13 @@ button:disabled {
     <br>
 
 
-    <div class="message info">
+    <div class="message info"
+         style="display:block">
 
         You will answer exactly
         <strong>10 interview questions</strong>.
-        Each question includes preparation guidance
-        before recording your answer.
+        Preparation guidance will be shown before
+        every question.
 
     </div>
 
@@ -830,11 +797,8 @@ button:disabled {
     <div
         id="questionText"
         class="question">
-
     </div>
 
-
-    <!-- USEFUL WORDS -->
 
     <div class="hint-section">
 
@@ -850,8 +814,6 @@ button:disabled {
     </div>
 
 
-    <!-- PROFESSIONAL PHRASES -->
-
     <div class="hint-section">
 
         <div class="hint-title">
@@ -865,8 +827,6 @@ button:disabled {
 
     </div>
 
-
-    <!-- THINKING POINTS -->
 
     <div class="hint-section">
 
@@ -882,16 +842,12 @@ button:disabled {
     </div>
 
 
-    <!-- PREPARATION TIMER -->
-
     <div
         id="preparationBox"
         class="timer-box">
 
         <div class="timer-label">
-
             Preparation Time
-
         </div>
 
         <div
@@ -903,16 +859,11 @@ button:disabled {
         </div>
 
         <div>
-
-            Think about your answer.
-            You may organise your ideas before recording.
-
+            Prepare your answer.
         </div>
 
     </div>
 
-
-    <!-- RECORDING -->
 
     <div
         id="recordingBox"
@@ -983,20 +934,13 @@ button:disabled {
     </h2>
 
     <p>
-        Your 10 interview responses have been recorded
-        and submitted successfully.
+        Your 10 interview responses have been
+        recorded and submitted successfully.
     </p>
 
     <p>
-        Your responses will be processed for
-        communication, vocabulary, grammar,
-        pronunciation, fluency and clarity.
-    </p>
-
-    <p>
-        <strong>
-            Thank you for completing the FXEC AI Mock Interview.
-        </strong>
+        Your responses will now be available
+        for AI evaluation.
     </p>
 
 </section>
@@ -1006,37 +950,39 @@ button:disabled {
 
 
 <!-- =====================================================
-     APPS SCRIPT BRIDGE
+     HIDDEN POST FORM
      ===================================================== -->
 
 <iframe
-    id="backendBridge"
-    title="FXEC Backend">
+    id="postFrame"
+    name="postFrame">
 </iframe>
+
+
+<form
+    id="postForm"
+    method="POST"
+    target="postFrame"
+    style="display:none">
+
+</form>
 
 
 <script>
 
 
 // =====================================================
-// CONFIGURATION
+// APPS SCRIPT URL
 // =====================================================
 
-const APPS_SCRIPT_URL =
-    'https://script.google.com/macros/s/AKfycbwauRE6eTD6LCmhZingb2oesDQcdvWDxxER7wSDD44v-fh4ZHzlLao6KkcsL0i-Ptyi/exec';
+const API_URL =
+
+'https://script.google.com/macros/s/AKfycbwauRE6eTD6LCmhZingb2oesDQcdvWDxxER7wSDD44v-fh4ZHzlLao6KkcsL0i-Ptyi/exec';
 
 
 // =====================================================
-// GLOBAL STATE
+// GLOBALS
 // =====================================================
-
-let bridgeLoaded = false;
-
-let bridgeQueue = [];
-
-let pendingRequests = {};
-
-let requestCounter = 0;
 
 let student = null;
 
@@ -1058,13 +1004,9 @@ let preparationInterval = null;
 
 let answerInterval = null;
 
-let preparationRemaining = 0;
-
-let answerRemaining = 0;
-
 
 // =====================================================
-// ELEMENT HELPERS
+// HELPERS
 // =====================================================
 
 function show(id) {
@@ -1091,12 +1033,12 @@ function showMessage(
     type
 ) {
 
-    const element =
+    const el =
         document.getElementById(id);
 
-    element.textContent = text;
+    el.textContent = text;
 
-    element.className =
+    el.className =
         'message ' +
         (type || 'info');
 
@@ -1105,377 +1047,275 @@ function showMessage(
 
 function clearMessage(id) {
 
-    const element =
+    const el =
         document.getElementById(id);
 
-    element.textContent = '';
+    el.textContent = '';
 
-    element.className =
-        'message';
+    el.className = 'message';
 
 }
 
 
 // =====================================================
-// LOAD BRIDGE
+// JSONP API
 // =====================================================
 
-const bridge =
-    document.getElementById(
-        'backendBridge'
-    );
-
-
-/*
- * IMPORTANT:
- * The load listener is attached BEFORE
- * assigning the iframe src.
- */
-
-bridge.addEventListener(
-    'load',
-    function () {
-
-        console.log(
-            'FXEC Apps Script Bridge loaded'
-        );
-
-
-        bridgeLoaded = true;
-
-
-        const status =
-            document.getElementById(
-                'serverStatus'
-            );
-
-
-        status.textContent =
-            '✓ FXEC server connected';
-
-
-        status.className =
-            'server-status connected';
-
-
-        /*
-         * Send queued requests.
-         */
-
-        const queue =
-            bridgeQueue;
-
-
-        bridgeQueue = [];
-
-
-        queue.forEach(
-            function(request) {
-
-                sendToBridge(
-                    request
-                );
-
-            }
-        );
-
-
-        /*
-         * Ping bridge.
-         */
-
-        try {
-
-            bridge.contentWindow.postMessage(
-
-                {
-                    source:
-                        'FXEC_MOCK_INTERVIEW',
-
-                    action:
-                        'PING'
-
-                },
-
-                '*'
-
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-        }
-
-    }
-);
-
-
-/*
- * Now load Apps Script.
- *
- * Timestamp prevents stale iframe caching.
- */
-
-bridge.src =
-    APPS_SCRIPT_URL +
-    '?v=' +
-    Date.now();
-
-
-// =====================================================
-// RECEIVE BRIDGE MESSAGES
-// =====================================================
-
-window.addEventListener(
-    'message',
-    function(event) {
-
-
-        const data =
-            event.data;
-
-
-        if (!data) {
-            return;
-        }
-
-
-        if (
-            data.source !==
-            'FXEC_MOCK_INTERVIEW_BRIDGE'
-        ) {
-
-            return;
-
-        }
-
-
-        // -------------------------------------------------
-        // BRIDGE READY
-        // -------------------------------------------------
-
-        if (
-            data.type ===
-            'BRIDGE_READY'
-        ) {
-
-            console.log(
-                'FXEC Bridge READY'
-            );
-
-            return;
-
-        }
-
-
-        // -------------------------------------------------
-        // RESPONSE
-        // -------------------------------------------------
-
-        if (
-            data.type !==
-            'RESPONSE'
-        ) {
-
-            return;
-
-        }
-
-
-        const request =
-            pendingRequests[
-                data.requestId
-            ];
-
-
-        if (!request) {
-
-            console.warn(
-                'Unknown request:',
-                data.requestId
-            );
-
-            return;
-
-        }
-
-
-        delete pendingRequests[
-            data.requestId
-        ];
-
-
-        if (data.success) {
-
-            request.resolve(
-                data.data
-            );
-
-        }
-
-        else {
-
-            request.reject(
-                new Error(
-                    data.error ||
-                    'FXEC backend request failed.'
-                )
-            );
-
-        }
-
-    }
-);
-
-
-// =====================================================
-// SEND TO BRIDGE
-// =====================================================
-
-function sendToBridge(request) {
-
-    if (
-        !bridge ||
-        !bridge.contentWindow
-    ) {
-
-        console.error(
-            'FXEC bridge is unavailable.'
-        );
-
-        return;
-
-    }
-
-
-    console.log(
-        'Sending:',
-        request.action
-    );
-
-
-    bridge.contentWindow.postMessage(
-        request,
-        '*'
-    );
-
-}
-
-
-// =====================================================
-// BACKEND REQUEST
-// =====================================================
-
-function backendRequest(
+function apiGet(
     action,
-    payload
+    params
 ) {
 
     return new Promise(
         function(resolve, reject) {
 
 
-            const requestId =
-                'REQ-' +
+            const callbackName =
+                'fxecCallback_' +
                 Date.now() +
-                '-' +
-                (++requestCounter);
-
-
-            pendingRequests[
-                requestId
-            ] = {
-
-                resolve:
-                    resolve,
-
-                reject:
-                    reject
-
-            };
-
-
-            const request = {
-
-                source:
-                    'FXEC_MOCK_INTERVIEW',
-
-                requestId:
-                    requestId,
-
-                action:
-                    action,
-
-                payload:
-                    payload || {}
-
-            };
-
-
-            /*
-             * Send immediately if bridge loaded.
-             */
-
-            if (bridgeLoaded) {
-
-                sendToBridge(
-                    request
+                '_' +
+                Math.floor(
+                    Math.random() * 100000
                 );
+
+
+            const script =
+                document.createElement(
+                    'script'
+                );
+
+
+            let finished = false;
+
+
+            window[callbackName] =
+                function(data) {
+
+                    finished = true;
+
+
+                    cleanup();
+
+
+                    if (
+                        data &&
+                        data.success === false
+                    ) {
+
+                        /*
+                         * Some endpoints use success:false
+                         * for legitimate lookup failures.
+                         *
+                         * Return data rather than reject.
+                         */
+
+                        resolve(data);
+
+                    }
+
+                    else {
+
+                        resolve(data);
+
+                    }
+
+                };
+
+
+            function cleanup() {
+
+                try {
+
+                    script.remove();
+
+                }
+
+                catch(e) {}
+
+
+                try {
+
+                    delete window[
+                        callbackName
+                    ];
+
+                }
+
+                catch(e) {}
 
             }
 
-            else {
 
-                console.log(
-                    'Bridge not loaded. Queueing ' +
-                    action
-                );
+            const query =
+                new URLSearchParams();
 
 
-                bridgeQueue.push(
-                    request
-                );
+            query.set(
+                'action',
+                action
+            );
 
-            }
+
+            query.set(
+                'callback',
+                callbackName
+            );
 
 
-            /*
-             * Timeout.
-             */
+            query.set(
+                '_',
+                Date.now()
+            );
+
+
+            Object.keys(
+                params || {}
+            ).forEach(
+                function(key) {
+
+                    query.set(
+                        key,
+                        params[key]
+                    );
+
+                }
+            );
+
+
+            script.src =
+                API_URL +
+                '?' +
+                query.toString();
+
+
+            script.onerror =
+                function() {
+
+                    if (
+                        finished
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    finished = true;
+
+                    cleanup();
+
+
+                    reject(
+                        new Error(
+                            'Unable to contact FXEC server.'
+                        )
+                    );
+
+                };
+
 
             setTimeout(
                 function() {
 
                     if (
-                        pendingRequests[
-                            requestId
-                        ]
+                        finished
                     ) {
 
-                        delete pendingRequests[
-                            requestId
-                        ];
-
-
-                        reject(
-                            new Error(
-                                'FXEC server did not respond. Please refresh the page and try again.'
-                            )
-                        );
+                        return;
 
                     }
+
+
+                    finished = true;
+
+                    cleanup();
+
+
+                    reject(
+                        new Error(
+                            'FXEC server did not respond.'
+                        )
+                    );
 
                 },
                 30000
             );
 
+
+            document
+                .head
+                .appendChild(
+                    script
+                );
+
         }
     );
 
 }
+
+
+// =====================================================
+// INITIAL SERVER TEST
+// =====================================================
+
+async function testServer() {
+
+    const status =
+        document.getElementById(
+            'serverStatus'
+        );
+
+
+    try {
+
+        const result =
+            await apiGet(
+                'ping',
+                {}
+            );
+
+
+        if (
+            result &&
+            result.success
+        ) {
+
+            status.textContent =
+                '✓ FXEC server connected';
+
+            status.className =
+                'server-status connected';
+
+        }
+
+        else {
+
+            throw new Error(
+                'FXEC server test failed.'
+            );
+
+        }
+
+    }
+
+    catch(error) {
+
+        status.textContent =
+            '✗ FXEC server unavailable';
+
+        status.className =
+            'server-status';
+
+        console.error(error);
+
+    }
+
+}
+
+
+// Run immediately.
+
+testServer();
 
 
 // =====================================================
@@ -1485,14 +1325,10 @@ function backendRequest(
 async function verifyStudent() {
 
 
-    const emailInput =
-        document.getElementById(
-            'email'
-        );
-
-
     const email =
-        emailInput.value
+        document
+            .getElementById('email')
+            .value
             .trim()
             .toLowerCase();
 
@@ -1505,9 +1341,13 @@ async function verifyStudent() {
     if (!email) {
 
         showMessage(
+
             'loginMessage',
+
             'Please enter your college email address.',
+
             'error'
+
         );
 
         return;
@@ -1521,7 +1361,8 @@ async function verifyStudent() {
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
 
     button.textContent =
         'Verifying...';
@@ -1531,7 +1372,7 @@ async function verifyStudent() {
 
 
         const result =
-            await backendRequest(
+            await apiGet(
 
                 'verifyStudent',
 
@@ -1544,7 +1385,7 @@ async function verifyStudent() {
 
 
         console.log(
-            'Student verification:',
+            'Verification result:',
             result
         );
 
@@ -1558,7 +1399,9 @@ async function verifyStudent() {
 
                 result &&
                 result.message
+
                     ? result.message
+
                     : 'College email address was not found.'
 
             );
@@ -1594,14 +1437,19 @@ async function verifyStudent() {
             student.section || '-';
 
 
-        hide('loginCard');
+        hide(
+            'loginCard'
+        );
 
-        show('studentCard');
+
+        show(
+            'studentCard'
+        );
 
 
     }
 
-    catch (error) {
+    catch(error) {
 
 
         console.error(
@@ -1614,6 +1462,7 @@ async function verifyStudent() {
             'loginMessage',
 
             error.message ||
+
             'Unable to verify student.',
 
             'error'
@@ -1623,7 +1472,8 @@ async function verifyStudent() {
     }
 
 
-    button.disabled = false;
+    button.disabled =
+        false;
 
     button.textContent =
         'Continue';
@@ -1641,21 +1491,12 @@ async function beginInterview() {
     try {
 
 
-        if (!student) {
-
-            throw new Error(
-                'Student information is missing.'
-            );
-
-        }
-
-
         /*
          * Get exactly 10 questions.
          */
 
         const questionResult =
-            await backendRequest(
+            await apiGet(
 
                 'getInterviewQuestions',
 
@@ -1673,7 +1514,14 @@ async function beginInterview() {
         ) {
 
             throw new Error(
-                'Unable to load interview questions.'
+
+                questionResult &&
+                questionResult.message
+
+                    ? questionResult.message
+
+                    : 'Unable to load interview questions.'
+
             );
 
         }
@@ -1683,14 +1531,15 @@ async function beginInterview() {
             questionResult.questions || [];
 
 
-        if (questions.length !== 10) {
+        if (
+            questions.length !== 10
+        ) {
 
             throw new Error(
 
-                'The interview must contain exactly 10 questions. ' +
-                'Currently ' +
-                questions.length +
-                ' questions were loaded.'
+                'Exactly 10 questions are required. ' +
+                'Loaded: ' +
+                questions.length
 
             );
 
@@ -1701,14 +1550,20 @@ async function beginInterview() {
          * Create attempt.
          */
 
+        const studentJson =
+            JSON.stringify(
+                student
+            );
+
+
         const attemptResult =
-            await backendRequest(
+            await apiGet(
 
                 'createAttempt',
 
                 {
                     student:
-                        student
+                        studentJson
                 }
 
             );
@@ -1720,7 +1575,14 @@ async function beginInterview() {
         ) {
 
             throw new Error(
-                'Unable to create interview attempt.'
+
+                attemptResult &&
+                attemptResult.message
+
+                    ? attemptResult.message
+
+                    : 'Unable to create interview attempt.'
+
             );
 
         }
@@ -1734,9 +1596,14 @@ async function beginInterview() {
             0;
 
 
-        hide('studentCard');
+        hide(
+            'studentCard'
+        );
 
-        show('interviewCard');
+
+        show(
+            'interviewCard'
+        );
 
 
         showQuestion();
@@ -1744,7 +1611,7 @@ async function beginInterview() {
 
     }
 
-    catch (error) {
+    catch(error) {
 
 
         console.error(
@@ -1754,7 +1621,7 @@ async function beginInterview() {
 
         alert(
             error.message ||
-            'Unable to start the interview.'
+            'Unable to start interview.'
         );
 
     }
@@ -1772,13 +1639,13 @@ function showQuestion() {
     clearTimers();
 
 
-    const question =
+    const q =
         questions[
             currentQuestionIndex
         ];
 
 
-    if (!question) {
+    if (!q) {
 
         finishInterview();
 
@@ -1787,55 +1654,46 @@ function showQuestion() {
     }
 
 
-    const number =
-        currentQuestionIndex + 1;
-
-
     document.getElementById(
         'questionNumber'
     ).textContent =
 
         'Question ' +
-        number +
+        (
+            currentQuestionIndex + 1
+        ) +
         ' of 10';
 
 
     document.getElementById(
         'questionCategory'
     ).textContent =
-
-        question.category ||
+        q.category ||
         'Interview';
 
 
     document.getElementById(
         'questionText'
     ).textContent =
-        question.question;
+        q.question;
 
 
     document.getElementById(
         'usefulWords'
     ).textContent =
-
-        question.usefulWords ||
-        'Use appropriate professional vocabulary.';
+        q.usefulWords || '';
 
 
     document.getElementById(
         'professionalPhrases'
     ).textContent =
-
-        question.professionalPhrases ||
-        'Use clear and professional phrases.';
+        q.professionalPhrases || '';
 
 
     document.getElementById(
         'thinkingPoints'
     ).textContent =
-
-        question.thinkingPoints ||
-        'Organise your answer logically.';
+        q.thinkingPoints || '';
 
 
     const progress =
@@ -1851,14 +1709,14 @@ function showQuestion() {
         progress + '%';
 
 
-    /*
-     * Reset recording UI.
-     */
-
-    hide('recordingBox');
+    hide(
+        'recordingBox'
+    );
 
 
-    show('preparationBox');
+    show(
+        'preparationBox'
+    );
 
 
     document.getElementById(
@@ -1876,19 +1734,29 @@ function showQuestion() {
 
 
     document.getElementById(
+        'recordBtn'
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        'stopBtn'
+    ).disabled =
+        false;
+
+
+    document.getElementById(
         'recordingStatus'
     ).textContent =
         'Ready to record';
 
 
-    /*
-     * Start preparation timer.
-     */
-
     startPreparationTimer(
+
         Number(
-            question.preparationTime
+            q.preparationTime
         ) || 30
+
     );
 
 }
@@ -1908,18 +1776,14 @@ function startPreparationTimer(
     );
 
 
-    preparationRemaining =
+    let remaining =
         seconds;
 
 
-    const timer =
-        document.getElementById(
-            'preparationTimer'
-        );
-
-
-    timer.textContent =
-        preparationRemaining;
+    document.getElementById(
+        'preparationTimer'
+    ).textContent =
+        remaining;
 
 
     preparationInterval =
@@ -1927,15 +1791,17 @@ function startPreparationTimer(
             function() {
 
 
-                preparationRemaining--;
+                remaining--;
 
 
-                timer.textContent =
-                    preparationRemaining;
+                document.getElementById(
+                    'preparationTimer'
+                ).textContent =
+                    remaining;
 
 
                 if (
-                    preparationRemaining <= 0
+                    remaining <= 0
                 ) {
 
                     clearInterval(
@@ -1955,15 +1821,20 @@ function startPreparationTimer(
 
 
 // =====================================================
-// START RECORDING STAGE
+// RECORDING STAGE
 // =====================================================
 
 function startRecordingStage() {
 
 
-    hide('preparationBox');
+    hide(
+        'preparationBox'
+    );
 
-    show('recordingBox');
+
+    show(
+        'recordingBox'
+    );
 
 
     document.getElementById(
@@ -1971,25 +1842,6 @@ function startRecordingStage() {
     ).textContent =
         'Your preparation time is over.';
 
-
-    document.getElementById(
-        'recordBtn'
-    ).disabled =
-        false;
-
-
-    document.getElementById(
-        'recordBtn'
-    ).classList.remove(
-        'hidden'
-    );
-
-
-    document.getElementById(
-        'stopBtn'
-    ).classList.add(
-        'hidden'
-    );
 
 }
 
@@ -2015,17 +1867,11 @@ async function startRecording() {
         ) {
 
             throw new Error(
-
-                'Microphone access is not supported by this browser.'
-
+                'Microphone access is not supported.'
             );
 
         }
 
-
-        /*
-         * Request microphone.
-         */
 
         mediaStream =
             await navigator
@@ -2090,11 +1936,14 @@ async function startRecording() {
 
                 currentAudioBlob =
                     new Blob(
+
                         audioChunks,
+
                         {
                             type:
                                 'audio/webm'
                         }
+
                     );
 
             };
@@ -2123,11 +1972,7 @@ async function startRecording() {
         );
 
 
-        /*
-         * Start answer timer.
-         */
-
-        const question =
+        const q =
             questions[
                 currentQuestionIndex
             ];
@@ -2136,16 +1981,14 @@ async function startRecording() {
         startAnswerTimer(
 
             Number(
-                question.answerTime
+                q.answerTime
             ) || 90
 
         );
 
-
     }
 
-    catch (error) {
-
+    catch(error) {
 
         console.error(
             error
@@ -2182,14 +2025,14 @@ function startAnswerTimer(
     );
 
 
-    answerRemaining =
+    let remaining =
         seconds;
 
 
     document.getElementById(
         'answerTimer'
     ).textContent =
-        answerRemaining;
+        remaining;
 
 
     answerInterval =
@@ -2197,17 +2040,17 @@ function startAnswerTimer(
             function() {
 
 
-                answerRemaining--;
+                remaining--;
 
 
                 document.getElementById(
                     'answerTimer'
                 ).textContent =
-                    answerRemaining;
+                    remaining;
 
 
                 if (
-                    answerRemaining <= 0
+                    remaining <= 0
                 ) {
 
                     clearInterval(
@@ -2238,9 +2081,16 @@ function stopRecording() {
     );
 
 
+    document.getElementById(
+        'stopBtn'
+    ).disabled =
+        true;
+
+
     if (
         mediaRecorder &&
-        mediaRecorder.state !== 'inactive'
+        mediaRecorder.state !==
+        'inactive'
     ) {
 
         mediaRecorder.stop();
@@ -2263,17 +2113,20 @@ function stopRecording() {
     }
 
 
+    document.getElementById(
+        'recordingStatus'
+    ).textContent =
+        'Preparing your response...';
+
+
     /*
-     * Wait for recorder's final data.
+     * Give MediaRecorder time to produce
+     * its final dataavailable event.
      */
 
     setTimeout(
-        function() {
-
-            submitAnswer();
-
-        },
-        500
+        submitAnswer,
+        700
     );
 
 }
@@ -2286,31 +2139,6 @@ function stopRecording() {
 async function submitAnswer() {
 
 
-    const question =
-        questions[
-            currentQuestionIndex
-        ];
-
-
-    if (!question) {
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        'recordingStatus'
-    ).textContent =
-        'Uploading your response...';
-
-
-    document.getElementById(
-        'stopBtn'
-    ).disabled =
-        true;
-
-
     try {
 
 
@@ -2320,19 +2148,27 @@ async function submitAnswer() {
         ) {
 
             /*
-             * Recorder may need another short moment.
+             * Create blob from chunks if the
+             * onstop callback has not fired yet.
              */
 
-            await new Promise(
-                function(resolve) {
+            if (
+                audioChunks.length > 0
+            ) {
 
-                    setTimeout(
-                        resolve,
-                        500
+                currentAudioBlob =
+                    new Blob(
+
+                        audioChunks,
+
+                        {
+                            type:
+                                'audio/webm'
+                        }
+
                     );
 
-                }
-            );
+            }
 
         }
 
@@ -2349,6 +2185,18 @@ async function submitAnswer() {
         }
 
 
+        document.getElementById(
+            'recordingStatus'
+        ).textContent =
+            'Uploading your answer...';
+
+
+        const q =
+            questions[
+                currentQuestionIndex
+            ];
+
+
         /*
          * Convert audio to Base64.
          */
@@ -2360,30 +2208,57 @@ async function submitAnswer() {
 
 
         /*
-         * Upload audio.
+         * Generate POST token.
+         */
+
+        const uploadToken =
+            'UPLOAD-' +
+            Date.now() +
+            '-' +
+            Math.floor(
+                Math.random() * 100000
+            );
+
+
+        /*
+         * Upload through normal HTML form POST.
+         *
+         * This avoids cross-origin fetch/CORS.
+         */
+
+        await postToAppsScript(
+
+            'uploadAudio',
+
+            {
+
+                token:
+                    uploadToken,
+
+                base64Audio:
+                    base64Audio,
+
+                attemptId:
+                    attemptId,
+
+                qNo:
+                    q.qNo,
+
+                email:
+                    student.email
+
+            }
+
+        );
+
+
+        /*
+         * Poll server status.
          */
 
         const audioResult =
-            await backendRequest(
-
-                'uploadAudio',
-
-                {
-
-                    base64Audio:
-                        base64Audio,
-
-                    attemptId:
-                        attemptId,
-
-                    qNo:
-                        question.qNo,
-
-                    email:
-                        student.email
-
-                }
-
+            await waitForPostStatus(
+                uploadToken
             );
 
 
@@ -2393,16 +2268,27 @@ async function submitAnswer() {
         ) {
 
             throw new Error(
-                'Audio upload failed.'
+
+                audioResult &&
+                audioResult.message
+
+                    ? audioResult.message
+
+                    : 'Audio upload failed.'
+
             );
 
         }
 
 
+        document.getElementById(
+            'recordingStatus'
+        ).textContent =
+            'Saving your response...';
+
+
         /*
          * Save response.
-         *
-         * AI evaluation will be added later.
          */
 
         const response = {
@@ -2414,10 +2300,10 @@ async function submitAnswer() {
                 student.email,
 
             qNo:
-                question.qNo,
+                q.qNo,
 
             question:
-                question.question,
+                q.question,
 
             transcript:
                 '',
@@ -2467,16 +2353,37 @@ async function submitAnswer() {
         };
 
 
-        const saveResult =
-            await backendRequest(
+        const responseToken =
+            'RESPONSE-' +
+            Date.now() +
+            '-' +
+            Math.floor(
+                Math.random() * 100000
+            );
 
-                'saveResponse',
 
-                {
-                    response:
+        await postToAppsScript(
+
+            'saveResponse',
+
+            {
+
+                token:
+                    responseToken,
+
+                response:
+                    JSON.stringify(
                         response
-                }
+                    )
 
+            }
+
+        );
+
+
+        const saveResult =
+            await waitForPostStatus(
+                responseToken
             );
 
 
@@ -2486,22 +2393,24 @@ async function submitAnswer() {
         ) {
 
             throw new Error(
-                'Response could not be saved.'
+
+                saveResult &&
+                saveResult.message
+
+                    ? saveResult.message
+
+                    : 'Response could not be saved.'
+
             );
 
         }
 
 
-        /*
-         * Move to next question.
-         */
-
         moveToNextQuestion();
-
 
     }
 
-    catch (error) {
+    catch(error) {
 
 
         console.error(
@@ -2530,7 +2439,7 @@ async function submitAnswer() {
         document.getElementById(
             'recordingStatus'
         ).textContent =
-            'Submission failed.';
+            'Submission failed. Please try again.';
 
     }
 
@@ -2538,11 +2447,244 @@ async function submitAnswer() {
 
 
 // =====================================================
-// BLOB TO BASE64
+// POST TO APPS SCRIPT
 // =====================================================
 
-function blobToBase64(blob) {
+function postToAppsScript(
+    action,
+    data
+) {
 
+
+    return new Promise(
+        function(resolve) {
+
+
+            const form =
+                document.getElementById(
+                    'postForm'
+                );
+
+
+            /*
+             * Remove old fields.
+             */
+
+            form.innerHTML = '';
+
+
+            /*
+             * Add action.
+             */
+
+            addFormField(
+                form,
+                'action',
+                action
+            );
+
+
+            /*
+             * Add all payload fields.
+             */
+
+            Object.keys(
+                data || {}
+            ).forEach(
+                function(key) {
+
+                    addFormField(
+
+                        form,
+
+                        key,
+
+                        data[key]
+
+                    );
+
+                }
+            );
+
+
+            /*
+             * Submit.
+             */
+
+            form.action =
+                API_URL;
+
+
+            form.submit();
+
+
+            /*
+             * We don't rely on the iframe's response.
+             * The status token is polled separately.
+             */
+
+            resolve();
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// FORM FIELD
+// =====================================================
+
+function addFormField(
+    form,
+    name,
+    value
+) {
+
+
+    const input =
+        document.createElement(
+            'input'
+        );
+
+
+    input.type =
+        'hidden';
+
+
+    input.name =
+        name;
+
+
+    input.value =
+        value;
+
+
+    form.appendChild(
+        input
+    );
+
+}
+
+
+// =====================================================
+// WAIT FOR POST STATUS
+// =====================================================
+
+async function waitForPostStatus(
+    token
+) {
+
+
+    const maxAttempts =
+        60;
+
+
+    for (
+        let i = 0;
+        i < maxAttempts;
+        i++
+    ) {
+
+
+        try {
+
+
+            const result =
+                await apiGet(
+
+                    'status',
+
+                    {
+                        token:
+                            token
+                    }
+
+                );
+
+
+            /*
+             * Pending.
+             */
+
+            if (
+                result &&
+                result.status ===
+                'pending'
+            ) {
+
+                await sleep(
+                    1000
+                );
+
+                continue;
+
+            }
+
+
+            return result;
+
+
+        }
+
+        catch(error) {
+
+
+            if (
+                i ===
+                maxAttempts - 1
+            ) {
+
+                throw error;
+
+            }
+
+
+            await sleep(
+                1000
+            );
+
+        }
+
+    }
+
+
+    throw new Error(
+        'Server processing timed out.'
+    );
+
+}
+
+
+// =====================================================
+// SLEEP
+// =====================================================
+
+function sleep(
+    milliseconds
+) {
+
+    return new Promise(
+        function(resolve) {
+
+            setTimeout(
+                resolve,
+                milliseconds
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// BLOB → BASE64
+// =====================================================
+
+function blobToBase64(
+    blob
+) {
 
     return new Promise(
         function(resolve, reject) {
@@ -2608,7 +2750,7 @@ function moveToNextQuestion() {
 
 
 // =====================================================
-// FINISH INTERVIEW
+// FINISH
 // =====================================================
 
 async function finishInterview() {
@@ -2617,15 +2759,10 @@ async function finishInterview() {
     clearTimers();
 
 
-    /*
-     * Final score will initially be blank.
-     * Gemini evaluation will calculate it later.
-     */
-
     try {
 
 
-        await backendRequest(
+        await apiGet(
 
             'completeAttempt',
 
@@ -2644,19 +2781,23 @@ async function finishInterview() {
 
     }
 
-    catch (error) {
+    catch(error) {
 
         console.error(
-            'Unable to complete attempt:',
             error
         );
 
     }
 
 
-    hide('interviewCard');
+    hide(
+        'interviewCard'
+    );
 
-    show('completeCard');
+
+    show(
+        'completeCard'
+    );
 
 }
 
@@ -2668,7 +2809,9 @@ async function finishInterview() {
 function clearTimers() {
 
 
-    if (preparationInterval) {
+    if (
+        preparationInterval
+    ) {
 
         clearInterval(
             preparationInterval
@@ -2680,7 +2823,9 @@ function clearTimers() {
     }
 
 
-    if (answerInterval) {
+    if (
+        answerInterval
+    ) {
 
         clearInterval(
             answerInterval
@@ -2699,13 +2844,16 @@ function clearTimers() {
 // =====================================================
 
 document
-    .getElementById('email')
+    .getElementById(
+        'email'
+    )
     .addEventListener(
         'keydown',
         function(event) {
 
             if (
-                event.key === 'Enter'
+                event.key ===
+                'Enter'
             ) {
 
                 verifyStudent();
