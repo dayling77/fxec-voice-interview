@@ -1,239 +1,2723 @@
-// =====================================================
-// FXEC APPS SCRIPT BRIDGE
-// =====================================================
+<!DOCTYPE html>
+<html lang="en">
 
-const pendingRequests = {};
-let requestCounter = 0;
+<head>
 
-let bridgeLoaded = false;
-let bridgeQueue = [];
+<meta charset="UTF-8">
 
-const bridge = document.getElementById('backendBridge');
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>FXEC AI Mock Interview</title>
 
 
-// -----------------------------------------------------
-// BRIDGE IFRAME LOADED
-// -----------------------------------------------------
+<style>
 
-bridge.addEventListener('load', function () {
+/* =====================================================
+   GENERAL
+   ===================================================== */
 
-    console.log('FXEC Apps Script Bridge loaded');
+* {
+    box-sizing: border-box;
+}
 
-    bridgeLoaded = true;
+body {
 
-    // Update connection message
-    const status = document.getElementById('serverStatus');
+    margin: 0;
 
-    if (status) {
-        status.textContent = '✓ FXEC server connected';
-        status.className = 'server-status connected';
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f3f6fb;
+
+    color: #102a43;
+
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.header {
+
+    background: #0b3570;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 18px 15px 22px;
+
+}
+
+.header h1 {
+
+    margin: 0;
+
+    font-size: 32px;
+
+}
+
+.header p {
+
+    margin: 7px 0 0;
+
+    font-size: 20px;
+
+    opacity: 0.9;
+
+}
+
+
+/* =====================================================
+   MAIN
+   ===================================================== */
+
+.container {
+
+    max-width: 1050px;
+
+    margin: 38px auto;
+
+    padding: 0 20px;
+
+}
+
+
+/* =====================================================
+   CARD
+   ===================================================== */
+
+.card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 34px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 28px
+        rgba(0,0,0,0.08);
+
+}
+
+.card h2 {
+
+    margin-top: 0;
+
+    color: #073b78;
+
+    font-size: 30px;
+
+}
+
+
+/* =====================================================
+   FORM
+   ===================================================== */
+
+label {
+
+    display: block;
+
+    font-weight: bold;
+
+    margin-bottom: 9px;
+
+}
+
+input {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: 1px solid #c7d3e3;
+
+    border-radius: 9px;
+
+    font-size: 17px;
+
+    outline: none;
+
+}
+
+input:focus {
+
+    border-color: #2878d4;
+
+}
+
+
+/* =====================================================
+   BUTTON
+   ===================================================== */
+
+button {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 14px 25px;
+
+    background: #1769c2;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+button:hover {
+
+    background: #0e58a5;
+
+}
+
+button:disabled {
+
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.server-status {
+
+    text-align: center;
+
+    margin-top: 15px;
+
+    color: #60758a;
+
+}
+
+.server-status.connected {
+
+    color: #198754;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   MESSAGES
+   ===================================================== */
+
+.message {
+
+    padding: 14px;
+
+    border-radius: 8px;
+
+    margin-top: 15px;
+
+    display: none;
+
+}
+
+.message.error {
+
+    display: block;
+
+    background: #fde2e2;
+
+    color: #b42318;
+
+}
+
+.message.success {
+
+    display: block;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+}
+
+.message.info {
+
+    display: block;
+
+    background: #e8f1ff;
+
+    color: #174ea6;
+
+}
+
+
+/* =====================================================
+   STUDENT INFO
+   ===================================================== */
+
+.student-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+}
+
+.student-box {
+
+    background: #f5f8fc;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+}
+
+.student-box small {
+
+    display: block;
+
+    color: #66788a;
+
+    margin-bottom: 5px;
+
+}
+
+.student-box strong {
+
+    color: #073b78;
+
+}
+
+
+/* =====================================================
+   QUESTION HEADER
+   ===================================================== */
+
+.question-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+.question-number {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #1769c2;
+
+}
+
+.question-category {
+
+    background: #e8f1ff;
+
+    color: #174ea6;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   QUESTION
+   ===================================================== */
+
+.question {
+
+    font-size: 27px;
+
+    line-height: 1.4;
+
+    font-weight: bold;
+
+    color: #082f63;
+
+    margin: 20px 0 30px;
+
+}
+
+
+/* =====================================================
+   HINT SECTIONS
+   ===================================================== */
+
+.hint-section {
+
+    margin-bottom: 20px;
+
+}
+
+.hint-title {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #073b78;
+
+    margin-bottom: 8px;
+
+}
+
+.hint-content {
+
+    background: #f6f9fd;
+
+    border-left: 4px solid #1769c2;
+
+    padding: 14px 16px;
+
+    border-radius: 6px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =====================================================
+   PREPARATION TIMER
+   ===================================================== */
+
+.timer-box {
+
+    text-align: center;
+
+    background: #0b3570;
+
+    color: white;
+
+    border-radius: 14px;
+
+    padding: 22px;
+
+    margin: 25px 0;
+
+}
+
+.timer-label {
+
+    font-size: 16px;
+
+    opacity: 0.85;
+
+}
+
+.timer {
+
+    font-size: 52px;
+
+    font-weight: bold;
+
+    margin-top: 5px;
+
+}
+
+
+/* =====================================================
+   RECORDING
+   ===================================================== */
+
+.recording-box {
+
+    text-align: center;
+
+    padding: 25px;
+
+    background: #f7f9fc;
+
+    border-radius: 14px;
+
+}
+
+.recording-status {
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
+
+}
+
+.answer-timer {
+
+    font-size: 40px;
+
+    font-weight: bold;
+
+    color: #b42318;
+
+    margin: 10px 0 20px;
+
+}
+
+
+/* =====================================================
+   PROGRESS
+   ===================================================== */
+
+.progress {
+
+    height: 10px;
+
+    background: #e2e8f0;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-bottom: 25px;
+
+}
+
+.progress-bar {
+
+    height: 100%;
+
+    background: #1769c2;
+
+    width: 0%;
+
+    transition: width 0.3s;
+
+}
+
+
+/* =====================================================
+   COMPLETE
+   ===================================================== */
+
+.complete {
+
+    text-align: center;
+
+}
+
+.complete-icon {
+
+    font-size: 70px;
+
+}
+
+.complete h2 {
+
+    color: #166534;
+
+}
+
+
+/* =====================================================
+   HIDDEN
+   ===================================================== */
+
+.hidden {
+
+    display: none !important;
+
+}
+
+
+/* =====================================================
+   BRIDGE
+   ===================================================== */
+
+#backendBridge {
+
+    position: fixed;
+
+    width: 1px;
+
+    height: 1px;
+
+    left: -10px;
+
+    top: -10px;
+
+    border: 0;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 750px) {
+
+    .header h1 {
+        font-size: 25px;
     }
 
-    // Send all requests waiting for the bridge
-    const queue = bridgeQueue;
+    .header p {
+        font-size: 16px;
+    }
 
-    bridgeQueue = [];
+    .card {
+        padding: 22px;
+    }
 
-    queue.forEach(function (request) {
-        sendToBridge(request);
-    });
+    .student-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 
-    // Also send a PING
-    bridge.contentWindow.postMessage(
-        {
-            source: 'FXEC_MOCK_INTERVIEW',
-            action: 'PING'
-        },
-        '*'
+    .question {
+        font-size: 22px;
+    }
+
+    .timer {
+        font-size: 44px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .student-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header class="header">
+
+    <h1>FXEC AI Mock Interview</h1>
+
+    <p>
+        AI-Powered Employability & Communication Assessment
+    </p>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =====================================================
+     STUDENT VERIFICATION
+     ===================================================== -->
+
+<section
+    id="loginCard"
+    class="card">
+
+    <h2>
+        Student Verification
+    </h2>
+
+    <p>
+        Enter your registered college email address
+        to begin your AI Mock Interview.
+    </p>
+
+
+    <label for="email">
+        College Email Address
+    </label>
+
+    <input
+        id="email"
+        type="email"
+        placeholder="yourname@francisxavier.ac.in"
+        autocomplete="email">
+
+
+    <br><br>
+
+
+    <button
+        id="verifyBtn"
+        onclick="verifyStudent()">
+
+        Continue
+
+    </button>
+
+
+    <div
+        id="loginMessage"
+        class="message">
+    </div>
+
+
+    <div
+        id="serverStatus"
+        class="server-status">
+
+        Connecting to FXEC server...
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STUDENT INFORMATION
+     ===================================================== -->
+
+<section
+    id="studentCard"
+    class="card hidden">
+
+    <h2>
+        Student Details
+    </h2>
+
+
+    <div class="student-grid">
+
+        <div class="student-box">
+
+            <small>Name</small>
+
+            <strong id="studentName">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="student-box">
+
+            <small>Programme</small>
+
+            <strong id="studentProgramme">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="student-box">
+
+            <small>Year</small>
+
+            <strong id="studentYear">
+                -
+            </strong>
+
+        </div>
+
+
+        <div class="student-box">
+
+            <small>Section</small>
+
+            <strong id="studentSection">
+                -
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="message info">
+
+        You will answer exactly
+        <strong>10 interview questions</strong>.
+        Each question includes preparation guidance
+        before recording your answer.
+
+    </div>
+
+
+    <br>
+
+
+    <button
+        onclick="beginInterview()">
+
+        Begin AI Mock Interview
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     INTERVIEW
+     ===================================================== -->
+
+<section
+    id="interviewCard"
+    class="card hidden">
+
+
+    <div class="progress">
+
+        <div
+            id="progressBar"
+            class="progress-bar">
+        </div>
+
+    </div>
+
+
+    <div class="question-header">
+
+        <div
+            id="questionNumber"
+            class="question-number">
+
+            Question 1 of 10
+
+        </div>
+
+
+        <div
+            id="questionCategory"
+            class="question-category">
+
+            Interview
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="questionText"
+        class="question">
+
+    </div>
+
+
+    <!-- USEFUL WORDS -->
+
+    <div class="hint-section">
+
+        <div class="hint-title">
+            Useful Words
+        </div>
+
+        <div
+            id="usefulWords"
+            class="hint-content">
+        </div>
+
+    </div>
+
+
+    <!-- PROFESSIONAL PHRASES -->
+
+    <div class="hint-section">
+
+        <div class="hint-title">
+            Professional Phrases
+        </div>
+
+        <div
+            id="professionalPhrases"
+            class="hint-content">
+        </div>
+
+    </div>
+
+
+    <!-- THINKING POINTS -->
+
+    <div class="hint-section">
+
+        <div class="hint-title">
+            Thinking Points
+        </div>
+
+        <div
+            id="thinkingPoints"
+            class="hint-content">
+        </div>
+
+    </div>
+
+
+    <!-- PREPARATION TIMER -->
+
+    <div
+        id="preparationBox"
+        class="timer-box">
+
+        <div class="timer-label">
+
+            Preparation Time
+
+        </div>
+
+        <div
+            id="preparationTimer"
+            class="timer">
+
+            30
+
+        </div>
+
+        <div>
+
+            Think about your answer.
+            You may organise your ideas before recording.
+
+        </div>
+
+    </div>
+
+
+    <!-- RECORDING -->
+
+    <div
+        id="recordingBox"
+        class="recording-box hidden">
+
+
+        <div
+            id="recordingStatus"
+            class="recording-status">
+
+            Ready to record
+
+        </div>
+
+
+        <div
+            id="answerTimer"
+            class="answer-timer">
+
+            90
+
+        </div>
+
+
+        <button
+            id="recordBtn"
+            onclick="startRecording()">
+
+            🎙 Start Recording
+
+        </button>
+
+
+        <button
+            id="stopBtn"
+            onclick="stopRecording()"
+            class="hidden">
+
+            ⏹ Stop & Submit
+
+        </button>
+
+
+        <div
+            id="recordingMessage"
+            class="message">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     COMPLETE
+     ===================================================== -->
+
+<section
+    id="completeCard"
+    class="card complete hidden">
+
+    <div class="complete-icon">
+        ✓
+    </div>
+
+    <h2>
+        Interview Completed
+    </h2>
+
+    <p>
+        Your 10 interview responses have been recorded
+        and submitted successfully.
+    </p>
+
+    <p>
+        Your responses will be processed for
+        communication, vocabulary, grammar,
+        pronunciation, fluency and clarity.
+    </p>
+
+    <p>
+        <strong>
+            Thank you for completing the FXEC AI Mock Interview.
+        </strong>
+    </p>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================================
+     APPS SCRIPT BRIDGE
+     ===================================================== -->
+
+<iframe
+    id="backendBridge"
+    title="FXEC Backend">
+</iframe>
+
+
+<script>
+
+
+// =====================================================
+// CONFIGURATION
+// =====================================================
+
+const APPS_SCRIPT_URL =
+    'https://script.google.com/macros/s/AKfycbwauRE6eTD6LCmhZingb2oesDQcdvWDxxER7wSDD44v-fh4ZHzlLao6KkcsL0i-Ptyi/exec';
+
+
+// =====================================================
+// GLOBAL STATE
+// =====================================================
+
+let bridgeLoaded = false;
+
+let bridgeQueue = [];
+
+let pendingRequests = {};
+
+let requestCounter = 0;
+
+let student = null;
+
+let questions = [];
+
+let currentQuestionIndex = 0;
+
+let attemptId = null;
+
+let mediaRecorder = null;
+
+let mediaStream = null;
+
+let audioChunks = [];
+
+let currentAudioBlob = null;
+
+let preparationInterval = null;
+
+let answerInterval = null;
+
+let preparationRemaining = 0;
+
+let answerRemaining = 0;
+
+
+// =====================================================
+// ELEMENT HELPERS
+// =====================================================
+
+function show(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove('hidden');
+
+}
+
+
+function hide(id) {
+
+    document
+        .getElementById(id)
+        .classList.add('hidden');
+
+}
+
+
+function showMessage(
+    id,
+    text,
+    type
+) {
+
+    const element =
+        document.getElementById(id);
+
+    element.textContent = text;
+
+    element.className =
+        'message ' +
+        (type || 'info');
+
+}
+
+
+function clearMessage(id) {
+
+    const element =
+        document.getElementById(id);
+
+    element.textContent = '';
+
+    element.className =
+        'message';
+
+}
+
+
+// =====================================================
+// LOAD BRIDGE
+// =====================================================
+
+const bridge =
+    document.getElementById(
+        'backendBridge'
     );
 
-});
+
+/*
+ * IMPORTANT:
+ * The load listener is attached BEFORE
+ * assigning the iframe src.
+ */
+
+bridge.addEventListener(
+    'load',
+    function () {
+
+        console.log(
+            'FXEC Apps Script Bridge loaded'
+        );
 
 
-// -----------------------------------------------------
-// SEND REQUEST TO BRIDGE
-// -----------------------------------------------------
+        bridgeLoaded = true;
+
+
+        const status =
+            document.getElementById(
+                'serverStatus'
+            );
+
+
+        status.textContent =
+            '✓ FXEC server connected';
+
+
+        status.className =
+            'server-status connected';
+
+
+        /*
+         * Send queued requests.
+         */
+
+        const queue =
+            bridgeQueue;
+
+
+        bridgeQueue = [];
+
+
+        queue.forEach(
+            function(request) {
+
+                sendToBridge(
+                    request
+                );
+
+            }
+        );
+
+
+        /*
+         * Ping bridge.
+         */
+
+        try {
+
+            bridge.contentWindow.postMessage(
+
+                {
+                    source:
+                        'FXEC_MOCK_INTERVIEW',
+
+                    action:
+                        'PING'
+
+                },
+
+                '*'
+
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+);
+
+
+/*
+ * Now load Apps Script.
+ *
+ * Timestamp prevents stale iframe caching.
+ */
+
+bridge.src =
+    APPS_SCRIPT_URL +
+    '?v=' +
+    Date.now();
+
+
+// =====================================================
+// RECEIVE BRIDGE MESSAGES
+// =====================================================
+
+window.addEventListener(
+    'message',
+    function(event) {
+
+
+        const data =
+            event.data;
+
+
+        if (!data) {
+            return;
+        }
+
+
+        if (
+            data.source !==
+            'FXEC_MOCK_INTERVIEW_BRIDGE'
+        ) {
+
+            return;
+
+        }
+
+
+        // -------------------------------------------------
+        // BRIDGE READY
+        // -------------------------------------------------
+
+        if (
+            data.type ===
+            'BRIDGE_READY'
+        ) {
+
+            console.log(
+                'FXEC Bridge READY'
+            );
+
+            return;
+
+        }
+
+
+        // -------------------------------------------------
+        // RESPONSE
+        // -------------------------------------------------
+
+        if (
+            data.type !==
+            'RESPONSE'
+        ) {
+
+            return;
+
+        }
+
+
+        const request =
+            pendingRequests[
+                data.requestId
+            ];
+
+
+        if (!request) {
+
+            console.warn(
+                'Unknown request:',
+                data.requestId
+            );
+
+            return;
+
+        }
+
+
+        delete pendingRequests[
+            data.requestId
+        ];
+
+
+        if (data.success) {
+
+            request.resolve(
+                data.data
+            );
+
+        }
+
+        else {
+
+            request.reject(
+                new Error(
+                    data.error ||
+                    'FXEC backend request failed.'
+                )
+            );
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// SEND TO BRIDGE
+// =====================================================
 
 function sendToBridge(request) {
 
-    if (!bridge || !bridge.contentWindow) {
+    if (
+        !bridge ||
+        !bridge.contentWindow
+    ) {
 
-        console.error('Bridge iframe is not available');
+        console.error(
+            'FXEC bridge is unavailable.'
+        );
 
         return;
+
     }
 
-    console.log('Sending to FXEC Bridge:', request.action);
+
+    console.log(
+        'Sending:',
+        request.action
+    );
+
 
     bridge.contentWindow.postMessage(
         request,
         '*'
     );
+
 }
 
 
-// -----------------------------------------------------
+// =====================================================
 // BACKEND REQUEST
-// -----------------------------------------------------
+// =====================================================
 
-function backendRequest(action, payload) {
+function backendRequest(
+    action,
+    payload
+) {
 
-    return new Promise(function (resolve, reject) {
-
-        const requestId =
-            'REQ-' +
-            Date.now() +
-            '-' +
-            (++requestCounter);
-
-        pendingRequests[requestId] = {
-            resolve: resolve,
-            reject: reject
-        };
+    return new Promise(
+        function(resolve, reject) {
 
 
-        const request = {
-
-            source: 'FXEC_MOCK_INTERVIEW',
-
-            requestId: requestId,
-
-            action: action,
-
-            payload: payload || {}
-
-        };
+            const requestId =
+                'REQ-' +
+                Date.now() +
+                '-' +
+                (++requestCounter);
 
 
-        // If iframe is already loaded,
-        // send immediately.
+            pendingRequests[
+                requestId
+            ] = {
 
-        if (bridgeLoaded) {
+                resolve:
+                    resolve,
 
-            sendToBridge(request);
+                reject:
+                    reject
 
-        } else {
-
-            // Otherwise wait until iframe loads.
-
-            console.log(
-                'Bridge not loaded yet. Queueing:',
-                action
-            );
-
-            bridgeQueue.push(request);
-
-        }
+            };
 
 
-        // 30-second timeout
+            const request = {
 
-        setTimeout(function () {
+                source:
+                    'FXEC_MOCK_INTERVIEW',
 
-            if (pendingRequests[requestId]) {
+                requestId:
+                    requestId,
 
-                delete pendingRequests[requestId];
+                action:
+                    action,
 
-                reject(
-                    new Error(
-                        'FXEC server did not respond. Please refresh the page and try again.'
-                    )
+                payload:
+                    payload || {}
+
+            };
+
+
+            /*
+             * Send immediately if bridge loaded.
+             */
+
+            if (bridgeLoaded) {
+
+                sendToBridge(
+                    request
                 );
 
             }
 
-        }, 30000);
+            else {
 
-    });
+                console.log(
+                    'Bridge not loaded. Queueing ' +
+                    action
+                );
+
+
+                bridgeQueue.push(
+                    request
+                );
+
+            }
+
+
+            /*
+             * Timeout.
+             */
+
+            setTimeout(
+                function() {
+
+                    if (
+                        pendingRequests[
+                            requestId
+                        ]
+                    ) {
+
+                        delete pendingRequests[
+                            requestId
+                        ];
+
+
+                        reject(
+                            new Error(
+                                'FXEC server did not respond. Please refresh the page and try again.'
+                            )
+                        );
+
+                    }
+
+                },
+                30000
+            );
+
+        }
+    );
 
 }
 
 
-// -----------------------------------------------------
-// RECEIVE RESPONSE FROM APPS SCRIPT
-// -----------------------------------------------------
+// =====================================================
+// VERIFY STUDENT
+// =====================================================
 
-window.addEventListener('message', function (event) {
+async function verifyStudent() {
 
-    const data = event.data;
 
-    if (!data) {
+    const emailInput =
+        document.getElementById(
+            'email'
+        );
+
+
+    const email =
+        emailInput.value
+            .trim()
+            .toLowerCase();
+
+
+    clearMessage(
+        'loginMessage'
+    );
+
+
+    if (!email) {
+
+        showMessage(
+            'loginMessage',
+            'Please enter your college email address.',
+            'error'
+        );
+
         return;
+
     }
+
+
+    const button =
+        document.getElementById(
+            'verifyBtn'
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        'Verifying...';
+
+
+    try {
+
+
+        const result =
+            await backendRequest(
+
+                'verifyStudent',
+
+                {
+                    email:
+                        email
+                }
+
+            );
+
+
+        console.log(
+            'Student verification:',
+            result
+        );
+
+
+        if (
+            !result ||
+            !result.success
+        ) {
+
+            throw new Error(
+
+                result &&
+                result.message
+                    ? result.message
+                    : 'College email address was not found.'
+
+            );
+
+        }
+
+
+        student =
+            result;
+
+
+        document.getElementById(
+            'studentName'
+        ).textContent =
+            student.name || '-';
+
+
+        document.getElementById(
+            'studentProgramme'
+        ).textContent =
+            student.programme || '-';
+
+
+        document.getElementById(
+            'studentYear'
+        ).textContent =
+            student.year || '-';
+
+
+        document.getElementById(
+            'studentSection'
+        ).textContent =
+            student.section || '-';
+
+
+        hide('loginCard');
+
+        show('studentCard');
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        showMessage(
+
+            'loginMessage',
+
+            error.message ||
+            'Unable to verify student.',
+
+            'error'
+
+        );
+
+    }
+
+
+    button.disabled = false;
+
+    button.textContent =
+        'Continue';
+
+}
+
+
+// =====================================================
+// BEGIN INTERVIEW
+// =====================================================
+
+async function beginInterview() {
+
+
+    try {
+
+
+        if (!student) {
+
+            throw new Error(
+                'Student information is missing.'
+            );
+
+        }
+
+
+        /*
+         * Get exactly 10 questions.
+         */
+
+        const questionResult =
+            await backendRequest(
+
+                'getInterviewQuestions',
+
+                {
+                    programme:
+                        student.programme
+                }
+
+            );
+
+
+        if (
+            !questionResult ||
+            !questionResult.success
+        ) {
+
+            throw new Error(
+                'Unable to load interview questions.'
+            );
+
+        }
+
+
+        questions =
+            questionResult.questions || [];
+
+
+        if (questions.length !== 10) {
+
+            throw new Error(
+
+                'The interview must contain exactly 10 questions. ' +
+                'Currently ' +
+                questions.length +
+                ' questions were loaded.'
+
+            );
+
+        }
+
+
+        /*
+         * Create attempt.
+         */
+
+        const attemptResult =
+            await backendRequest(
+
+                'createAttempt',
+
+                {
+                    student:
+                        student
+                }
+
+            );
+
+
+        if (
+            !attemptResult ||
+            !attemptResult.success
+        ) {
+
+            throw new Error(
+                'Unable to create interview attempt.'
+            );
+
+        }
+
+
+        attemptId =
+            attemptResult.attemptId;
+
+
+        currentQuestionIndex =
+            0;
+
+
+        hide('studentCard');
+
+        show('interviewCard');
+
+
+        showQuestion();
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            error.message ||
+            'Unable to start the interview.'
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// SHOW QUESTION
+// =====================================================
+
+function showQuestion() {
+
+
+    clearTimers();
+
+
+    const question =
+        questions[
+            currentQuestionIndex
+        ];
+
+
+    if (!question) {
+
+        finishInterview();
+
+        return;
+
+    }
+
+
+    const number =
+        currentQuestionIndex + 1;
+
+
+    document.getElementById(
+        'questionNumber'
+    ).textContent =
+
+        'Question ' +
+        number +
+        ' of 10';
+
+
+    document.getElementById(
+        'questionCategory'
+    ).textContent =
+
+        question.category ||
+        'Interview';
+
+
+    document.getElementById(
+        'questionText'
+    ).textContent =
+        question.question;
+
+
+    document.getElementById(
+        'usefulWords'
+    ).textContent =
+
+        question.usefulWords ||
+        'Use appropriate professional vocabulary.';
+
+
+    document.getElementById(
+        'professionalPhrases'
+    ).textContent =
+
+        question.professionalPhrases ||
+        'Use clear and professional phrases.';
+
+
+    document.getElementById(
+        'thinkingPoints'
+    ).textContent =
+
+        question.thinkingPoints ||
+        'Organise your answer logically.';
+
+
+    const progress =
+        (
+            currentQuestionIndex /
+            10
+        ) * 100;
+
+
+    document.getElementById(
+        'progressBar'
+    ).style.width =
+        progress + '%';
+
+
+    /*
+     * Reset recording UI.
+     */
+
+    hide('recordingBox');
+
+
+    show('preparationBox');
+
+
+    document.getElementById(
+        'recordBtn'
+    ).classList.remove(
+        'hidden'
+    );
+
+
+    document.getElementById(
+        'stopBtn'
+    ).classList.add(
+        'hidden'
+    );
+
+
+    document.getElementById(
+        'recordingStatus'
+    ).textContent =
+        'Ready to record';
+
+
+    /*
+     * Start preparation timer.
+     */
+
+    startPreparationTimer(
+        Number(
+            question.preparationTime
+        ) || 30
+    );
+
+}
+
+
+// =====================================================
+// PREPARATION TIMER
+// =====================================================
+
+function startPreparationTimer(
+    seconds
+) {
+
+
+    clearInterval(
+        preparationInterval
+    );
+
+
+    preparationRemaining =
+        seconds;
+
+
+    const timer =
+        document.getElementById(
+            'preparationTimer'
+        );
+
+
+    timer.textContent =
+        preparationRemaining;
+
+
+    preparationInterval =
+        setInterval(
+            function() {
+
+
+                preparationRemaining--;
+
+
+                timer.textContent =
+                    preparationRemaining;
+
+
+                if (
+                    preparationRemaining <= 0
+                ) {
+
+                    clearInterval(
+                        preparationInterval
+                    );
+
+
+                    startRecordingStage();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+// =====================================================
+// START RECORDING STAGE
+// =====================================================
+
+function startRecordingStage() {
+
+
+    hide('preparationBox');
+
+    show('recordingBox');
+
+
+    document.getElementById(
+        'recordingStatus'
+    ).textContent =
+        'Your preparation time is over.';
+
+
+    document.getElementById(
+        'recordBtn'
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        'recordBtn'
+    ).classList.remove(
+        'hidden'
+    );
+
+
+    document.getElementById(
+        'stopBtn'
+    ).classList.add(
+        'hidden'
+    );
+
+}
+
+
+// =====================================================
+// START RECORDING
+// =====================================================
+
+async function startRecording() {
+
+
+    clearMessage(
+        'recordingMessage'
+    );
+
+
+    try {
+
+
+        if (
+            !navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia
+        ) {
+
+            throw new Error(
+
+                'Microphone access is not supported by this browser.'
+
+            );
+
+        }
+
+
+        /*
+         * Request microphone.
+         */
+
+        mediaStream =
+            await navigator
+                .mediaDevices
+                .getUserMedia({
+                    audio: true
+                });
+
+
+        audioChunks = [];
+
+
+        currentAudioBlob =
+            null;
+
+
+        let options = {};
+
+
+        if (
+            MediaRecorder.isTypeSupported(
+                'audio/webm;codecs=opus'
+            )
+        ) {
+
+            options = {
+
+                mimeType:
+                    'audio/webm;codecs=opus'
+
+            };
+
+        }
+
+
+        mediaRecorder =
+            new MediaRecorder(
+                mediaStream,
+                options
+            );
+
+
+        mediaRecorder.ondataavailable =
+            function(event) {
+
+                if (
+                    event.data &&
+                    event.data.size > 0
+                ) {
+
+                    audioChunks.push(
+                        event.data
+                    );
+
+                }
+
+            };
+
+
+        mediaRecorder.onstop =
+            function() {
+
+                currentAudioBlob =
+                    new Blob(
+                        audioChunks,
+                        {
+                            type:
+                                'audio/webm'
+                        }
+                    );
+
+            };
+
+
+        mediaRecorder.start();
+
+
+        document.getElementById(
+            'recordingStatus'
+        ).textContent =
+            '🔴 Recording in progress...';
+
+
+        document.getElementById(
+            'recordBtn'
+        ).classList.add(
+            'hidden'
+        );
+
+
+        document.getElementById(
+            'stopBtn'
+        ).classList.remove(
+            'hidden'
+        );
+
+
+        /*
+         * Start answer timer.
+         */
+
+        const question =
+            questions[
+                currentQuestionIndex
+            ];
+
+
+        startAnswerTimer(
+
+            Number(
+                question.answerTime
+            ) || 90
+
+        );
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        showMessage(
+
+            'recordingMessage',
+
+            error.message ||
+            'Unable to access microphone.',
+
+            'error'
+
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// ANSWER TIMER
+// =====================================================
+
+function startAnswerTimer(
+    seconds
+) {
+
+
+    clearInterval(
+        answerInterval
+    );
+
+
+    answerRemaining =
+        seconds;
+
+
+    document.getElementById(
+        'answerTimer'
+    ).textContent =
+        answerRemaining;
+
+
+    answerInterval =
+        setInterval(
+            function() {
+
+
+                answerRemaining--;
+
+
+                document.getElementById(
+                    'answerTimer'
+                ).textContent =
+                    answerRemaining;
+
+
+                if (
+                    answerRemaining <= 0
+                ) {
+
+                    clearInterval(
+                        answerInterval
+                    );
+
+
+                    stopRecording();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+// =====================================================
+// STOP RECORDING
+// =====================================================
+
+function stopRecording() {
+
+
+    clearInterval(
+        answerInterval
+    );
 
 
     if (
-        data.source !==
-        'FXEC_MOCK_INTERVIEW_BRIDGE'
+        mediaRecorder &&
+        mediaRecorder.state !== 'inactive'
     ) {
-        return;
+
+        mediaRecorder.stop();
+
     }
 
 
-    // -------------------------------------------------
-    // BRIDGE READY
-    // -------------------------------------------------
+    if (mediaStream) {
 
-    if (data.type === 'BRIDGE_READY') {
+        mediaStream
+            .getTracks()
+            .forEach(
+                function(track) {
 
-        console.log(
-            'FXEC Bridge says READY'
-        );
+                    track.stop();
 
-        return;
+                }
+            );
+
     }
 
 
-    // -------------------------------------------------
-    // RESPONSE
-    // -------------------------------------------------
+    /*
+     * Wait for recorder's final data.
+     */
 
-    if (data.type !== 'RESPONSE') {
+    setTimeout(
+        function() {
+
+            submitAnswer();
+
+        },
+        500
+    );
+
+}
+
+
+// =====================================================
+// SUBMIT ANSWER
+// =====================================================
+
+async function submitAnswer() {
+
+
+    const question =
+        questions[
+            currentQuestionIndex
+        ];
+
+
+    if (!question) {
+
         return;
+
     }
 
 
-    const request =
-        pendingRequests[data.requestId];
+    document.getElementById(
+        'recordingStatus'
+    ).textContent =
+        'Uploading your response...';
 
 
-    if (!request) {
+    document.getElementById(
+        'stopBtn'
+    ).disabled =
+        true;
 
-        console.warn(
-            'Unknown request:',
-            data.requestId
-        );
 
-        return;
+    try {
+
+
+        if (
+            !currentAudioBlob ||
+            currentAudioBlob.size === 0
+        ) {
+
+            /*
+             * Recorder may need another short moment.
+             */
+
+            await new Promise(
+                function(resolve) {
+
+                    setTimeout(
+                        resolve,
+                        500
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (
+            !currentAudioBlob ||
+            currentAudioBlob.size === 0
+        ) {
+
+            throw new Error(
+                'No audio was recorded.'
+            );
+
+        }
+
+
+        /*
+         * Convert audio to Base64.
+         */
+
+        const base64Audio =
+            await blobToBase64(
+                currentAudioBlob
+            );
+
+
+        /*
+         * Upload audio.
+         */
+
+        const audioResult =
+            await backendRequest(
+
+                'uploadAudio',
+
+                {
+
+                    base64Audio:
+                        base64Audio,
+
+                    attemptId:
+                        attemptId,
+
+                    qNo:
+                        question.qNo,
+
+                    email:
+                        student.email
+
+                }
+
+            );
+
+
+        if (
+            !audioResult ||
+            !audioResult.success
+        ) {
+
+            throw new Error(
+                'Audio upload failed.'
+            );
+
+        }
+
+
+        /*
+         * Save response.
+         *
+         * AI evaluation will be added later.
+         */
+
+        const response = {
+
+            attemptId:
+                attemptId,
+
+            email:
+                student.email,
+
+            qNo:
+                question.qNo,
+
+            question:
+                question.question,
+
+            transcript:
+                '',
+
+            content:
+                '',
+
+            vocabulary:
+                '',
+
+            phrases:
+                '',
+
+            grammar:
+                '',
+
+            pronunciation:
+                '',
+
+            fluency:
+                '',
+
+            clarity:
+                '',
+
+            totalScore:
+                '',
+
+            wordsToPractise:
+                '',
+
+            pronunciationFeedback:
+                '',
+
+            betterPhrases:
+                '',
+
+            aiFeedback:
+                '',
+
+            evaluationStatus:
+                'Pending',
+
+            audioFileUrl:
+                audioResult.fileUrl
+
+        };
+
+
+        const saveResult =
+            await backendRequest(
+
+                'saveResponse',
+
+                {
+                    response:
+                        response
+                }
+
+            );
+
+
+        if (
+            !saveResult ||
+            !saveResult.success
+        ) {
+
+            throw new Error(
+                'Response could not be saved.'
+            );
+
+        }
+
+
+        /*
+         * Move to next question.
+         */
+
+        moveToNextQuestion();
+
+
     }
 
+    catch (error) {
 
-    delete pendingRequests[data.requestId];
-
-
-    if (data.success) {
-
-        console.log(
-            'FXEC backend response received:',
-            data
-        );
-
-        request.resolve(data.data);
-
-    } else {
 
         console.error(
-            'FXEC backend error:',
-            data.error
+            error
         );
 
-        request.reject(
-            new Error(
-                data.error ||
-                'FXEC backend request failed.'
-            )
+
+        showMessage(
+
+            'recordingMessage',
+
+            error.message ||
+            'Unable to submit your answer.',
+
+            'error'
+
+        );
+
+
+        document.getElementById(
+            'stopBtn'
+        ).disabled =
+            false;
+
+
+        document.getElementById(
+            'recordingStatus'
+        ).textContent =
+            'Submission failed.';
+
+    }
+
+}
+
+
+// =====================================================
+// BLOB TO BASE64
+// =====================================================
+
+function blobToBase64(blob) {
+
+
+    return new Promise(
+        function(resolve, reject) {
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onloadend =
+                function() {
+
+                    resolve(
+                        reader.result
+                    );
+
+                };
+
+
+            reader.onerror =
+                function(error) {
+
+                    reject(error);
+
+                };
+
+
+            reader.readAsDataURL(
+                blob
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// NEXT QUESTION
+// =====================================================
+
+function moveToNextQuestion() {
+
+
+    currentQuestionIndex++;
+
+
+    if (
+        currentQuestionIndex >=
+        questions.length
+    ) {
+
+        finishInterview();
+
+        return;
+
+    }
+
+
+    showQuestion();
+
+}
+
+
+// =====================================================
+// FINISH INTERVIEW
+// =====================================================
+
+async function finishInterview() {
+
+
+    clearTimers();
+
+
+    /*
+     * Final score will initially be blank.
+     * Gemini evaluation will calculate it later.
+     */
+
+    try {
+
+
+        await backendRequest(
+
+            'completeAttempt',
+
+            {
+
+                attemptId:
+                    attemptId,
+
+                finalScore:
+                    ''
+
+            }
+
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            'Unable to complete attempt:',
+            error
         );
 
     }
 
-});
+
+    hide('interviewCard');
+
+    show('completeCard');
+
+}
+
+
+// =====================================================
+// CLEAR TIMERS
+// =====================================================
+
+function clearTimers() {
+
+
+    if (preparationInterval) {
+
+        clearInterval(
+            preparationInterval
+        );
+
+        preparationInterval =
+            null;
+
+    }
+
+
+    if (answerInterval) {
+
+        clearInterval(
+            answerInterval
+        );
+
+        answerInterval =
+            null;
+
+    }
+
+}
+
+
+// =====================================================
+// ENTER KEY
+// =====================================================
+
+document
+    .getElementById('email')
+    .addEventListener(
+        'keydown',
+        function(event) {
+
+            if (
+                event.key === 'Enter'
+            ) {
+
+                verifyStudent();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+</body>
+
+</html>
