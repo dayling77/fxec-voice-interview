@@ -547,6 +547,240 @@ button:disabled {
 }
 
 
+
+
+/* =====================================================
+   AI EVALUATION / RESULTS
+   ===================================================== */
+
+.evaluation-panel {
+    text-align: center;
+}
+
+.evaluation-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: #e8f1ff;
+    color: #1769c2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.spinner {
+    width: 54px;
+    height: 54px;
+    margin: 20px auto;
+    border: 5px solid #dbe7f5;
+    border-top-color: #1769c2;
+    border-radius: 50%;
+    animation: fxecSpin 1s linear infinite;
+}
+
+@keyframes fxecSpin {
+    to { transform: rotate(360deg); }
+}
+
+.eval-progress {
+    height: 12px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 24px auto 12px;
+    max-width: 650px;
+}
+
+.eval-progress-bar {
+    height: 100%;
+    width: 35%;
+    background: #1769c2;
+    border-radius: 20px;
+    animation: fxecProgress 1.8s ease-in-out infinite;
+}
+
+@keyframes fxecProgress {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(320%); }
+}
+
+.report-header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.score-card {
+    background: #f5f8fc;
+    border-radius: 12px;
+    padding: 16px 10px;
+    text-align: center;
+}
+
+.score-card small {
+    display: block;
+    color: #66788a;
+    margin-bottom: 7px;
+}
+
+.score-card strong {
+    display: block;
+    color: #073b78;
+    font-size: 25px;
+}
+
+.overall-score {
+    background: #0b3570;
+    color: white;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin: 22px 0;
+}
+
+.overall-score .number {
+    font-size: 58px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.overall-score .caption {
+    margin-top: 8px;
+    opacity: .9;
+}
+
+.report-section {
+    margin-top: 28px;
+}
+
+.report-section h3 {
+    color: #073b78;
+    margin-bottom: 12px;
+}
+
+.overall-feedback {
+    background: #f6f9fd;
+    border-left: 4px solid #1769c2;
+    padding: 16px 18px;
+    border-radius: 7px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.question-result {
+    border: 1px solid #dbe4ef;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 16px 0;
+    background: #fff;
+}
+
+.question-result-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.question-result-title h4 {
+    margin: 0;
+    color: #073b78;
+    font-size: 18px;
+    line-height: 1.45;
+}
+
+.q-score {
+    flex: 0 0 auto;
+    background: #e8f1ff;
+    color: #174ea6;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+    margin: 14px 0;
+}
+
+.metric {
+    background: #f7f9fc;
+    border-radius: 8px;
+    padding: 9px;
+    text-align: center;
+}
+
+.metric small {
+    display: block;
+    color: #66788a;
+    font-size: 11px;
+    margin-bottom: 3px;
+}
+
+.metric strong {
+    color: #073b78;
+}
+
+.result-block {
+    margin-top: 14px;
+}
+
+.result-block strong {
+    color: #073b78;
+}
+
+.result-text {
+    margin-top: 5px;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.transcript {
+    background: #f8fafc;
+    padding: 13px 15px;
+    border-radius: 8px;
+    margin-top: 6px;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.retry-button {
+    margin-top: 18px;
+}
+
+@media (max-width:750px) {
+    .report-header {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .metric-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .question-result-title {
+        flex-direction: column;
+    }
+}
+
+@media (max-width:500px) {
+    .report-header {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .overall-score .number {
+        font-size: 48px;
+    }
+}
+
+
 /* =====================================================
    MOBILE
    ===================================================== */
@@ -923,25 +1157,102 @@ button:disabled {
 
 <section
     id="completeCard"
-    class="card complete hidden">
+    class="card evaluation-panel hidden">
 
-    <div class="complete-icon">
-        ✓
+    <div class="evaluation-icon">✓</div>
+
+    <h2>Interview Submitted</h2>
+
+    <p>
+        Your 10 interview responses have been recorded successfully.
+    </p>
+
+    <div class="spinner"></div>
+
+    <h3 id="evaluationTitle">AI Evaluation in Progress</h3>
+
+    <p id="evaluationStatusText">
+        Gemini AI is analysing your responses for content, vocabulary,
+        professional phrases, grammar, pronunciation, fluency and clarity.
+    </p>
+
+    <div class="eval-progress" aria-label="AI evaluation progress">
+        <div class="eval-progress-bar"></div>
     </div>
 
-    <h2>
-        Interview Completed
-    </h2>
-
-    <p>
-        Your 10 interview responses have been
-        recorded and submitted successfully.
+    <p id="evaluationWaitText">
+        Please keep this page open. The evaluation may take a few minutes.
     </p>
 
-    <p>
-        Your responses will now be available
-        for AI evaluation.
-    </p>
+    <div id="evaluationError" class="message error" style="display:none"></div>
+
+    <button
+        id="retryEvaluationBtn"
+        class="retry-button hidden"
+        onclick="runEvaluation()">
+        Retry AI Evaluation
+    </button>
+
+</section>
+
+
+<section
+    id="resultsCard"
+    class="card hidden">
+
+    <h2>AI Mock Interview Report</h2>
+
+    <div id="reportStudent"></div>
+
+    <div class="overall-score">
+        <div class="number" id="overallScore">-</div>
+        <div class="caption">Overall Score / 100</div>
+    </div>
+
+    <div class="report-header">
+        <div class="score-card">
+            <small>Communication</small>
+            <strong id="communicationScore">-</strong>
+        </div>
+        <div class="score-card">
+            <small>Vocabulary</small>
+            <strong id="vocabularyScore">-</strong>
+        </div>
+        <div class="score-card">
+            <small>Grammar</small>
+            <strong id="grammarScore">-</strong>
+        </div>
+        <div class="score-card">
+            <small>Pronunciation</small>
+            <strong id="pronunciationScore">-</strong>
+        </div>
+        <div class="score-card">
+            <small>Fluency</small>
+            <strong id="fluencyScore">-</strong>
+        </div>
+        <div class="score-card">
+            <small>Technical</small>
+            <strong id="technicalScore">-</strong>
+        </div>
+        <div class="score-card">
+            <small>Questions</small>
+            <strong id="completedCount">10 / 10</strong>
+        </div>
+        <div class="score-card">
+            <small>Status</small>
+            <strong>Completed</strong>
+        </div>
+    </div>
+
+    <div class="report-section">
+        <h3>Overall Feedback</h3>
+        <div id="overallFeedback" class="overall-feedback">-</div>
+    </div>
+
+    <div class="report-section">
+        <h3>Question-wise Evaluation</h3>
+        <div id="questionResults"></div>
+    </div>
 
 </section>
 
@@ -1063,8 +1374,11 @@ function clearMessage(id) {
 
 function apiGet(
     action,
-    params
+    params,
+    timeoutMs
 ) {
+
+    timeoutMs = Number(timeoutMs) || 30000;
 
     return new Promise(
         function(resolve, reject) {
@@ -1238,7 +1552,7 @@ function apiGet(
                     );
 
                 },
-                30000
+                timeoutMs
             );
 
 
@@ -2755,50 +3069,358 @@ function moveToNextQuestion() {
 
 async function finishInterview() {
 
-
     clearTimers();
 
+    hide('interviewCard');
+    show('completeCard');
+
+    setEvaluationState(
+        'AI Evaluation in Progress',
+        'Gemini AI is analysing your 10 recorded responses. Please keep this page open.',
+        'The evaluation checks content, professional vocabulary, phrase usage, grammar, pronunciation, fluency and clarity.'
+    );
 
     try {
 
-
-        await apiGet(
-
+        const completeResult = await apiGet(
             'completeAttempt',
-
             {
-
-                attemptId:
-                    attemptId,
-
-                finalScore:
-                    ''
-
+                attemptId: attemptId,
+                finalScore: ''
             }
-
         );
 
+        if (completeResult && completeResult.success === false) {
+            throw new Error(
+                completeResult.message ||
+                'The interview could not be marked as completed.'
+            );
+        }
+
+        await runEvaluation();
 
     }
-
     catch(error) {
 
-        console.error(
-            error
+        console.error(error);
+
+        showEvaluationError(
+            error.message ||
+            'Unable to complete AI evaluation.'
         );
 
     }
+}
 
 
-    hide(
-        'interviewCard'
+// =====================================================
+// AI EVALUATION
+// =====================================================
+
+function setEvaluationState(title, statusText, waitText) {
+
+    document.getElementById('evaluationTitle').textContent = title;
+    document.getElementById('evaluationStatusText').textContent = statusText;
+    document.getElementById('evaluationWaitText').textContent = waitText;
+
+    document.getElementById('evaluationError').style.display = 'none';
+    document.getElementById('retryEvaluationBtn').classList.add('hidden');
+}
+
+
+function showEvaluationError(message) {
+
+    const errorBox = document.getElementById('evaluationError');
+
+    errorBox.textContent = message;
+    errorBox.style.display = 'block';
+
+    document.getElementById('evaluationTitle').textContent =
+        'AI Evaluation Needs Attention';
+
+    document.getElementById('evaluationStatusText').textContent =
+        'Your interview responses are safely stored. The AI evaluation did not complete.';
+
+    document.getElementById('evaluationWaitText').textContent =
+        'You can retry the evaluation without recording the interview again.';
+
+    document.getElementById('retryEvaluationBtn').classList.remove('hidden');
+}
+
+
+async function runEvaluation() {
+
+    if (!attemptId) {
+        showEvaluationError('Attempt ID is missing. Please contact the FXEC administrator.');
+        return;
+    }
+
+    const retryButton = document.getElementById('retryEvaluationBtn');
+    retryButton.disabled = true;
+
+    setEvaluationState(
+        'AI Evaluation in Progress',
+        'Gemini AI is evaluating all 10 responses one by one.',
+        'Please keep this page open. This may take a few minutes.'
     );
 
+    try {
 
-    show(
-        'completeCard'
-    );
+        /*
+         * The current Apps Script startEvaluation endpoint is synchronous.
+         * Allow a longer JSONP timeout than normal lightweight API calls.
+         */
+        const evaluationResult = await apiGet(
+            'startEvaluation',
+            {
+                attemptId: attemptId
+            },
+            240000
+        );
 
+        if (!evaluationResult || !evaluationResult.success) {
+            throw new Error(
+                evaluationResult && evaluationResult.message
+                    ? evaluationResult.message
+                    : 'AI evaluation failed.'
+            );
+        }
+
+        setEvaluationState(
+            'Preparing Your Report',
+            'AI evaluation is complete. Loading your question-wise report.',
+            'Almost done...'
+        );
+
+        const report = await apiGet(
+            'getInterviewResults',
+            {
+                attemptId: attemptId
+            },
+            30000
+        );
+
+        if (!report || !report.success) {
+            throw new Error(
+                report && report.message
+                    ? report.message
+                    : 'Evaluation completed, but the report could not be loaded.'
+            );
+        }
+
+        if (report.status !== 'completed') {
+            throw new Error(
+                'The evaluation is still processing. Please retry in a moment.'
+            );
+        }
+
+        renderFinalReport(report);
+
+    }
+    catch(error) {
+
+        console.error(error);
+        showEvaluationError(
+            error.message ||
+            'Unable to complete AI evaluation.'
+        );
+
+    }
+    finally {
+        retryButton.disabled = false;
+    }
+}
+
+
+// =====================================================
+// REPORT RENDERING
+// =====================================================
+
+function safeNumber(value) {
+
+    const n = Number(value);
+
+    return Number.isFinite(n) ? n : 0;
+}
+
+
+function formatScore(value) {
+
+    const n = safeNumber(value);
+
+    return Number.isInteger(n) ? String(n) : n.toFixed(1);
+}
+
+
+function escapeHtml(value) {
+
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+
+function renderFinalReport(report) {
+
+    const result = report.result || {};
+    const responses = Array.isArray(report.responses)
+        ? report.responses
+        : [];
+
+    document.getElementById('reportStudent').innerHTML =
+        '<div class="student-grid">' +
+            '<div class="student-box"><small>Name</small><strong>' +
+                escapeHtml(result.name || student.name || '-') +
+            '</strong></div>' +
+            '<div class="student-box"><small>Programme</small><strong>' +
+                escapeHtml(result.programme || student.programme || '-') +
+            '</strong></div>' +
+            '<div class="student-box"><small>Year</small><strong>' +
+                escapeHtml(result.year || student.year || '-') +
+            '</strong></div>' +
+            '<div class="student-box"><small>Section</small><strong>' +
+                escapeHtml(result.section || student.section || '-') +
+            '</strong></div>' +
+        '</div>';
+
+    document.getElementById('overallScore').textContent =
+        formatScore(result.overallScore);
+
+    document.getElementById('communicationScore').textContent =
+        formatScore(result.communication);
+
+    document.getElementById('vocabularyScore').textContent =
+        formatScore(result.vocabulary);
+
+    document.getElementById('grammarScore').textContent =
+        formatScore(result.grammar);
+
+    document.getElementById('pronunciationScore').textContent =
+        formatScore(result.pronunciation);
+
+    document.getElementById('fluencyScore').textContent =
+        formatScore(result.fluency);
+
+    document.getElementById('technicalScore').textContent =
+        formatScore(result.technical);
+
+    document.getElementById('completedCount').textContent =
+        (report.evaluatedCount || responses.length || 0) + ' / 10';
+
+    document.getElementById('overallFeedback').textContent =
+        result.overallFeedback ||
+        'Your detailed question-wise feedback is shown below.';
+
+    const container = document.getElementById('questionResults');
+
+    container.innerHTML = '';
+
+    responses
+        .slice()
+        .sort(function(a, b) {
+            return safeNumber(a.qNo) - safeNumber(b.qNo);
+        })
+        .forEach(function(response) {
+
+            const qNo = safeNumber(response.qNo);
+            const isTechnical = qNo === 7;
+
+            const metrics = isTechnical
+                ? [
+                    ['Technical Accuracy', response.content],
+                    ['Technical Vocabulary', response.vocabulary],
+                    ['Explanation / Example', response.phrases],
+                    ['Technical Grammar', response.grammar],
+                    ['Technical Pronunciation', response.pronunciation],
+                    ['Fluency / Clarity', response.fluency],
+                    ['Concept Understanding', response.clarity]
+                ]
+                : [
+                    ['Content', response.content],
+                    ['Vocabulary', response.vocabulary],
+                    ['Phrases', response.phrases],
+                    ['Grammar', response.grammar],
+                    ['Pronunciation', response.pronunciation],
+                    ['Fluency', response.fluency],
+                    ['Clarity', response.clarity]
+                ];
+
+            let metricHtml = '';
+
+            metrics.forEach(function(metric) {
+                metricHtml +=
+                    '<div class="metric">' +
+                        '<small>' + escapeHtml(metric[0]) + '</small>' +
+                        '<strong>' + escapeHtml(formatScore(metric[1])) + '</strong>' +
+                    '</div>';
+            });
+
+            const block = document.createElement('div');
+            block.className = 'question-result';
+
+            block.innerHTML =
+                '<div class="question-result-title">' +
+                    '<h4>Q' + qNo + '. ' +
+                        escapeHtml(response.question || '') +
+                    '</h4>' +
+                    '<div class="q-score">' +
+                        escapeHtml(formatScore(response.totalScore)) +
+                        ' / 100' +
+                    '</div>' +
+                '</div>' +
+
+                '<div class="metric-grid">' +
+                    metricHtml +
+                '</div>' +
+
+                '<div class="result-block">' +
+                    '<strong>Transcript</strong>' +
+                    '<div class="transcript">' +
+                        escapeHtml(response.transcript || 'Transcript not available.') +
+                    '</div>' +
+                '</div>' +
+
+                '<div class="result-block">' +
+                    '<strong>Words to Practise</strong>' +
+                    '<div class="result-text">' +
+                        escapeHtml(response.wordsToPractise || 'No specific words listed.') +
+                    '</div>' +
+                '</div>' +
+
+                '<div class="result-block">' +
+                    '<strong>Pronunciation Practice</strong>' +
+                    '<div class="result-text">' +
+                        escapeHtml(response.pronunciationFeedback || 'No specific pronunciation feedback listed.') +
+                    '</div>' +
+                '</div>' +
+
+                '<div class="result-block">' +
+                    '<strong>Better Professional Phrases</strong>' +
+                    '<div class="result-text">' +
+                        escapeHtml(response.betterPhrases || 'No specific phrase suggestions listed.') +
+                    '</div>' +
+                '</div>' +
+
+                '<div class="result-block">' +
+                    '<strong>AI Feedback</strong>' +
+                    '<div class="result-text">' +
+                        escapeHtml(response.aiFeedback || 'No additional feedback available.') +
+                    '</div>' +
+                '</div>';
+
+            container.appendChild(block);
+        });
+
+    hide('completeCard');
+    show('resultsCard');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 
