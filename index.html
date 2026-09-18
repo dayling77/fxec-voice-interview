@@ -1285,8 +1285,11 @@ button:disabled {
 // =====================================================
 // APPS SCRIPT URL
 // =====================================================
+
 const API_URL =
-  "https://fxec-interview-api.late-bonus-4c55.workers.dev/";
+
+'https://fxec-interview-api.late-bonus-4c55.workers.dev/';
+
 
 // =====================================================
 // GLOBALS
@@ -1372,198 +1375,117 @@ function clearMessage(id) {
 function apiGet(
     action,
     params,
-    timeoutMs
+    timeoutMs,
+    retries
 ) {
 
-    timeoutMs = Number(timeoutMs) || 30000;
+    timeoutMs = Number(timeoutMs) || 20000;
+    retries = Number(retries);
 
-    return new Promise(
-        function(resolve, reject) {
+    if (!Number.isFinite(retries) || retries < 0) {
+        retries = 2;
+    }
 
+    function requestOnce() {
 
-            const callbackName =
-                'fxecCallback_' +
-                Date.now() +
-                '_' +
-                Math.floor(
-                    Math.random() * 100000
-                );
+        return new Promise(
+            function(resolve, reject) {
 
+                const callbackName =
+                    'fxecCallback_' +
+                    Date.now() +
+                    '_' +
+                    Math.floor(
+                        Math.random() * 1000000
+                    );
 
-            const script =
-                document.createElement(
-                    'script'
-                );
+                const script =
+                    document.createElement('script');
 
+                script.async = true;
 
-            let finished = false;
+                let finished = false;
 
+                function cleanup() {
+                    try {
+                        script.remove();
+                    } catch(e) {}
 
-            window[callbackName] =
-                function(data) {
+                    try {
+                        delete window[callbackName];
+                    } catch(e) {}
+                }
 
+                function finishSuccess(data) {
+                    if (finished) return;
                     finished = true;
-
-
                     cleanup();
+                    resolve(data);
+                }
 
+                function finishError(message) {
+                    if (finished) return;
+                    finished = true;
+                    cleanup();
+                    reject(new Error(message));
+                }
 
-                    if (
-                        data &&
-                        data.success === false
-                    ) {
+                window[callbackName] = finishSuccess;
 
-                        /*
-                         * Some endpoints use success:false
-                         * for legitimate lookup failures.
-                         *
-                         * Return data rather than reject.
-                         */
+                const query = new URLSearchParams();
 
-                        resolve(data);
+                query.set('action', action);
+                query.set('callback', callbackName);
+                query.set('_', String(Date.now()) + '_' + Math.random());
 
-                    }
+                Object.keys(params || {}).forEach(function(key) {
+                    query.set(key, params[key]);
+                });
 
-                    else {
+                script.src =
+                    API_URL + '?' + query.toString();
 
-                        resolve(data);
-
-                    }
-
+                script.onerror = function() {
+                    finishError(
+                        'The FXEC server connection was interrupted.'
+                    );
                 };
 
+                document.head.appendChild(script);
 
-            function cleanup() {
-
-                try {
-
-                    script.remove();
-
-                }
-
-                catch(e) {}
-
-
-                try {
-
-                    delete window[
-                        callbackName
-                    ];
-
-                }
-
-                catch(e) {}
-
+                setTimeout(function() {
+                    if (!finished) {
+                        finishError(
+                            'The FXEC server did not respond in time.'
+                        );
+                    }
+                }, timeoutMs);
             }
+        );
+    }
 
+    async function run() {
+        let lastError = null;
 
-            const query =
-                new URLSearchParams();
+        for (let attempt = 0; attempt <= retries; attempt++) {
+            try {
+                return await requestOnce();
+            } catch (error) {
+                lastError = error;
 
-
-            query.set(
-                'action',
-                action
-            );
-
-
-            query.set(
-                'callback',
-                callbackName
-            );
-
-
-            query.set(
-                '_',
-                Date.now()
-            );
-
-
-            Object.keys(
-                params || {}
-            ).forEach(
-                function(key) {
-
-                    query.set(
-                        key,
-                        params[key]
-                    );
-
+                if (attempt < retries) {
+                    await new Promise(function(resolve) {
+                        setTimeout(resolve, 1200);
+                    });
                 }
-            );
-
-
-            script.src =
-                API_URL +
-                '?' +
-                query.toString();
-
-
-            script.onerror =
-                function() {
-
-                    if (
-                        finished
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    finished = true;
-
-                    cleanup();
-
-
-                    reject(
-                        new Error(
-                            'Unable to contact FXEC server.'
-                        )
-                    );
-
-                };
-
-
-            setTimeout(
-                function() {
-
-                    if (
-                        finished
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    finished = true;
-
-                    cleanup();
-
-
-                    reject(
-                        new Error(
-                            'FXEC server did not respond.'
-                        )
-                    );
-
-                },
-                timeoutMs
-            );
-
-
-            document
-                .head
-                .appendChild(
-                    script
-                );
-
+            }
         }
-    );
 
+        throw lastError || new Error('Unable to contact FXEC server.');
+    }
+
+    return run();
 }
-
 
 // =====================================================
 // INITIAL SERVER TEST
@@ -1582,7 +1504,9 @@ async function testServer() {
         const result =
             await apiGet(
                 'ping',
-                {}
+                {},
+                20000,
+                2
             );
 
 
@@ -1690,7 +1614,10 @@ async function verifyStudent() {
                 {
                     email:
                         email
-                }
+                },
+
+                20000,
+                2
 
             );
 
