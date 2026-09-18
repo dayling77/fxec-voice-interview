@@ -1863,25 +1863,65 @@ async function loadPreparationQuestions() {
 
     try {
 
-        const result = await apiGet(
+        let result = await apiGet(
             'getInterviewQuestions',
             { programme: 'All' },
             20000,
             2
         );
 
-        if (!result || !result.success || !Array.isArray(result.questions)) {
-            throw new Error(
-                (result && result.message) ||
-                'Unable to load the interview preparation material.'
+        /*
+         * The live interview bank intentionally returns exactly 10 questions
+         * only when a student's programme is known, because Q7 is programme-
+         * specific. Before login there is no programme yet.
+         *
+         * For the public preparation page, make one programme-specific API
+         * request only to obtain the nine common questions. The Q7 row is then
+         * replaced by the generic preparation version already defined in the
+         * frontend. This does NOT change the live assessment or backend.
+         */
+        if (!result || !result.success || !Array.isArray(result.questions) || result.questions.length < 10) {
+            const fallbackResult = await apiGet(
+                'getInterviewQuestions',
+                { programme: 'B.E.CSE' },
+                20000,
+                2
             );
+
+            if (!fallbackResult || !fallbackResult.success || !Array.isArray(fallbackResult.questions)) {
+                throw new Error(
+                    (result && result.message) ||
+                    'Unable to load the interview preparation material.'
+                );
+            }
+
+            result = fallbackResult;
         }
 
-        const questionsForPreparation = result.questions
+        let questionsForPreparation = result.questions
             .slice()
             .sort(function(a, b) {
                 return Number(a.qNo) - Number(b.qNo);
             });
+
+        /*
+         * Q7 is programme-specific in the actual interview. For preparation,
+         * show the generic Q7 guidance so students understand the expected
+         * approach without seeing a technical question for the wrong programme.
+         */
+        const q7 = questionsForPreparation.find(function(q) {
+            return Number(q.qNo) === 7;
+        });
+
+        if (q7) {
+            q7.question = 'Answer a technical question related to your programme.';
+            q7.category = 'Technical';
+            q7.programme = 'All';
+            q7.usefulWords = 'concept; principle; application; process; method; system; analyse; implement; efficiency; example';
+            q7.professionalPhrases = 'Let me explain the concept...; The main principle is...; This can be applied in...; For example...; The main advantage is...; One limitation is...; In practical applications...';
+            q7.thinkingPoints = 'concept; principle; example/application; advantage/limitation';
+            q7.evaluationFocus = 'technical accuracy; technical vocabulary; explanation; grammar; pronunciation; fluency; clarity';
+        }
 
         if (questionsForPreparation.length < 10) {
             throw new Error('The interview preparation material is incomplete.');
