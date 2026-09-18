@@ -1,279 +1,2308 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>FXEC Mock Interview</title>
+  <meta charset="UTF-8">
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f3f6fb;
-    margin: 0;
-    padding: 30px;
-}
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-.container {
-    max-width: 700px;
-    margin: auto;
-    background: white;
-    padding: 30px;
-    border-radius: 18px;
-    box-shadow: 0 5px 25px rgba(0,0,0,.12);
-}
+  <title>
+    FXEC AI Mock Interview
+  </title>
 
-h1 {
-    color: #174a87;
-}
+  <style>
 
-.question {
-    background: #eef4ff;
-    padding: 20px;
-    border-radius: 12px;
-    font-size: 21px;
-    font-weight: bold;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.timer {
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    margin: 25px;
-    color: #174a87;
-}
 
-.status {
-    text-align: center;
-    font-size: 18px;
-    margin: 20px;
-}
+    body {
 
-.buttons {
-    text-align: center;
-}
+      margin: 0;
 
-button {
-    padding: 13px 22px;
-    margin: 5px;
-    border: none;
-    border-radius: 9px;
-    font-size: 16px;
-    cursor: pointer;
-}
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-.start {
-    background: #1677ff;
-    color: white;
-}
+      background:
+        #f3f6fb;
 
-.stop {
-    background: #d93025;
-    color: white;
-}
+      color:
+        #172033;
 
-.play {
-    background: #188038;
-    color: white;
-}
+    }
 
-button:disabled {
-    opacity: .45;
-}
 
-audio {
-    width: 100%;
-    margin-top: 25px;
-}
-</style>
+    .header {
+
+      background:
+        #062b63;
+
+      color:
+        white;
+
+      padding:
+        22px;
+
+      text-align:
+        center;
+
+    }
+
+
+    .header h1 {
+
+      margin:
+        0;
+
+      font-size:
+        25px;
+
+    }
+
+
+    .header p {
+
+      margin:
+        6px 0 0;
+
+      opacity:
+        .9;
+
+    }
+
+
+    .container {
+
+      max-width:
+        850px;
+
+      margin:
+        30px auto;
+
+      padding:
+        0 15px;
+
+    }
+
+
+    .card {
+
+      background:
+        white;
+
+      border-radius:
+        16px;
+
+      padding:
+        28px;
+
+      box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.08);
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .hidden {
+
+      display:
+        none !important;
+
+    }
+
+
+    h2 {
+
+      margin-top:
+        0;
+
+      color:
+        #062b63;
+
+    }
+
+
+    input {
+
+      width:
+        100%;
+
+      padding:
+        14px;
+
+      border:
+        1px solid #ccd4e0;
+
+      border-radius:
+        8px;
+
+      font-size:
+        16px;
+
+      margin:
+        10px 0 15px;
+
+    }
+
+
+    button {
+
+      border:
+        none;
+
+      border-radius:
+        8px;
+
+      padding:
+        13px 22px;
+
+      font-size:
+        16px;
+
+      cursor:
+        pointer;
+
+      font-weight:
+        600;
+
+    }
+
+
+    button:disabled {
+
+      opacity:
+        .5;
+
+      cursor:
+        not-allowed;
+
+    }
+
+
+    .primary {
+
+      background:
+        #0756b5;
+
+      color:
+        white;
+
+    }
+
+
+    .danger {
+
+      background:
+        #c62828;
+
+      color:
+        white;
+
+    }
+
+
+    .student-info {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap:
+        12px;
+
+      margin-top:
+        20px;
+
+    }
+
+
+    .info-box {
+
+      background:
+        #f5f8fc;
+
+      padding:
+        14px;
+
+      border-radius:
+        8px;
+
+    }
+
+
+    .label {
+
+      font-size:
+        12px;
+
+      color:
+        #6b7280;
+
+      text-transform:
+        uppercase;
+
+    }
+
+
+    .value {
+
+      font-weight:
+        600;
+
+      margin-top:
+        4px;
+
+    }
+
+
+    .progress {
+
+      height:
+        10px;
+
+      background:
+        #e5e7eb;
+
+      border-radius:
+        10px;
+
+      overflow:
+        hidden;
+
+      margin:
+        15px 0 25px;
+
+    }
+
+
+    .progress-bar {
+
+      height:
+        100%;
+
+      background:
+        #0756b5;
+
+      width:
+        0%;
+
+      transition:
+        width .3s;
+
+    }
+
+
+    .question-number {
+
+      font-size:
+        14px;
+
+      color:
+        #0756b5;
+
+      font-weight:
+        bold;
+
+      margin-bottom:
+        10px;
+
+    }
+
+
+    .question {
+
+      font-size:
+        24px;
+
+      line-height:
+        1.4;
+
+      font-weight:
+        700;
+
+      margin-bottom:
+        25px;
+
+    }
+
+
+    .section {
+
+      margin:
+        18px 0;
+
+      padding:
+        16px;
+
+      border-radius:
+        10px;
+
+      background:
+        #f7f9fc;
+
+    }
+
+
+    .section h3 {
+
+      margin:
+        0 0 10px;
+
+      font-size:
+        15px;
+
+      color:
+        #0756b5;
+
+    }
+
+
+    .section ul {
+
+      margin:
+        0;
+
+      padding-left:
+        20px;
+
+    }
+
+
+    .section li {
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .countdown {
+
+      font-size:
+        46px;
+
+      font-weight:
+        bold;
+
+      text-align:
+        center;
+
+      color:
+        #0756b5;
+
+      margin:
+        20px 0;
+
+    }
+
+
+    .timer {
+
+      font-size:
+        30px;
+
+      font-weight:
+        bold;
+
+      text-align:
+        center;
+
+      margin:
+        20px 0;
+
+    }
+
+
+    .recording-status {
+
+      text-align:
+        center;
+
+      font-weight:
+        bold;
+
+      margin:
+        15px 0;
+
+    }
+
+
+    .controls {
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      gap:
+        12px;
+
+      flex-wrap:
+        wrap;
+
+      margin-top:
+        20px;
+
+    }
+
+
+    audio {
+
+      width:
+        100%;
+
+      margin-top:
+        20px;
+
+    }
+
+
+    .message {
+
+      padding:
+        12px;
+
+      border-radius:
+        8px;
+
+      margin-top:
+        12px;
+
+    }
+
+
+    .error {
+
+      background:
+        #fee2e2;
+
+      color:
+        #991b1b;
+
+    }
+
+
+    .success {
+
+      background:
+        #dcfce7;
+
+      color:
+        #166534;
+
+    }
+
+
+    /*
+     * Hidden Apps Script bridge.
+     */
+
+    #backendBridge {
+
+      position:
+        fixed;
+
+      width:
+        1px;
+
+      height:
+        1px;
+
+      border:
+        0;
+
+      opacity:
+        0;
+
+      pointer-events:
+        none;
+
+      left:
+        -9999px;
+
+      top:
+        -9999px;
+
+    }
+
+
+    @media (max-width:600px) {
+
+      .card {
+        padding:
+          20px;
+      }
+
+      .student-info {
+        grid-template-columns:
+          1fr;
+      }
+
+      .question {
+        font-size:
+          20px;
+      }
+
+      .countdown {
+        font-size:
+          38px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
+
 <body>
+
+
+<!-- =================================================
+     HIDDEN APPS SCRIPT BACKEND
+================================================== -->
+
+<iframe
+  id="backendBridge"
+  src="YOUR_APPS_SCRIPT_WEB_APP_URL"
+  title="Backend">
+</iframe>
+
+
+<!-- =================================================
+     HEADER
+================================================== -->
+
+<div class="header">
+
+  <h1>
+    FXEC AI Mock Interview
+  </h1>
+
+  <p>
+    AI-Powered Employability & Communication Assessment
+  </p>
+
+</div>
+
 
 <div class="container">
 
-<h1>FXEC Mock Interview – Voice Test</h1>
 
-<div class="question">
-Question 1: Tell me about yourself.
+<!-- =================================================
+     LOGIN
+================================================== -->
+
+<div
+  id="loginCard"
+  class="card">
+
+  <h2>
+    Student Verification
+  </h2>
+
+  <p>
+    Enter your registered college email address
+    to begin your AI Mock Interview.
+  </p>
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Enter your college email"
+    autocomplete="email">
+
+  <button
+    id="verifyBtn"
+    class="primary"
+    onclick="verifyStudent()">
+
+    Continue
+
+  </button>
+
+  <div
+    id="loginMessage"
+    class="message hidden">
+  </div>
+
 </div>
 
-<div id="status" class="status">
-Ready. Click Start Recording.
+
+<!-- =================================================
+     STUDENT DETAILS
+================================================== -->
+
+<div
+  id="studentCard"
+  class="card hidden">
+
+  <h2>
+    Student Details
+  </h2>
+
+
+  <div class="student-info">
+
+    <div class="info-box">
+
+      <div class="label">
+        Name
+      </div>
+
+      <div
+        id="studentName"
+        class="value">
+      </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+      <div class="label">
+        Programme
+      </div>
+
+      <div
+        id="studentProgramme"
+        class="value">
+      </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+      <div class="label">
+        Year
+      </div>
+
+      <div
+        id="studentYear"
+        class="value">
+      </div>
+
+    </div>
+
+
+    <div class="info-box">
+
+      <div class="label">
+        Section
+      </div>
+
+      <div
+        id="studentSection"
+        class="value">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <br>
+
+
+  <button
+    class="primary"
+    onclick="beginInterview()">
+
+    Begin Mock Interview
+
+  </button>
+
 </div>
 
-<div id="timer" class="timer">
-00:00
+
+<!-- =================================================
+     INTERVIEW
+================================================== -->
+
+<div
+  id="interviewCard"
+  class="card hidden">
+
+
+  <div class="question-number">
+
+    Question
+    <span id="questionNumber"></span>
+    of 10
+
+  </div>
+
+
+  <div class="progress">
+
+    <div
+      id="progressBar"
+      class="progress-bar">
+    </div>
+
+  </div>
+
+
+  <div
+    id="questionText"
+    class="question">
+  </div>
+
+
+  <!-- PREPARATION -->
+
+  <div id="preparationArea">
+
+
+    <div class="section">
+
+      <h3>
+        Useful Words
+      </h3>
+
+      <ul id="usefulWords"></ul>
+
+    </div>
+
+
+    <div class="section">
+
+      <h3>
+        Professional Phrases
+      </h3>
+
+      <ul id="professionalPhrases"></ul>
+
+    </div>
+
+
+    <div class="section">
+
+      <h3>
+        Thinking Points
+      </h3>
+
+      <ul id="thinkingPoints"></ul>
+
+    </div>
+
+
+    <div class="section">
+
+      <h3>
+        Preparation Time
+      </h3>
+
+      <p>
+        Use this time to organise your thoughts.
+        The suggestions are guidance.
+        You do not need to use every word or phrase.
+      </p>
+
+
+      <div
+        id="preparationCountdown"
+        class="countdown">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- RECORDING -->
+
+  <div
+    id="recordingArea"
+    class="hidden">
+
+
+    <div class="timer">
+
+      <span id="answerTimer">
+        01:30
+      </span>
+
+    </div>
+
+
+    <div
+      id="recordingStatus"
+      class="recording-status">
+
+      Ready to record
+
+    </div>
+
+
+    <div class="controls">
+
+      <button
+        id="startBtn"
+        class="primary"
+        onclick="startRecording()">
+
+        🎙 Start Recording
+
+      </button>
+
+
+      <button
+        id="stopBtn"
+        class="danger"
+        onclick="stopRecording()"
+        disabled>
+
+        ⏹ Stop
+
+      </button>
+
+    </div>
+
+
+    <audio
+      id="audioPlayback"
+      controls
+      class="hidden">
+    </audio>
+
+
+    <div class="controls">
+
+      <button
+        id="submitAnswerBtn"
+        class="primary"
+        onclick="submitAnswer()"
+        disabled>
+
+        Submit Answer
+
+      </button>
+
+    </div>
+
+  </div>
+
 </div>
 
-<div class="buttons">
 
-<button class="start" id="start">
-🎙 Start Recording
-</button>
+<!-- =================================================
+     COMPLETION
+================================================== -->
 
-<button class="stop" id="stop" disabled>
-⏹ Stop
-</button>
+<div
+  id="completeCard"
+  class="card hidden">
 
-<button class="play" id="play" disabled>
-▶ Play
-</button>
+  <h2>
+    Interview Completed
+  </h2>
+
+  <p>
+    Your responses have been recorded successfully.
+  </p>
+
+  <div
+    id="completionMessage"
+    class="message success">
+  </div>
 
 </div>
 
-<audio id="audio" controls></audio>
 
 </div>
+
 
 <script>
 
-let recorder;
-let stream;
-let chunks = [];
-
-let startTime;
-let timerInterval;
-
-const startButton =
-    document.getElementById("start");
-
-const stopButton =
-    document.getElementById("stop");
-
-const playButton =
-    document.getElementById("play");
-
-const status =
-    document.getElementById("status");
-
-const timer =
-    document.getElementById("timer");
-
-const audio =
-    document.getElementById("audio");
+/* =====================================================
+   CONFIGURATION
+===================================================== */
 
 
-startButton.onclick = async function() {
+/*
+ * IMPORTANT:
+ *
+ * Replace this with your actual
+ * Apps Script Web App URL.
+ *
+ * Example:
+ *
+ * https://script.google.com/macros/s/XXXXXXXX/exec
+ */
 
-    try {
+const APPS_SCRIPT_URL =
+  'YOUR_APPS_SCRIPT_WEB_APP_URL';
 
-        stream =
-            await navigator.mediaDevices
-            .getUserMedia({
-                audio: true
-            });
 
-        chunks = [];
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
 
-        recorder =
-            new MediaRecorder(stream);
+let student = null;
 
-        recorder.ondataavailable =
-            function(event) {
+let questions = [];
 
-                if (event.data.size > 0) {
-                    chunks.push(event.data);
-                }
+let currentQuestionIndex = 0;
 
-            };
+let attemptId = null;
 
-        recorder.onstop =
-            function() {
+let preparationTimer = null;
 
-                const blob =
-                    new Blob(
-                        chunks,
-                        {type: "audio/webm"}
-                    );
+let answerTimer = null;
 
-                const audioURL =
-                    URL.createObjectURL(blob);
+let preparationRemaining = 0;
 
-                audio.src = audioURL;
+let answerRemaining = 0;
 
-                playButton.disabled = false;
+let mediaRecorder = null;
 
-                status.innerHTML =
-                    "✅ Recording completed.";
+let audioChunks = [];
 
-                stream.getTracks().forEach(
-                    track => track.stop()
-                );
+let audioBlob = null;
 
-            };
 
-        recorder.start();
+/* =====================================================
+   BACKEND REQUEST SYSTEM
+===================================================== */
 
-        startTime = Date.now();
+const pendingRequests = {};
 
-        timerInterval =
-            setInterval(function() {
 
-                let seconds =
-                    Math.floor(
-                        (Date.now() - startTime) / 1000
-                    );
+let requestCounter = 0;
 
-                let min =
-                    Math.floor(seconds / 60);
 
-                let sec =
-                    seconds % 60;
+function backendRequest(
+  action,
+  payload
+) {
 
-                timer.innerHTML =
-                    String(min).padStart(2,"0")
-                    + ":"
-                    +
-                    String(sec).padStart(2,"0");
+  return new Promise(
+    function(resolve, reject) {
 
-            },1000);
+      const requestId =
+        'REQ-' +
+        Date.now() +
+        '-' +
+        (++requestCounter);
 
-        startButton.disabled = true;
 
-        stopButton.disabled = false;
+      pendingRequests[
+        requestId
+      ] = {
 
-        status.innerHTML =
-            "🔴 Recording... Speak now.";
+        resolve:
+          resolve,
+
+        reject:
+          reject
+
+      };
+
+
+      const bridge =
+        document.getElementById(
+          'backendBridge'
+        );
+
+
+      /*
+       * Wait until the bridge is loaded.
+       */
+
+      if (
+        bridge.contentWindow
+      ) {
+
+        bridge.contentWindow.postMessage(
+
+          {
+
+            source:
+              'FXEC_MOCK_INTERVIEW',
+
+            requestId:
+              requestId,
+
+            action:
+              action,
+
+            payload:
+              payload || {}
+
+          },
+
+          '*'
+
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   RECEIVE BACKEND RESPONSE
+===================================================== */
+
+window.addEventListener(
+  'message',
+  function(event) {
+
+    if (
+      !event.data ||
+      event.data.source !==
+        'FXEC_MOCK_INTERVIEW_BRIDGE'
+    ) {
+
+      return;
 
     }
 
-    catch(error) {
 
-        status.innerHTML =
-            "❌ Microphone access failed: "
-            + error.name;
-
-        console.error(error);
-
-    }
-
-};
+    const data =
+      event.data;
 
 
-stopButton.onclick = function() {
+    const request =
+      pendingRequests[
+        data.requestId
+      ];
 
-    if (recorder) {
 
-        recorder.stop();
+    if (!request) {
+
+      return;
 
     }
 
-    clearInterval(timerInterval);
 
-    startButton.disabled = false;
-
-    stopButton.disabled = true;
-
-};
+    delete pendingRequests[
+      data.requestId
+    ];
 
 
-playButton.onclick = function() {
+    if (data.success) {
 
-    audio.play();
+      request.resolve(
+        data.data
+      );
 
-};
+    }
+
+    else {
+
+      request.reject(
+        new Error(
+          data.error ||
+          'Backend request failed.'
+        )
+      );
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   SHOW MESSAGE
+===================================================== */
+
+function showMessage(
+  elementId,
+  message,
+  type
+) {
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+
+  element.textContent =
+    message;
+
+
+  element.className =
+    'message ' + type;
+
+
+  element.classList.remove(
+    'hidden'
+  );
+
+}
+
+
+/* =====================================================
+   SHOW / HIDE
+===================================================== */
+
+function show(
+  elementId
+) {
+
+  document
+    .getElementById(elementId)
+    .classList
+    .remove('hidden');
+
+}
+
+
+function hide(
+  elementId
+) {
+
+  document
+    .getElementById(elementId)
+    .classList
+    .add('hidden');
+
+}
+
+
+/* =====================================================
+   VERIFY STUDENT
+===================================================== */
+
+async function verifyStudent() {
+
+  const email =
+    document
+      .getElementById('email')
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  if (!email) {
+
+    showMessage(
+      'loginMessage',
+      'Please enter your college email address.',
+      'error'
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      'verifyBtn'
+    );
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    'Verifying...';
+
+
+  try {
+
+    const result =
+      await backendRequest(
+
+        'verifyStudent',
+
+        {
+          email:
+            email
+        }
+
+      );
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message
+      );
+
+    }
+
+
+    student =
+      result;
+
+
+    document.getElementById(
+      'studentName'
+    ).textContent =
+      result.name;
+
+
+    document.getElementById(
+      'studentProgramme'
+    ).textContent =
+      result.programme;
+
+
+    document.getElementById(
+      'studentYear'
+    ).textContent =
+      result.year;
+
+
+    document.getElementById(
+      'studentSection'
+    ).textContent =
+      result.section;
+
+
+    hide('loginCard');
+
+    show('studentCard');
+
+  }
+
+  catch (error) {
+
+    showMessage(
+      'loginMessage',
+      error.message ||
+        'Unable to verify student.',
+      'error'
+    );
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    'Continue';
+
+}
+
+
+/* =====================================================
+   BEGIN INTERVIEW
+===================================================== */
+
+async function beginInterview() {
+
+  try {
+
+    /*
+     * Load exactly 10 questions.
+     */
+
+    questions =
+      await backendRequest(
+
+        'getInterviewQuestions',
+
+        {
+          programme:
+            student.programme
+        }
+
+      );
+
+
+    if (
+      !questions ||
+      questions.length !== 10
+    ) {
+
+      throw new Error(
+        'Exactly 10 questions are required.'
+      );
+
+    }
+
+
+    /*
+     * Create attempt.
+     */
+
+    const attempt =
+      await backendRequest(
+
+        'createAttempt',
+
+        {
+          student:
+            student
+        }
+
+      );
+
+
+    attemptId =
+      attempt.attemptId;
+
+
+    hide('studentCard');
+
+    show('interviewCard');
+
+
+    currentQuestionIndex =
+      0;
+
+
+    showQuestion();
+
+  }
+
+  catch (error) {
+
+    alert(
+      error.message ||
+      'Unable to start interview.'
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   SHOW QUESTION
+===================================================== */
+
+function showQuestion() {
+
+  clearTimers();
+
+
+  audioBlob =
+    null;
+
+  audioChunks =
+    [];
+
+
+  const question =
+    questions[
+      currentQuestionIndex
+    ];
+
+
+  document.getElementById(
+    'questionNumber'
+  ).textContent =
+    question.qNo;
+
+
+  document.getElementById(
+    'questionText'
+  ).textContent =
+    question.question;
+
+
+  document.getElementById(
+    'progressBar'
+  ).style.width =
+
+    (
+      (
+        currentQuestionIndex + 1
+      )
+      /
+      10
+      *
+      100
+    ) + '%';
+
+
+  populateList(
+    'usefulWords',
+    question.usefulWords
+  );
+
+
+  populateList(
+    'professionalPhrases',
+    question.professionalPhrases
+  );
+
+
+  populateList(
+    'thinkingPoints',
+    question.thinkingPoints
+  );
+
+
+  show(
+    'preparationArea'
+  );
+
+
+  hide(
+    'recordingArea'
+  );
+
+
+  document.getElementById(
+    'audioPlayback'
+  ).classList.add(
+    'hidden'
+  );
+
+
+  document.getElementById(
+    'submitAnswerBtn'
+  ).disabled =
+    true;
+
+
+  document.getElementById(
+    'startBtn'
+  ).disabled =
+    true;
+
+
+  document.getElementById(
+    'stopBtn'
+  ).disabled =
+    true;
+
+
+  startPreparationTimer(
+    question.preparationTime
+  );
+
+}
+
+
+/* =====================================================
+   LIST DISPLAY
+===================================================== */
+
+function populateList(
+  elementId,
+  text
+) {
+
+  const list =
+    document.getElementById(
+      elementId
+    );
+
+
+  list.innerHTML =
+    '';
+
+
+  if (!text) {
+
+    return;
+
+  }
+
+
+  const items =
+    text
+      .split(';')
+      .map(
+        function(item) {
+          return item.trim();
+        }
+      )
+      .filter(
+        function(item) {
+          return item;
+        }
+      );
+
+
+  items.forEach(
+    function(item) {
+
+      const li =
+        document.createElement(
+          'li'
+        );
+
+
+      li.textContent =
+        item;
+
+
+      list.appendChild(
+        li
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PREPARATION TIMER
+===================================================== */
+
+function startPreparationTimer(
+  seconds
+) {
+
+  preparationRemaining =
+    Number(seconds) ||
+    30;
+
+
+  updatePreparationDisplay();
+
+
+  preparationTimer =
+    setInterval(
+      function() {
+
+        preparationRemaining--;
+
+
+        updatePreparationDisplay();
+
+
+        if (
+          preparationRemaining <= 0
+        ) {
+
+          clearInterval(
+            preparationTimer
+          );
+
+
+          startRecordingStage();
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+/* =====================================================
+   PREPARATION DISPLAY
+===================================================== */
+
+function updatePreparationDisplay() {
+
+  document.getElementById(
+    'preparationCountdown'
+  ).textContent =
+    preparationRemaining +
+    ' sec';
+
+}
+
+
+/* =====================================================
+   RECORDING STAGE
+===================================================== */
+
+function startRecordingStage() {
+
+  show(
+    'recordingArea'
+  );
+
+
+  document.getElementById(
+    'recordingStatus'
+  ).textContent =
+    'Ready to record';
+
+
+  document.getElementById(
+    'startBtn'
+  ).disabled =
+    false;
+
+
+  document.getElementById(
+    'stopBtn'
+  ).disabled =
+    true;
+
+
+  document.getElementById(
+    'submitAnswerBtn'
+  ).disabled =
+    true;
+
+
+  answerRemaining =
+    Number(
+      questions[
+        currentQuestionIndex
+      ].answerTime
+    ) || 90;
+
+
+  updateAnswerTimer();
+
+}
+
+
+/* =====================================================
+   START RECORDING
+===================================================== */
+
+async function startRecording() {
+
+  try {
+
+    const stream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+          audio: true
+        });
+
+
+    audioChunks =
+      [];
+
+
+    mediaRecorder =
+      new MediaRecorder(
+        stream
+      );
+
+
+    mediaRecorder.ondataavailable =
+      function(event) {
+
+        if (
+          event.data &&
+          event.data.size > 0
+        ) {
+
+          audioChunks.push(
+            event.data
+          );
+
+        }
+
+      };
+
+
+    mediaRecorder.onstop =
+      function() {
+
+        audioBlob =
+          new Blob(
+            audioChunks,
+            {
+              type:
+                'audio/webm'
+            }
+          );
+
+
+        const audioURL =
+          URL.createObjectURL(
+            audioBlob
+          );
+
+
+        const audio =
+          document.getElementById(
+            'audioPlayback'
+          );
+
+
+        audio.src =
+          audioURL;
+
+
+        audio.classList.remove(
+          'hidden'
+        );
+
+
+        document.getElementById(
+          'submitAnswerBtn'
+        ).disabled =
+          false;
+
+      };
+
+
+    mediaRecorder.start();
+
+
+    document.getElementById(
+      'recordingStatus'
+    ).textContent =
+      '🔴 Recording...';
+
+
+    document.getElementById(
+      'startBtn'
+    ).disabled =
+      true;
+
+
+    document.getElementById(
+      'stopBtn'
+    ).disabled =
+      false;
+
+
+    startAnswerTimer();
+
+  }
+
+  catch (error) {
+
+    alert(
+      'Microphone access is required. ' +
+      'Please allow microphone permission ' +
+      'for this GitHub Pages website.'
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   STOP RECORDING
+===================================================== */
+
+function stopRecording() {
+
+  if (!mediaRecorder) {
+
+    return;
+
+  }
+
+
+  if (
+    mediaRecorder.state !==
+    'inactive'
+  ) {
+
+    mediaRecorder.stop();
+
+  }
+
+
+  if (
+    mediaRecorder.stream
+  ) {
+
+    mediaRecorder.stream
+      .getTracks()
+      .forEach(
+        function(track) {
+
+          track.stop();
+
+        }
+      );
+
+  }
+
+
+  clearInterval(
+    answerTimer
+  );
+
+
+  document.getElementById(
+    'recordingStatus'
+  ).textContent =
+    'Recording completed';
+
+
+  document.getElementById(
+    'stopBtn'
+  ).disabled =
+    true;
+
+}
+
+
+/* =====================================================
+   ANSWER TIMER
+===================================================== */
+
+function startAnswerTimer() {
+
+  updateAnswerTimer();
+
+
+  answerTimer =
+    setInterval(
+      function() {
+
+        answerRemaining--;
+
+
+        updateAnswerTimer();
+
+
+        if (
+          answerRemaining <= 0
+        ) {
+
+          clearInterval(
+            answerTimer
+          );
+
+
+          stopRecording();
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+/* =====================================================
+   ANSWER TIMER DISPLAY
+===================================================== */
+
+function updateAnswerTimer() {
+
+  const minutes =
+    Math.floor(
+      answerRemaining /
+      60
+    );
+
+
+  const seconds =
+    answerRemaining %
+    60;
+
+
+  document.getElementById(
+    'answerTimer'
+  ).textContent =
+
+    String(minutes)
+      .padStart(2, '0')
+
+    + ':'
+
+    +
+
+    String(seconds)
+      .padStart(2, '0');
+
+}
+
+
+/* =====================================================
+   SUBMIT ANSWER
+===================================================== */
+
+async function submitAnswer() {
+
+  if (!audioBlob) {
+
+    alert(
+      'Please record your answer before submitting.'
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      'submitAnswerBtn'
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    'Preparing audio...';
+
+
+  try {
+
+    /*
+     * Convert WebM audio to Base64.
+     */
+
+    const base64Audio =
+      await blobToBase64(
+        audioBlob
+      );
+
+
+    button.textContent =
+      'Uploading audio...';
+
+
+    /*
+     * Upload to Drive through
+     * Apps Script bridge.
+     */
+
+    const audioResult =
+      await backendRequest(
+
+        'uploadAudio',
+
+        {
+
+          base64Audio:
+            base64Audio,
+
+          attemptId:
+            attemptId,
+
+          qNo:
+            questions[
+              currentQuestionIndex
+            ].qNo,
+
+          email:
+            student.email
+
+        }
+
+      );
+
+
+    if (
+      !audioResult ||
+      !audioResult.success
+    ) {
+
+      throw new Error(
+        'Audio upload failed.'
+      );
+
+    }
+
+
+    button.textContent =
+      'Saving response...';
+
+
+    /*
+     * Save response record.
+     */
+
+    const response = {
+
+      attemptId:
+        attemptId,
+
+      email:
+        student.email,
+
+      qNo:
+        questions[
+          currentQuestionIndex
+        ].qNo,
+
+      question:
+        questions[
+          currentQuestionIndex
+        ].question,
+
+      transcript:
+        '',
+
+      content:
+        '',
+
+      vocabulary:
+        '',
+
+      phrases:
+        '',
+
+      grammar:
+        '',
+
+      pronunciation:
+        '',
+
+      fluency:
+        '',
+
+      clarity:
+        '',
+
+      totalScore:
+        '',
+
+      wordsToPractise:
+        '',
+
+      pronunciationFeedback:
+        '',
+
+      betterPhrases:
+        '',
+
+      aiFeedback:
+        '',
+
+      evaluationStatus:
+        'Pending',
+
+      audioFileUrl:
+        audioResult.fileUrl
+
+    };
+
+
+    await backendRequest(
+
+      'saveResponse',
+
+      {
+        response:
+          response
+      }
+
+    );
+
+
+    button.textContent =
+      'Saved ✓';
+
+
+    setTimeout(
+      function() {
+
+        moveToNextQuestion();
+
+      },
+      500
+    );
+
+  }
+
+  catch (error) {
+
+    button.disabled =
+      false;
+
+
+    button.textContent =
+      'Submit Answer';
+
+
+    alert(
+      error.message ||
+      'Unable to save answer.'
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   BLOB TO BASE64
+===================================================== */
+
+function blobToBase64(
+  blob
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onloadend =
+        function() {
+
+          const result =
+            reader.result;
+
+
+          const base64 =
+            result.split(',')[1];
+
+
+          resolve(
+            base64
+          );
+
+        };
+
+
+      reader.onerror =
+        function() {
+
+          reject(
+            new Error(
+              'Unable to read audio.'
+            )
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        blob
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   NEXT QUESTION
+===================================================== */
+
+function moveToNextQuestion() {
+
+  currentQuestionIndex++;
+
+
+  if (
+    currentQuestionIndex >=
+    questions.length
+  ) {
+
+    finishInterview();
+
+    return;
+
+  }
+
+
+  showQuestion();
+
+}
+
+
+/* =====================================================
+   FINISH INTERVIEW
+===================================================== */
+
+async function finishInterview() {
+
+  try {
+
+    await backendRequest(
+
+      'completeAttempt',
+
+      {
+
+        attemptId:
+          attemptId,
+
+        finalScore:
+          ''
+
+      }
+
+    );
+
+
+    hide(
+      'interviewCard'
+    );
+
+
+    show(
+      'completeCard'
+    );
+
+
+    document.getElementById(
+      'completionMessage'
+    ).textContent =
+
+      'Attempt ' +
+      attemptId +
+      ' has been submitted successfully.';
+
+  }
+
+  catch (error) {
+
+    alert(
+      error.message ||
+      'Unable to complete interview.'
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   CLEAR TIMERS
+===================================================== */
+
+function clearTimers() {
+
+  if (
+    preparationTimer
+  ) {
+
+    clearInterval(
+      preparationTimer
+    );
+
+    preparationTimer =
+      null;
+
+  }
+
+
+  if (
+    answerTimer
+  ) {
+
+    clearInterval(
+      answerTimer
+    );
+
+    answerTimer =
+      null;
+
+  }
+
+}
 
 </script>
 
