@@ -9,9 +9,7 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0">
 
-  <title>
-    FXEC AI Mock Interview
-  </title>
+  <title>FXEC AI Mock Interview</title>
 
   <style>
 
@@ -19,545 +17,337 @@
       box-sizing: border-box;
     }
 
-
     body {
-
       margin: 0;
-
       font-family:
         Arial,
         Helvetica,
         sans-serif;
-
-      background:
-        #f3f6fb;
-
-      color:
-        #172033;
-
+      background: #f3f6fb;
+      color: #172033;
     }
 
+    /* =========================================
+       HEADER
+    ========================================= */
 
     .header {
-
-      background:
-        #062b63;
-
-      color:
-        white;
-
-      padding:
-        22px;
-
-      text-align:
-        center;
-
+      background: #062b63;
+      color: white;
+      padding: 22px;
+      text-align: center;
     }
-
 
     .header h1 {
-
-      margin:
-        0;
-
-      font-size:
-        25px;
-
+      margin: 0;
+      font-size: 25px;
     }
-
 
     .header p {
-
-      margin:
-        6px 0 0;
-
-      opacity:
-        .9;
-
+      margin: 6px 0 0;
+      opacity: 0.9;
+      font-size: 16px;
     }
 
+    /* =========================================
+       CONTAINER
+    ========================================= */
 
     .container {
-
-      max-width:
-        850px;
-
-      margin:
-        30px auto;
-
-      padding:
-        0 15px;
-
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 0 15px;
     }
-
 
     .card {
-
-      background:
-        white;
-
-      border-radius:
-        16px;
-
-      padding:
-        28px;
-
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
       box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.08);
-
-      margin-bottom:
-        20px;
-
+        0 5px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
     }
-
 
     .hidden {
-
-      display:
-        none !important;
-
+      display: none !important;
     }
-
 
     h2 {
-
-      margin-top:
-        0;
-
-      color:
-        #062b63;
-
+      margin-top: 0;
+      color: #062b63;
     }
 
+    /* =========================================
+       FORM
+    ========================================= */
 
     input {
-
-      width:
-        100%;
-
-      padding:
-        14px;
-
-      border:
-        1px solid #ccd4e0;
-
-      border-radius:
-        8px;
-
-      font-size:
-        16px;
-
-      margin:
-        10px 0 15px;
-
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccd4e0;
+      border-radius: 8px;
+      font-size: 16px;
+      margin: 10px 0 15px;
+      outline: none;
     }
 
+    input:focus {
+      border-color: #0756b5;
+    }
+
+    /* =========================================
+       BUTTONS
+    ========================================= */
 
     button {
-
-      border:
-        none;
-
-      border-radius:
-        8px;
-
-      padding:
-        13px 22px;
-
-      font-size:
-        16px;
-
-      cursor:
-        pointer;
-
-      font-weight:
-        600;
-
+      border: none;
+      border-radius: 8px;
+      padding: 13px 22px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
     }
-
 
     button:disabled {
-
-      opacity:
-        .5;
-
-      cursor:
-        not-allowed;
-
+      opacity: 0.5;
+      cursor: not-allowed;
     }
-
 
     .primary {
-
-      background:
-        #0756b5;
-
-      color:
-        white;
-
+      background: #0756b5;
+      color: white;
     }
 
+    .primary:hover:not(:disabled) {
+      background: #06458f;
+    }
 
     .danger {
-
-      background:
-        #c62828;
-
-      color:
-        white;
-
+      background: #c62828;
+      color: white;
     }
 
+    .danger:hover:not(:disabled) {
+      background: #a91f1f;
+    }
+
+    /* =========================================
+       STUDENT INFORMATION
+    ========================================= */
 
     .student-info {
-
-      display:
-        grid;
-
+      display: grid;
       grid-template-columns:
         repeat(2, 1fr);
-
-      gap:
-        12px;
-
-      margin-top:
-        20px;
-
+      gap: 12px;
+      margin-top: 20px;
     }
-
 
     .info-box {
-
-      background:
-        #f5f8fc;
-
-      padding:
-        14px;
-
-      border-radius:
-        8px;
-
+      background: #f5f8fc;
+      padding: 14px;
+      border-radius: 8px;
     }
-
 
     .label {
-
-      font-size:
-        12px;
-
-      color:
-        #6b7280;
-
-      text-transform:
-        uppercase;
-
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
     }
-
 
     .value {
-
-      font-weight:
-        600;
-
-      margin-top:
-        4px;
-
+      font-weight: 600;
+      margin-top: 4px;
     }
 
+    /* =========================================
+       PROGRESS
+    ========================================= */
 
     .progress {
-
-      height:
-        10px;
-
-      background:
-        #e5e7eb;
-
-      border-radius:
-        10px;
-
-      overflow:
-        hidden;
-
-      margin:
-        15px 0 25px;
-
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 15px 0 25px;
     }
-
 
     .progress-bar {
-
-      height:
-        100%;
-
-      background:
-        #0756b5;
-
-      width:
-        0%;
-
-      transition:
-        width .3s;
-
+      height: 100%;
+      background: #0756b5;
+      width: 0%;
+      transition: width 0.3s;
     }
 
+    /* =========================================
+       QUESTION
+    ========================================= */
 
     .question-number {
-
-      font-size:
-        14px;
-
-      color:
-        #0756b5;
-
-      font-weight:
-        bold;
-
-      margin-bottom:
-        10px;
-
+      font-size: 14px;
+      color: #0756b5;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
-
 
     .question {
-
-      font-size:
-        24px;
-
-      line-height:
-        1.4;
-
-      font-weight:
-        700;
-
-      margin-bottom:
-        25px;
-
+      font-size: 24px;
+      line-height: 1.4;
+      font-weight: 700;
+      margin-bottom: 25px;
     }
 
+    /* =========================================
+       PREPARATION SECTIONS
+    ========================================= */
 
     .section {
-
-      margin:
-        18px 0;
-
-      padding:
-        16px;
-
-      border-radius:
-        10px;
-
-      background:
-        #f7f9fc;
-
+      margin: 18px 0;
+      padding: 16px;
+      border-radius: 10px;
+      background: #f7f9fc;
     }
-
 
     .section h3 {
-
-      margin:
-        0 0 10px;
-
-      font-size:
-        15px;
-
-      color:
-        #0756b5;
-
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: #0756b5;
     }
-
 
     .section ul {
-
-      margin:
-        0;
-
-      padding-left:
-        20px;
-
+      margin: 0;
+      padding-left: 20px;
     }
-
 
     .section li {
-
-      margin-bottom:
-        6px;
-
+      margin-bottom: 6px;
     }
 
+    /* =========================================
+       TIMERS
+    ========================================= */
 
     .countdown {
-
-      font-size:
-        46px;
-
-      font-weight:
-        bold;
-
-      text-align:
-        center;
-
-      color:
-        #0756b5;
-
-      margin:
-        20px 0;
-
+      font-size: 46px;
+      font-weight: bold;
+      text-align: center;
+      color: #0756b5;
+      margin: 20px 0;
     }
-
 
     .timer {
-
-      font-size:
-        30px;
-
-      font-weight:
-        bold;
-
-      text-align:
-        center;
-
-      margin:
-        20px 0;
-
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
     }
-
 
     .recording-status {
-
-      text-align:
-        center;
-
-      font-weight:
-        bold;
-
-      margin:
-        15px 0;
-
+      text-align: center;
+      font-weight: bold;
+      margin: 15px 0;
     }
 
+    /* =========================================
+       CONTROLS
+    ========================================= */
 
     .controls {
-
-      display:
-        flex;
-
-      justify-content:
-        center;
-
-      gap:
-        12px;
-
-      flex-wrap:
-        wrap;
-
-      margin-top:
-        20px;
-
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
-
 
     audio {
-
-      width:
-        100%;
-
-      margin-top:
-        20px;
-
+      width: 100%;
+      margin-top: 20px;
     }
 
+    /* =========================================
+       MESSAGES
+    ========================================= */
 
     .message {
-
-      padding:
-        12px;
-
-      border-radius:
-        8px;
-
-      margin-top:
-        12px;
-
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
     }
-
 
     .error {
-
-      background:
-        #fee2e2;
-
-      color:
-        #991b1b;
-
+      background: #fee2e2;
+      color: #991b1b;
     }
-
 
     .success {
-
-      background:
-        #dcfce7;
-
-      color:
-        #166534;
-
+      background: #dcfce7;
+      color: #166534;
     }
 
+    /* =========================================
+       CONNECTION STATUS
+    ========================================= */
 
-    /*
-     * Hidden Apps Script bridge.
-     */
+    .connection-status {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 12px;
+      color: #6b7280;
+    }
+
+    .connection-status.ready {
+      color: #166534;
+    }
+
+    .connection-status.error {
+      color: #991b1b;
+      background: none;
+    }
+
+    /* =========================================
+       HIDDEN BACKEND BRIDGE
+    ========================================= */
 
     #backendBridge {
-
-      position:
-        fixed;
-
-      width:
-        1px;
-
-      height:
-        1px;
-
-      border:
-        0;
-
-      opacity:
-        0;
-
-      pointer-events:
-        none;
-
-      left:
-        -9999px;
-
-      top:
-        -9999px;
-
+      position: fixed;
+      width: 1px;
+      height: 1px;
+      border: 0;
+      opacity: 0;
+      pointer-events: none;
+      left: -9999px;
+      top: -9999px;
     }
 
+    /* =========================================
+       MOBILE
+    ========================================= */
 
-    @media (max-width:600px) {
+    @media (max-width: 600px) {
 
       .card {
-        padding:
-          20px;
+        padding: 20px;
       }
 
       .student-info {
-        grid-template-columns:
-          1fr;
+        grid-template-columns: 1fr;
       }
 
       .question {
-        font-size:
-          20px;
+        font-size: 20px;
       }
 
       .countdown {
-        font-size:
-          38px;
+        font-size: 38px;
+      }
+
+      .header h1 {
+        font-size: 21px;
+      }
+
+      .header p {
+        font-size: 14px;
       }
 
     }
@@ -571,13 +361,15 @@
 
 
 <!-- =================================================
-     HIDDEN APPS SCRIPT BACKEND
+     APPS SCRIPT BACKEND BRIDGE
+
+     YOUR ACTUAL APPS SCRIPT URL
 ================================================== -->
 
 <iframe
   id="backendBridge"
   src="https://script.google.com/macros/s/AKfycbwauRE6eTD6LCmhZingb2oesDQcdvWDxxER7wSDD44v-fh4ZHzlLao6KkcsL0i-Ptyi/exec"
-  title="Backend">
+  title="FXEC Backend">
 </iframe>
 
 
@@ -602,7 +394,7 @@
 
 
 <!-- =================================================
-     LOGIN
+     STUDENT VERIFICATION
 ================================================== -->
 
 <div
@@ -633,9 +425,19 @@
 
   </button>
 
+
   <div
     id="loginMessage"
     class="message hidden">
+  </div>
+
+
+  <div
+    id="connectionStatus"
+    class="connection-status">
+
+    Connecting to FXEC server...
+
   </div>
 
 </div>
@@ -655,6 +457,7 @@
 
 
   <div class="student-info">
+
 
     <div class="info-box">
 
@@ -711,6 +514,7 @@
 
     </div>
 
+
   </div>
 
 
@@ -718,6 +522,7 @@
 
 
   <button
+    id="beginInterviewBtn"
     class="primary"
     onclick="beginInterview()">
 
@@ -737,6 +542,8 @@
   class="card hidden">
 
 
+  <!-- QUESTION NUMBER -->
+
   <div class="question-number">
 
     Question
@@ -745,6 +552,8 @@
 
   </div>
 
+
+  <!-- PROGRESS -->
 
   <div class="progress">
 
@@ -756,13 +565,17 @@
   </div>
 
 
+  <!-- QUESTION -->
+
   <div
     id="questionText"
     class="question">
   </div>
 
 
-  <!-- PREPARATION -->
+  <!-- =================================================
+       PREPARATION
+  ================================================== -->
 
   <div id="preparationArea">
 
@@ -806,24 +619,31 @@
         Preparation Time
       </h3>
 
+
       <p>
+
         Use this time to organise your thoughts.
         The suggestions are guidance.
         You do not need to use every word or phrase.
+
       </p>
 
 
       <div
         id="preparationCountdown"
         class="countdown">
+
       </div>
 
     </div>
 
+
   </div>
 
 
-  <!-- RECORDING -->
+  <!-- =================================================
+       RECORDING
+  ================================================== -->
 
   <div
     id="recordingArea"
@@ -850,6 +670,7 @@
 
     <div class="controls">
 
+
       <button
         id="startBtn"
         class="primary"
@@ -870,6 +691,7 @@
 
       </button>
 
+
     </div>
 
 
@@ -882,6 +704,7 @@
 
     <div class="controls">
 
+
       <button
         id="submitAnswerBtn"
         class="primary"
@@ -892,9 +715,12 @@
 
       </button>
 
+
     </div>
 
+
   </div>
+
 
 </div>
 
@@ -907,18 +733,23 @@
   id="completeCard"
   class="card hidden">
 
+
   <h2>
     Interview Completed
   </h2>
+
 
   <p>
     Your responses have been recorded successfully.
   </p>
 
+
   <div
     id="completionMessage"
     class="message success">
+
   </div>
+
 
 </div>
 
@@ -929,23 +760,9 @@
 <script>
 
 /* =====================================================
-   CONFIGURATION
+   FXEC AI MOCK INTERVIEW
+   GITHUB FRONTEND
 ===================================================== */
-
-
-/*
- * IMPORTANT:
- *
- * Replace this with your actual
- * Apps Script Web App URL.
- *
- * Example:
- *
- * https://script.google.com/macros/s/XXXXXXXX/exec
- */
-
-const APPS_SCRIPT_URL =
-  'YOUR_APPS_SCRIPT_WEB_APP_URL';
 
 
 /* =====================================================
@@ -976,14 +793,75 @@ let audioBlob = null;
 
 
 /* =====================================================
-   BACKEND REQUEST SYSTEM
+   BACKEND BRIDGE
 ===================================================== */
 
 const pendingRequests = {};
 
-
 let requestCounter = 0;
 
+let bridgeReady = false;
+
+let bridgeWaitQueue = [];
+
+
+/* =====================================================
+   GET BRIDGE
+===================================================== */
+
+function getBridge() {
+
+  return document.getElementById(
+    'backendBridge'
+  );
+
+}
+
+
+/* =====================================================
+   SEND REQUEST TO BRIDGE
+===================================================== */
+
+function sendToBridge(
+  request
+) {
+
+  const bridge =
+    getBridge();
+
+
+  if (
+    !bridge ||
+    !bridge.contentWindow
+  ) {
+
+    setTimeout(
+      function() {
+
+        sendToBridge(
+          request
+        );
+
+      },
+      300
+    );
+
+    return;
+
+  }
+
+
+  bridge.contentWindow.postMessage(
+    request,
+    '*'
+  );
+
+}
+
+
+/* =====================================================
+   BACKEND REQUEST
+===================================================== */
 
 function backendRequest(
   action,
@@ -992,6 +870,7 @@ function backendRequest(
 
   return new Promise(
     function(resolve, reject) {
+
 
       const requestId =
         'REQ-' +
@@ -1013,43 +892,79 @@ function backendRequest(
       };
 
 
-      const bridge =
-        document.getElementById(
-          'backendBridge'
-        );
+      const request = {
+
+        source:
+          'FXEC_MOCK_INTERVIEW',
+
+        requestId:
+          requestId,
+
+        action:
+          action,
+
+        payload:
+          payload || {}
+
+      };
 
 
       /*
-       * Wait until the bridge is loaded.
+       * If bridge is ready,
+       * send immediately.
        */
 
-      if (
-        bridge.contentWindow
-      ) {
+      if (bridgeReady) {
 
-        bridge.contentWindow.postMessage(
-
-          {
-
-            source:
-              'FXEC_MOCK_INTERVIEW',
-
-            requestId:
-              requestId,
-
-            action:
-              action,
-
-            payload:
-              payload || {}
-
-          },
-
-          '*'
-
+        sendToBridge(
+          request
         );
 
       }
+
+      else {
+
+        /*
+         * Hold request until bridge
+         * becomes ready.
+         */
+
+        bridgeWaitQueue.push(
+          request
+        );
+
+      }
+
+
+      /*
+       * Safety timeout.
+       */
+
+      setTimeout(
+        function() {
+
+          if (
+            pendingRequests[
+              requestId
+            ]
+          ) {
+
+            delete pendingRequests[
+              requestId
+            ];
+
+
+            reject(
+              new Error(
+                'FXEC server did not respond. Please refresh the page and try again.'
+              )
+            );
+
+          }
+
+        },
+        30000
+      );
 
     }
   );
@@ -1058,17 +973,22 @@ function backendRequest(
 
 
 /* =====================================================
-   RECEIVE BACKEND RESPONSE
+   BRIDGE MESSAGE LISTENER
 ===================================================== */
 
 window.addEventListener(
   'message',
   function(event) {
 
+
+    if (!event.data) {
+      return;
+    }
+
+
     if (
-      !event.data ||
       event.data.source !==
-        'FXEC_MOCK_INTERVIEW_BRIDGE'
+      'FXEC_MOCK_INTERVIEW_BRIDGE'
     ) {
 
       return;
@@ -1076,32 +996,103 @@ window.addEventListener(
     }
 
 
-    const data =
-      event.data;
+    /* ==============================================
+       BRIDGE READY
+    ============================================== */
+
+    if (
+      event.data.type ===
+      'BRIDGE_READY'
+    ) {
 
 
-    const request =
-      pendingRequests[
-        data.requestId
-      ];
+      bridgeReady =
+        true;
 
 
-    if (!request) {
+      const status =
+        document.getElementById(
+          'connectionStatus'
+        );
+
+
+      if (status) {
+
+        status.textContent =
+          '✓ FXEC server connected';
+
+        status.classList.add(
+          'ready'
+        );
+
+      }
+
+
+      /*
+       * Send requests that were
+       * waiting for the bridge.
+       */
+
+      const queue =
+        bridgeWaitQueue;
+
+
+      bridgeWaitQueue =
+        [];
+
+
+      queue.forEach(
+        function(request) {
+
+          sendToBridge(
+            request
+          );
+
+        }
+      );
+
 
       return;
 
     }
 
 
+    /* ==============================================
+       BACKEND RESPONSE
+    ============================================== */
+
+    if (
+      event.data.type !==
+      'RESPONSE'
+    ) {
+
+      return;
+
+    }
+
+
+    const request =
+      pendingRequests[
+        event.data.requestId
+      ];
+
+
+    if (!request) {
+      return;
+    }
+
+
     delete pendingRequests[
-      data.requestId
+      event.data.requestId
     ];
 
 
-    if (data.success) {
+    if (
+      event.data.success
+    ) {
 
       request.resolve(
-        data.data
+        event.data.data
       );
 
     }
@@ -1109,13 +1100,103 @@ window.addEventListener(
     else {
 
       request.reject(
+
         new Error(
-          data.error ||
+          event.data.error ||
           'Backend request failed.'
         )
+
       );
 
     }
+
+  }
+);
+
+
+/* =====================================================
+   IFRAME LOAD FALLBACK
+===================================================== */
+
+window.addEventListener(
+  'load',
+  function() {
+
+
+    const bridge =
+      getBridge();
+
+
+    if (!bridge) {
+      return;
+    }
+
+
+    bridge.addEventListener(
+      'load',
+      function() {
+
+
+        /*
+         * The bridge has loaded.
+         *
+         * The Bridge.html itself will
+         * also send BRIDGE_READY.
+         */
+
+        setTimeout(
+          function() {
+
+            if (!bridgeReady) {
+
+              bridgeReady =
+                true;
+
+
+              const status =
+                document.getElementById(
+                  'connectionStatus'
+                );
+
+
+              if (status) {
+
+                status.textContent =
+                  '✓ FXEC server connected';
+
+                status.classList.add(
+                  'ready'
+                );
+
+              }
+
+
+              const queue =
+                bridgeWaitQueue;
+
+
+              bridgeWaitQueue =
+                [];
+
+
+              queue.forEach(
+                function(request) {
+
+                  sendToBridge(
+                    request
+                  );
+
+                }
+              );
+
+            }
+
+          },
+          500
+        );
+
+      }
+    );
 
   }
 );
@@ -1153,7 +1234,7 @@ function showMessage(
 
 
 /* =====================================================
-   SHOW / HIDE
+   SHOW
 ===================================================== */
 
 function show(
@@ -1161,21 +1242,33 @@ function show(
 ) {
 
   document
-    .getElementById(elementId)
+    .getElementById(
+      elementId
+    )
     .classList
-    .remove('hidden');
+    .remove(
+      'hidden'
+    );
 
 }
 
+
+/* =====================================================
+   HIDE
+===================================================== */
 
 function hide(
   elementId
 ) {
 
   document
-    .getElementById(elementId)
+    .getElementById(
+      elementId
+    )
     .classList
-    .add('hidden');
+    .add(
+      'hidden'
+    );
 
 }
 
@@ -1186,9 +1279,12 @@ function hide(
 
 async function verifyStudent() {
 
+
   const email =
     document
-      .getElementById('email')
+      .getElementById(
+        'email'
+      )
       .value
       .trim()
       .toLowerCase();
@@ -1216,11 +1312,13 @@ async function verifyStudent() {
   button.disabled =
     true;
 
+
   button.textContent =
     'Verifying...';
 
 
   try {
+
 
     const result =
       await backendRequest(
@@ -1235,10 +1333,20 @@ async function verifyStudent() {
       );
 
 
-    if (!result.success) {
+    if (
+      !result ||
+      !result.success
+    ) {
 
       throw new Error(
+
+        result &&
         result.message
+
+          ? result.message
+
+          : 'College email address not found.'
+
       );
 
     }
@@ -1272,19 +1380,30 @@ async function verifyStudent() {
       result.section;
 
 
-    hide('loginCard');
+    hide(
+      'loginCard'
+    );
 
-    show('studentCard');
+
+    show(
+      'studentCard'
+    );
+
 
   }
 
   catch (error) {
 
+
     showMessage(
+
       'loginMessage',
+
       error.message ||
         'Unable to verify student.',
+
       'error'
+
     );
 
   }
@@ -1292,6 +1411,7 @@ async function verifyStudent() {
 
   button.disabled =
     false;
+
 
   button.textContent =
     'Continue';
@@ -1305,10 +1425,26 @@ async function verifyStudent() {
 
 async function beginInterview() {
 
+
+  const button =
+    document.getElementById(
+      'beginInterviewBtn'
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.textContent =
+    'Loading Interview...';
+
+
   try {
 
+
     /*
-     * Load exactly 10 questions.
+     * Get exactly 10 questions.
      */
 
     questions =
@@ -1330,7 +1466,10 @@ async function beginInterview() {
     ) {
 
       throw new Error(
+
+        'Interview configuration error. ' +
         'Exactly 10 questions are required.'
+
       );
 
     }
@@ -1353,13 +1492,30 @@ async function beginInterview() {
       );
 
 
+    if (
+      !attempt ||
+      !attempt.attemptId
+    ) {
+
+      throw new Error(
+        'Unable to create interview attempt.'
+      );
+
+    }
+
+
     attemptId =
       attempt.attemptId;
 
 
-    hide('studentCard');
+    hide(
+      'studentCard'
+    );
 
-    show('interviewCard');
+
+    show(
+      'interviewCard'
+    );
 
 
     currentQuestionIndex =
@@ -1368,16 +1524,29 @@ async function beginInterview() {
 
     showQuestion();
 
+
   }
 
   catch (error) {
 
+
     alert(
+
       error.message ||
       'Unable to start interview.'
+
     );
 
+
   }
+
+
+  button.disabled =
+    false;
+
+
+  button.textContent =
+    'Begin Mock Interview';
 
 }
 
@@ -1388,11 +1557,13 @@ async function beginInterview() {
 
 function showQuestion() {
 
+
   clearTimers();
 
 
   audioBlob =
     null;
+
 
   audioChunks =
     [];
@@ -1421,13 +1592,20 @@ function showQuestion() {
   ).style.width =
 
     (
+
       (
-        currentQuestionIndex + 1
+        currentQuestionIndex +
+        1
       )
+
       /
+
       10
+
       *
+
       100
+
     ) + '%';
 
 
@@ -1459,9 +1637,22 @@ function showQuestion() {
   );
 
 
-  document.getElementById(
-    'audioPlayback'
-  ).classList.add(
+  const audio =
+    document.getElementById(
+      'audioPlayback'
+    );
+
+
+  audio.pause();
+
+  audio.removeAttribute(
+    'src'
+  );
+
+  audio.load();
+
+
+  audio.classList.add(
     'hidden'
   );
 
@@ -1492,13 +1683,14 @@ function showQuestion() {
 
 
 /* =====================================================
-   LIST DISPLAY
+   POPULATE LIST
 ===================================================== */
 
 function populateList(
   elementId,
   text
 ) {
+
 
   const list =
     document.getElementById(
@@ -1511,9 +1703,7 @@ function populateList(
 
 
   if (!text) {
-
     return;
-
   }
 
 
@@ -1522,18 +1712,23 @@ function populateList(
       .split(';')
       .map(
         function(item) {
+
           return item.trim();
+
         }
       )
       .filter(
         function(item) {
+
           return item;
+
         }
       );
 
 
   items.forEach(
     function(item) {
+
 
       const li =
         document.createElement(
@@ -1549,6 +1744,7 @@ function populateList(
         li
       );
 
+
     }
   );
 
@@ -1563,9 +1759,9 @@ function startPreparationTimer(
   seconds
 ) {
 
+
   preparationRemaining =
-    Number(seconds) ||
-    30;
+    Number(seconds) || 30;
 
 
   updatePreparationDisplay();
@@ -1573,7 +1769,9 @@ function startPreparationTimer(
 
   preparationTimer =
     setInterval(
+
       function() {
+
 
         preparationRemaining--;
 
@@ -1582,20 +1780,29 @@ function startPreparationTimer(
 
 
         if (
-          preparationRemaining <= 0
+          preparationRemaining <=
+          0
         ) {
+
 
           clearInterval(
             preparationTimer
           );
 
 
+          preparationTimer =
+            null;
+
+
           startRecordingStage();
 
         }
 
+
       },
+
       1000
+
     );
 
 }
@@ -1607,9 +1814,11 @@ function startPreparationTimer(
 
 function updatePreparationDisplay() {
 
+
   document.getElementById(
     'preparationCountdown'
   ).textContent =
+
     preparationRemaining +
     ' sec';
 
@@ -1621,6 +1830,7 @@ function updatePreparationDisplay() {
 ===================================================== */
 
 function startRecordingStage() {
+
 
   show(
     'recordingArea'
@@ -1653,9 +1863,11 @@ function startRecordingStage() {
 
   answerRemaining =
     Number(
+
       questions[
         currentQuestionIndex
       ].answerTime
+
     ) || 90;
 
 
@@ -1670,13 +1882,22 @@ function startRecordingStage() {
 
 async function startRecording() {
 
+
   try {
+
+
+    /*
+     * Request microphone permission
+     * from the GitHub Pages domain.
+     */
 
     const stream =
       await navigator
         .mediaDevices
         .getUserMedia({
+
           audio: true
+
         });
 
 
@@ -1684,14 +1905,42 @@ async function startRecording() {
       [];
 
 
+    /*
+     * Use WebM/Opus when supported.
+     */
+
+    let recorderOptions = {};
+
+
+    if (
+      MediaRecorder.isTypeSupported(
+        'audio/webm;codecs=opus'
+      )
+    ) {
+
+      recorderOptions = {
+
+        mimeType:
+          'audio/webm;codecs=opus'
+
+      };
+
+    }
+
+
     mediaRecorder =
       new MediaRecorder(
-        stream
+
+        stream,
+
+        recorderOptions
+
       );
 
 
     mediaRecorder.ondataavailable =
       function(event) {
+
 
         if (
           event.data &&
@@ -1710,13 +1959,20 @@ async function startRecording() {
     mediaRecorder.onstop =
       function() {
 
+
         audioBlob =
           new Blob(
+
             audioChunks,
+
             {
+
               type:
+                mediaRecorder.mimeType ||
                 'audio/webm'
+
             }
+
           );
 
 
@@ -1746,6 +2002,25 @@ async function startRecording() {
         ).disabled =
           false;
 
+
+        document.getElementById(
+          'recordingStatus'
+        ).textContent =
+          'Recording completed ✓';
+
+      };
+
+
+    mediaRecorder.onerror =
+      function() {
+
+
+        document.getElementById(
+          'recordingStatus'
+        ).textContent =
+          'Recording error';
+
+
       };
 
 
@@ -1772,14 +2047,29 @@ async function startRecording() {
 
     startAnswerTimer();
 
+
   }
 
   catch (error) {
 
+
+    console.error(
+      'Microphone error:',
+      error
+    );
+
+
     alert(
-      'Microphone access is required. ' +
-      'Please allow microphone permission ' +
-      'for this GitHub Pages website.'
+
+      'Microphone access is required.\n\n' +
+
+      'Please click Allow when your browser asks ' +
+      'for microphone permission.\n\n' +
+
+      'If permission was previously blocked, ' +
+      'click the microphone/camera icon near the ' +
+      'browser address bar and allow microphone access.'
+
     );
 
   }
@@ -1793,10 +2083,9 @@ async function startRecording() {
 
 function stopRecording() {
 
+
   if (!mediaRecorder) {
-
     return;
-
   }
 
 
@@ -1814,28 +2103,32 @@ function stopRecording() {
     mediaRecorder.stream
   ) {
 
+
     mediaRecorder.stream
       .getTracks()
       .forEach(
+
         function(track) {
 
           track.stop();
 
         }
+
       );
 
   }
 
 
-  clearInterval(
-    answerTimer
-  );
+  if (answerTimer) {
 
+    clearInterval(
+      answerTimer
+    );
 
-  document.getElementById(
-    'recordingStatus'
-  ).textContent =
-    'Recording completed';
+    answerTimer =
+      null;
+
+  }
 
 
   document.getElementById(
@@ -1852,12 +2145,15 @@ function stopRecording() {
 
 function startAnswerTimer() {
 
+
   updateAnswerTimer();
 
 
   answerTimer =
     setInterval(
+
       function() {
+
 
         answerRemaining--;
 
@@ -1866,20 +2162,29 @@ function startAnswerTimer() {
 
 
         if (
-          answerRemaining <= 0
+          answerRemaining <=
+          0
         ) {
+
 
           clearInterval(
             answerTimer
           );
 
 
+          answerTimer =
+            null;
+
+
           stopRecording();
 
         }
 
+
       },
+
       1000
+
     );
 
 }
@@ -1890,6 +2195,7 @@ function startAnswerTimer() {
 ===================================================== */
 
 function updateAnswerTimer() {
+
 
   const minutes =
     Math.floor(
@@ -1908,14 +2214,22 @@ function updateAnswerTimer() {
   ).textContent =
 
     String(minutes)
-      .padStart(2, '0')
+      .padStart(
+        2,
+        '0'
+      )
 
-    + ':'
+    +
+
+    ':'
 
     +
 
     String(seconds)
-      .padStart(2, '0');
+      .padStart(
+        2,
+        '0'
+      );
 
 }
 
@@ -1926,11 +2240,14 @@ function updateAnswerTimer() {
 
 async function submitAnswer() {
 
+
   if (!audioBlob) {
+
 
     alert(
       'Please record your answer before submitting.'
     );
+
 
     return;
 
@@ -1953,8 +2270,9 @@ async function submitAnswer() {
 
   try {
 
+
     /*
-     * Convert WebM audio to Base64.
+     * Convert audio Blob to Base64.
      */
 
     const base64Audio =
@@ -1963,13 +2281,21 @@ async function submitAnswer() {
       );
 
 
+    if (!base64Audio) {
+
+      throw new Error(
+        'Unable to process audio.'
+      );
+
+    }
+
+
     button.textContent =
       'Uploading audio...';
 
 
     /*
-     * Upload to Drive through
-     * Apps Script bridge.
+     * Upload audio to Google Drive.
      */
 
     const audioResult =
@@ -2015,68 +2341,87 @@ async function submitAnswer() {
 
 
     /*
-     * Save response record.
+     * Save response.
      */
 
     const response = {
 
+
       attemptId:
         attemptId,
 
+
       email:
         student.email,
+
 
       qNo:
         questions[
           currentQuestionIndex
         ].qNo,
 
+
       question:
         questions[
           currentQuestionIndex
         ].question,
 
+
       transcript:
         '',
+
 
       content:
         '',
 
+
       vocabulary:
         '',
+
 
       phrases:
         '',
 
+
       grammar:
         '',
+
 
       pronunciation:
         '',
 
+
       fluency:
         '',
+
 
       clarity:
         '',
 
+
       totalScore:
         '',
+
 
       wordsToPractise:
         '',
 
+
       pronunciationFeedback:
         '',
+
 
       betterPhrases:
         '',
 
+
       aiFeedback:
         '',
 
+
       evaluationStatus:
         'Pending',
+
 
       audioFileUrl:
         audioResult.fileUrl
@@ -2089,8 +2434,10 @@ async function submitAnswer() {
       'saveResponse',
 
       {
+
         response:
           response
+
       }
 
     );
@@ -2101,17 +2448,27 @@ async function submitAnswer() {
 
 
     setTimeout(
+
       function() {
 
         moveToNextQuestion();
 
       },
+
       500
+
     );
 
   }
 
   catch (error) {
+
+
+    console.error(
+      'Submit error:',
+      error
+    );
+
 
     button.disabled =
       false;
@@ -2122,8 +2479,10 @@ async function submitAnswer() {
 
 
     alert(
+
       error.message ||
       'Unable to save answer.'
+
     );
 
   }
@@ -2139,8 +2498,11 @@ function blobToBase64(
   blob
 ) {
 
+
   return new Promise(
+
     function(resolve, reject) {
+
 
       const reader =
         new FileReader();
@@ -2149,17 +2511,51 @@ function blobToBase64(
       reader.onloadend =
         function() {
 
-          const result =
-            reader.result;
+
+          try {
 
 
-          const base64 =
-            result.split(',')[1];
+            const result =
+              reader.result;
 
 
-          resolve(
-            base64
-          );
+            const parts =
+              result.split(',');
+
+
+            if (
+              parts.length < 2
+            ) {
+
+              reject(
+
+                new Error(
+                  'Invalid audio data.'
+                )
+
+              );
+
+              return;
+
+            }
+
+
+            resolve(
+              parts[1]
+            );
+
+
+          }
+
+          catch (error) {
+
+
+            reject(
+              error
+            );
+
+
+          }
 
         };
 
@@ -2167,10 +2563,13 @@ function blobToBase64(
       reader.onerror =
         function() {
 
+
           reject(
+
             new Error(
               'Unable to read audio.'
             )
+
           );
 
         };
@@ -2181,6 +2580,7 @@ function blobToBase64(
       );
 
     }
+
   );
 
 }
@@ -2192,6 +2592,7 @@ function blobToBase64(
 
 function moveToNextQuestion() {
 
+
   currentQuestionIndex++;
 
 
@@ -2200,7 +2601,9 @@ function moveToNextQuestion() {
     questions.length
   ) {
 
+
     finishInterview();
+
 
     return;
 
@@ -2218,7 +2621,9 @@ function moveToNextQuestion() {
 
 async function finishInterview() {
 
+
   try {
+
 
     await backendRequest(
 
@@ -2255,13 +2660,17 @@ async function finishInterview() {
       attemptId +
       ' has been submitted successfully.';
 
+
   }
 
   catch (error) {
 
+
     alert(
+
       error.message ||
       'Unable to complete interview.'
+
     );
 
   }
@@ -2275,13 +2684,16 @@ async function finishInterview() {
 
 function clearTimers() {
 
+
   if (
     preparationTimer
   ) {
 
+
     clearInterval(
       preparationTimer
     );
+
 
     preparationTimer =
       null;
@@ -2293,9 +2705,11 @@ function clearTimers() {
     answerTimer
   ) {
 
+
     clearInterval(
       answerTimer
     );
+
 
     answerTimer =
       null;
@@ -2307,4 +2721,5 @@ function clearTimers() {
 </script>
 
 </body>
+
 </html>
