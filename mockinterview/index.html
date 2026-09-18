@@ -2125,28 +2125,88 @@ function renderPreparationQuestion(q) {
 }
 
 
-function selectNaturalUSVoice(voices) {
+function getPreferredSampleVoiceGender(questionNumber) {
 
-    const preferredNames = [
-        'Google US English',
+    /*
+     * Use a mix of female and male voices across the 10 samples.
+     * This keeps the preparation section from sounding like one speaker
+     * throughout. The browser/device must provide a suitable US-English
+     * voice for the selected gender.
+     */
+
+    const maleQuestions = [2, 4, 6, 8, 10];
+    return maleQuestions.indexOf(Number(questionNumber)) !== -1
+        ? 'male'
+        : 'female';
+}
+
+
+function selectNaturalUSVoice(voices, gender) {
+
+    const usVoices = voices.filter(function(voice) {
+        return voice.lang && voice.lang.toLowerCase().startsWith('en-us');
+    });
+
+    if (!usVoices.length) return null;
+
+    /*
+     * Prefer Microsoft/Google US neural or high-quality voices where the
+     * browser exposes them. Voice names vary by operating system/browser,
+     * so several known names are supported with a controlled fallback.
+     */
+    const maleNames = [
+        'Microsoft Guy Online (Natural) - English (United States)',
+        'Microsoft Ryan Online (Natural) - English (United States)',
+        'Microsoft Christopher Online (Natural) - English (United States)',
+        'Microsoft Andrew Online (Natural) - English (United States)',
+        'Microsoft Eric Online (Natural) - English (United States)',
+        'Microsoft Brian Online (Natural) - English (United States)',
+        'Microsoft Guy - English (United States)',
+        'Microsoft Ryan - English (United States)',
+        'Alex',
+        'Google US English'
+    ];
+
+    const femaleNames = [
         'Microsoft Aria Online (Natural) - English (United States)',
         'Microsoft Jenny Online (Natural) - English (United States)',
+        'Microsoft Ava Online (Natural) - English (United States)',
         'Microsoft Aria - English (United States)',
         'Samantha',
         'Ava',
-        'Alex'
+        'Google US English'
     ];
 
+    const preferredNames = gender === 'male' ? maleNames : femaleNames;
+
     for (let i = 0; i < preferredNames.length; i++) {
-        const exact = voices.find(function(voice) {
-            return voice.name === preferredNames[i] && voice.lang && voice.lang.toLowerCase().startsWith('en-us');
+        const exact = usVoices.find(function(voice) {
+            return voice.name === preferredNames[i];
         });
         if (exact) return exact;
     }
 
-    return voices.find(function(voice) {
-        return voice.lang && voice.lang.toLowerCase().startsWith('en-us');
-    }) || null;
+    /* Name-based gender fallback for browsers with slightly different names. */
+    const genderKeywords = gender === 'male'
+        ? ['guy', 'ryan', 'christopher', 'andrew', 'eric', 'brian', 'alex', 'david', 'mark']
+        : ['aria', 'jenny', 'ava', 'samantha', 'zira', 'susan', 'allison'];
+
+    const byKeyword = usVoices.find(function(voice) {
+        const name = voice.name.toLowerCase();
+        return genderKeywords.some(function(keyword) {
+            return name.indexOf(keyword) !== -1;
+        });
+    });
+
+    if (byKeyword) return byKeyword;
+
+    /*
+     * If the requested gender is unavailable, use the best US-English voice
+     * rather than failing audio playback. This is device dependent.
+     */
+    return usVoices.find(function(voice) {
+        return /natural|neural|online/i.test(voice.name);
+    }) || usVoices[0];
 }
 
 
@@ -2162,18 +2222,23 @@ function speakPreparationSample(questionNumber, button) {
 
     window.speechSynthesis.cancel();
 
+    const gender = getPreferredSampleVoiceGender(questionNumber);
+    const voices = window.speechSynthesis.getVoices();
+    const usVoice = selectNaturalUSVoice(voices, gender);
+
     const utterance = new SpeechSynthesisUtterance(guidance.sample);
     utterance.lang = 'en-US';
-    utterance.rate = 0.88;
-    utterance.pitch = 0.98;
+    utterance.rate = 0.92;
+    utterance.pitch = gender === 'male' ? 0.90 : 1.02;
     utterance.volume = 1;
 
-    const usVoice = selectNaturalUSVoice(window.speechSynthesis.getVoices());
     if (usVoice) utterance.voice = usVoice;
 
     const originalText = button.textContent;
     button.disabled = true;
-    button.textContent = '🔊 Playing sample...';
+    button.textContent = gender === 'male'
+        ? '🔊 Playing US English Male Sample...'
+        : '🔊 Playing US English Female Sample...';
 
     utterance.onend = function() {
         button.disabled = false;
